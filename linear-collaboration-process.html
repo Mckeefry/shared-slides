@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Collaboration Process</title>
+<style>
+/* ── Cisco Brand Design Tokens ─────────────────────────────────────── */
+:root {
+    --bg:              #07182D;
+    --text-primary:    #FFFFFF;
+    --text-secondary:  rgba(255, 255, 255, 0.85);
+    --muted:           rgba(255, 255, 255, 0.50);
+    --cisco-blue:      #02C8FF;
+    --medium-blue:     #0A60FF;
+    --accent-magenta:  #FF007F;
+    --accent-orange:   #FF9000;
+    --status-green:    #3DDC84;
+    --status-red:      #FF4D4F;
+    --card-bg:         rgba(255, 255, 255, 0.06);
+    --card-hover:      rgba(255, 255, 255, 0.10);
+    --card-border:     rgba(255, 255, 255, 0.12);
+    --gradient-primary: linear-gradient(90deg, #0A60FF 5%, #02C8FF 37%, #02C8FF 44%, #FF007F 75%, #FF9000 95%);
+    --gradient-blue:    linear-gradient(90deg, #0A60FF, #02C8FF);
+    --slide-pad-x:     60px;
+    --slide-pad-y:     32px;
+    --transition:      300ms;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'CiscoSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Deck & Slide ──────────────────────────────────────────────────── */
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity var(--transition) ease, visibility 0s var(--transition);
+    z-index: 0;
+}
+.slide.active {
+    opacity: 1; visibility: visible;
+    transition: opacity var(--transition) ease, visibility 0s 0s;
+    z-index: 1;
+}
+
+.slide-inner {
+    width: 100%; max-width: 1260px;
+    padding: var(--slide-pad-y) 40px;
+    display: flex; flex-direction: column;
+    height: 100vh; justify-content: center;
+}
+
+/* ── Logo ──────────────────────────────────────────────────────────── */
+.cisco-logo {
+    position: absolute; z-index: 10;
+}
+.cisco-logo.logo-content {
+    bottom: 18px; left: 24px; width: 48px; height: auto; opacity: 0.7;
+}
+
+/* ── Gradient bar ──────────────────────────────────────────────────── */
+.gradient-bar {
+    height: 4px; border-radius: 2px;
+    background: var(--gradient-primary);
+    margin-bottom: 20px;
+}
+
+/* ── Slide Header ──────────────────────────────────────────────────── */
+.slide-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.eyebrow {
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--cisco-blue); margin-bottom: 10px;
+}
+.slide-title {
+    font-size: 2rem; font-weight: 700;
+    color: var(--text-primary); line-height: 1.25;
+}
+
+/* ── Process Flow ──────────────────────────────────────────────────── */
+.process-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+}
+
+/* ── Team Node ─────────────────────────────────────────────────────── */
+.team-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 195px;
+    animation: fadeInUp 0.5s ease both;
+}
+.team-node:nth-child(1)  { animation-delay: 0.05s; }
+.team-node:nth-child(3)  { animation-delay: 0.15s; }
+.team-node:nth-child(5)  { animation-delay: 0.25s; }
+.team-node:nth-child(7)  { animation-delay: 0.35s; }
+.team-node:nth-child(9)  { animation-delay: 0.45s; }
+
+.team-card {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-top: 3px solid var(--cisco-blue);
+    border-radius: 8px;
+    padding: 16px 14px 14px;
+    text-align: center;
+    position: relative;
+    transition: background 250ms ease, border-color 250ms ease, transform 200ms ease;
+    cursor: default;
+}
+.team-card:hover {
+    background: var(--card-hover);
+    transform: translateY(-4px);
+}
+
+/* Color-coded top borders per team */
+.team-node:nth-child(1) .team-card { border-top-color: var(--cisco-blue); }
+.team-node:nth-child(3) .team-card { border-top-color: var(--medium-blue); }
+.team-node:nth-child(5) .team-card { border-top-color: var(--cisco-blue); }
+.team-node:nth-child(7) .team-card { border-top-color: var(--medium-blue); }
+.team-node:nth-child(9) .team-card { border-top-color: var(--status-green); }
+
+.team-icon {
+    width: 44px; height: 44px;
+    margin: 0 auto 12px;
+    color: var(--cisco-blue);
+}
+.team-node:nth-child(3)  .team-icon { color: var(--medium-blue); }
+.team-node:nth-child(7)  .team-icon { color: var(--medium-blue); }
+.team-node:nth-child(9)  .team-icon { color: var(--status-green); }
+
+.team-icon svg { width: 100%; height: 100%; }
+
+.team-name {
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+.team-label {
+    font-size: 0.72rem; font-weight: 400;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* ── Bidirectional Arrow Connector ─────────────────────────────────── */
+  /* ── Team Member List ──────────────────────────────────────────────── */
+  .team-members {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--card-border);
+    width: 100%;
+    text-align: left;
+  }
+  .team-member-item {
+    font-size: 0.66rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .team-member-item.highlight {
+    color: var(--cisco-blue);
+    font-weight: 700;
+  }
+  .team-member-item .member-role {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--muted);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  /* ── Team Responsibilities ─────────────────────────────────────────── */
+  .team-responsibilities {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--card-border);
+    width: 100%;
+    text-align: left;
+  }
+  .responsibility-item {
+    font-size: 0.63rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 5px;
+  }
+  .responsibility-item strong {
+    color: var(--cisco-blue);
+    font-weight: 700;
+  }
+
+  /* ── Bidirectional Arrow Connector ─────────────────────────────────── */
+.connector {
+    flex: 0 0 auto;
+  width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    animation: fadeInUp 0.5s ease both;
+    padding-bottom: 10px;
+}
+.connector:nth-child(2)  { animation-delay: 0.1s; }
+.connector:nth-child(4)  { animation-delay: 0.2s; }
+.connector:nth-child(6)  { animation-delay: 0.3s; }
+.connector:nth-child(8)  { animation-delay: 0.4s; }
+
+.arrow-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.arrow-line svg {
+    width: 100%; height: 14px;
+    overflow: visible;
+}
+
+/* ── Slide Counter ─────────────────────────────────────────────────── */
+.slide-counter {
+    position: fixed; bottom: 18px; right: 24px;
+    font-size: 0.75rem; color: var(--muted); z-index: 100;
+}
+
+/* ── Navigation Arrows ─────────────────────────────────────────────── */
+.nav-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 100;
+    transition: background var(--transition) ease, border-color var(--transition) ease,
+                opacity var(--transition) ease, transform var(--transition) ease;
+    opacity: 0.55;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none; padding: 0; font: inherit;
+}
+.nav-arrow:hover, .nav-arrow:focus-visible {
+    opacity: 1; background: rgba(2, 200, 255, 0.18); border-color: var(--cisco-blue); outline: none;
+}
+.nav-arrow:active { transform: translateY(-50%) scale(0.94); }
+.nav-arrow.prev { left: 16px; }
+.nav-arrow.next { right: 16px; }
+.nav-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.nav-arrow[disabled] { opacity: 0.18; cursor: default; }
+
+/* ── Animations ────────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Notes Panel ───────────────────────────────────────────────────── */
+.notes-panel {
+    display: none; position: fixed; bottom: 60px; left: 0; right: 0;
+    background: rgba(7, 24, 45, 0.97); border-top: 1px solid var(--card-border);
+    padding: 16px 60px; font-size: 0.9rem; color: var(--text-secondary);
+    line-height: 1.6; max-height: 30vh; overflow-y: auto; z-index: 99;
+}
+.notes-panel.visible { display: block; }
+
+/* ── Print ─────────────────────────────────────────────────────────── */
+@media print {
+    html, body { overflow: visible; height: auto; }
+    .deck { height: auto; position: static; }
+    .slide { position: relative; opacity: 1; visibility: visible; page-break-after: always; height: 100vh; }
+    .slide-counter, .nav-arrow { display: none; }
+}
+
+/* ── Overview Mode ─────────────────────────────────────────────────── */
+body.overview-mode { overflow: auto; }
+body.overview-mode .deck {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px; padding: 32px;
+    width: 100vw; height: auto; min-height: 100vh;
+    background: var(--bg); position: static;
+}
+body.overview-mode .slide {
+    position: relative; inset: auto;
+    opacity: 1; visibility: visible;
+    width: 100%; aspect-ratio: 16 / 10; height: auto;
+    border: 1px solid var(--card-border); border-radius: 8px;
+    overflow: hidden; transform: none; cursor: pointer;
+    transition: border-color 200ms ease, transform 200ms ease;
+}
+body.overview-mode .slide:hover { border-color: var(--cisco-blue); transform: translateY(-2px); }
+body.overview-mode .slide.active { border-color: var(--cisco-blue); box-shadow: 0 0 0 2px var(--cisco-blue); }
+body.overview-mode .slide-inner {
+    transform: scale(0.32); transform-origin: top left;
+    width: 312.5%; height: 312.5%; pointer-events: none;
+}
+body.overview-mode .nav-arrow,
+body.overview-mode .slide-counter { display: none; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- Slide 1: Linear Collaboration Process -->
+  <div class="slide active">
+    <div class="slide-inner">
+
+      <!-- Gradient accent bar -->
+      <div class="gradient-bar"></div>
+
+      <!-- Slide header -->
+      <div class="slide-header">
+        <div class="eyebrow">Team Collaboration Model</div>
+        <div class="slide-title">Linear Collaboration Process</div>
+      </div>
+
+      <!-- Process Flow -->
+      <div class="process-flow">
+
+        <!-- Team 1: RRA (Field) -->
+        <div class="team-node">
+          <div class="team-card">
+            <div class="team-icon">
+              <!-- Field / signal tower icon -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <circle cx="24" cy="30" r="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <path d="M17 23c1.8-1.8 4.3-3 7-3s5.2 1.2 7 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <path d="M11 17c3.6-3.6 8.5-5.8 13-5.8s9.4 2.2 13 5.8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <line x1="24" y1="34" x2="24" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="19" y1="42" x2="29" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="team-name">RRA</div>
+            <div class="team-label">Field</div>
+            <div class="team-members">
+              <div class="team-member-item">Renewal Managers</div>
+              <div class="team-member-item">Renewal Specialists</div>
+              <div class="team-member-item">Renewal Leaders</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 1 -->
+        <div class="connector">
+          <div class="arrow-line">
+            <svg viewBox="0 0 52 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- Right arrow -->
+              <line x1="4" y1="4" x2="44" y2="4" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="38,1 44,4 38,7" fill="none" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Left arrow -->
+              <line x1="8" y1="10" x2="48" y2="10" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="14,7 8,10 14,13" fill="none" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Team 2: Drew Sturgell (AI Strategy and Adoption Leader) -->
+        <div class="team-node">
+          <div class="team-card">
+            <div class="team-icon">
+              <!-- People / group icon -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <circle cx="18" cy="16" r="5" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <path d="M8 36c0-5.5 4.5-10 10-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <path d="M28 36c0-5.5-4.5-10-10-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                <circle cx="32" cy="14" r="4" stroke="currentColor" stroke-width="2.5" fill="none" opacity="0.6"/>
+                <path d="M40 34c0-4.4-3.6-8-8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+              </svg>
+            </div>
+            <div class="team-name">Drew Sturgell</div>
+            <div class="team-label">AI Strategy & Adoption Leader</div>
+            <div class="team-members">
+              <div class="team-member-item">Michael McKeefry<span class="member-role">RRA AI Adoption Lead - EMEA</span></div>
+              <div class="team-member-item">Christine Rees<span class="member-role">RRA AI Adoption Lead - AMER</span></div>
+              <div class="team-member-item">Andre Lemos</div>
+              <div class="team-member-item">Peter Komorowski<span class="member-role">AI Product Manager</span></div>
+              <div class="team-member-item">Maria Hernandez<span class="member-role">Business Operations Manager</span></div>
+            </div>
+            <div class="team-responsibilities">
+              <div class="responsibility-item"><strong>Adoption & Change Management</strong> — Lead organizational adoption and change initiatives</div>
+              <div class="responsibility-item"><strong>Market Positioning</strong> — Define product positioning and strategy within RRA</div>
+              <div class="responsibility-item"><strong>Strategic Enablement</strong> — Execute adoption strategies for effective target audience engagement</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 2 -->
+        <div class="connector">
+          <div class="arrow-line">
+            <svg viewBox="0 0 52 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="4" y1="4" x2="44" y2="4" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="38,1 44,4 38,7" fill="none" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="8" y1="10" x2="48" y2="10" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="14,7 8,10 14,13" fill="none" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Team 3: Fahad Abid (Director, Business Development) -->
+        <div class="team-node">
+          <div class="team-card">
+            <div class="team-icon">
+              <!-- Layers / stack icon -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <polygon points="24,8 42,18 24,28 6,18" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+                <path d="M6 28l18 10 18-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="team-name">Fahad Abid</div>
+            <div class="team-label">Director, Business Development</div>
+            <div class="team-members">
+              <div class="team-member-item">Gowtham Tamilselvan<span class="member-role">Business Development Manager</span></div>
+            </div>
+            <div class="team-responsibilities">
+              <div class="responsibility-item"><strong>Innovation & Discovery</strong> — Lead end-to-end AI ideation, discovery, and testing of new use cases</div>
+              <div class="responsibility-item"><strong>Strategic Delivery</strong> — Drive AI execution as primary RRA representative</div>
+              <div class="responsibility-item"><strong>Technical Enablement</strong> — Provide technical guidance and standardized AI methodologies</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 3 -->
+        <div class="connector">
+          <div class="arrow-line">
+            <svg viewBox="0 0 52 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="4" y1="4" x2="44" y2="4" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="38,1 44,4 38,7" fill="none" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="8" y1="10" x2="48" y2="10" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="14,7 8,10 14,13" fill="none" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Team 4: Siddharth Jayachandran (Director, Product Management) -->
+        <div class="team-node">
+          <div class="team-card">
+            <div class="team-icon">
+              <!-- Chart / PM icon -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <rect x="8" y="28" width="8" height="12" rx="1.5" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <rect x="20" y="18" width="8" height="22" rx="1.5" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                <rect x="32" y="10" width="8" height="30" rx="1.5" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              </svg>
+            </div>
+            <div class="team-name">Siddharth Jayachandran</div>
+            <div class="team-label">Director, Product Management</div>
+            <div class="team-members">
+              <div class="team-member-item">Sherly Santhosh<span class="member-role">Eng. Product Manager</span></div>
+              <div class="team-member-item">Vijaya Baliwada<span class="member-role">Eng. Product Manager</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 4 -->
+        <div class="connector">
+          <div class="arrow-line">
+            <svg viewBox="0 0 52 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="4" y1="4" x2="44" y2="4" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="38,1 44,4 38,7" fill="none" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="8" y1="10" x2="48" y2="10" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="14,7 8,10 14,13" fill="none" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Team 5: Nilesh Panicker (Leader, Software Engineering) -->
+        <div class="team-node">
+          <div class="team-card">
+            <div class="team-icon">
+              <!-- Code / engineering icon -->
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                <polyline points="16,14 6,24 16,34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <polyline points="32,14 42,24 32,34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <line x1="28" y1="10" x2="20" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="team-name">Nilesh Panicker</div>
+            <div class="team-label">Leader, Software Engineering</div>
+            <div class="team-members">
+              <div class="team-member-item">Kevin Zhou<span class="member-role">Business Analysis Mgr</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /process-flow -->
+
+      <!-- Bottom legend -->
+      <div style="text-align:center; margin-top: 16px;">
+        <div style="display:inline-flex; align-items:center; gap:24px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="36" height="10" viewBox="0 0 36 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="2" y1="5" x2="28" y2="5" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="23,2 29,5 23,8" fill="none" stroke="#02C8FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span style="font-size:0.72rem; color:var(--text-secondary); letter-spacing:0.05em;">Outbound</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="36" height="10" viewBox="0 0 36 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="8" y1="5" x2="34" y2="5" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
+              <polyline points="13,2 7,5 13,8" fill="none" stroke="rgba(2,200,255,0.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span style="font-size:0.72rem; color:var(--muted); letter-spacing:0.05em;">Inbound</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /slide-inner -->
+
+    <!-- Cisco Logo -->
+    <svg class="cisco-logo logo-content" viewBox="0 0 235.59 124.17" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cisco" aria-hidden="false">
+      <style>.MsftOfcThm_Background1_Fill_v2 { fill:#FFFFFF; }</style>
+      <g><g><g>
+        <rect x="66.63" y="82.51" width="10.33" height="40.94" class="MsftOfcThm_Background1_Fill_v2" fill="#FFFFFF"/>
+        <path d="M160.26 94.24C157.594 92.7891 154.605 92.0357 151.57 92.05 144.89 92.05 140.26 96.7 140.26 102.97 140.26 109.05 144.69 113.9 151.57 113.9 154.601 113.904 157.586 113.158 160.26 111.73L160.26 122.73C157.208 123.673 154.034 124.164 150.84 124.19 139.22 124.19 129.03 116.19 129.03 102.99 129.03 90.77 138.25 81.8 150.84 81.8 154.036 81.8088 157.213 82.3044 160.26 83.27Z" fill="#FFFFFF"/>
+        <path d="M52.43 94.24C49.7693 92.7854 46.7823 92.0317 43.75 92.05 37.06 92.05 32.43 96.7 32.43 102.97 32.43 109.05 36.87 113.9 43.75 113.9 46.7789 113.911 49.7625 113.165 52.43 111.73L52.43 122.73C49.3745 123.671 46.197 124.156 43 124.17 31.39 124.17 21.2 116.17 21.2 102.97 21.2 90.75 30.43 81.78 43 81.78 46.1966 81.7866 49.3734 82.2823 52.42 83.25Z" fill="#FFFFFF"/>
+        <path d="M214.39 103C214.39 114.71 205.39 124.2 192.76 124.2 180.13 124.2 171.14 114.71 171.14 103 171.14 91.29 180.14 81.81 192.76 81.81 205.38 81.81 214.39 91.31 214.39 103M192.76 92.21C186.812 92.1603 181.95 96.9417 181.9 102.89 181.851 108.838 186.632 113.7 192.58 113.749 198.528 113.799 203.39 109.018 203.44 103.07 203.44 103.046 203.44 103.023 203.44 103 203.54 97.1577 198.884 92.3407 193.042 92.2411 192.948 92.2394 192.854 92.2391 192.76 92.24" fill="#FFFFFF"/>
+        <path d="M116.14 91.81C113.504 91.0821 110.793 90.6627 108.06 90.56 103.92 90.56 101.67 91.95 101.67 93.92 101.67 96.41 104.67 97.28 106.41 97.82L109.26 98.72C115.96 100.86 119.02 105.45 119.02 110.43 119.02 120.72 110.02 124.17 102.02 124.17 98.277 124.137 94.5448 123.762 90.87 123.05L90.87 113.63C94.041 114.556 97.3179 115.07 100.62 115.16 105.76 115.16 108.13 113.65 108.13 111.33 108.13 109.26 106.08 108.06 103.52 107.26L101.31 106.54C95.31 104.55 91.1 100.62 91.1 94.17 91.1 85.5 98.6 81.63 106.6 81.63 110.031 81.6565 113.452 82.0659 116.79 82.85Z" fill="#FFFFFF"/>
+        <path d="M235.59 82.57L235.59 124.17 225.27 124.17 225.27 82.57ZM4.25 57.16A4.26 4.26 0 1 0 0 61.36 4.26 4.26 0 0 0 4.25 57.16M18.84 49.59A4.26 4.26 0 1 0 14.59 53.85 4.26 4.26 0 0 0 18.84 49.59M33.44 44.5A4.26 4.26 0 1 0 29.18 48.76 4.26 4.26 0 0 0 33.44 44.5M48 41.87A4.26 4.26 0 1 0 43.74 46.13 4.26 4.26 0 0 0 48 41.87M62.59 41.35A4.26 4.26 0 1 0 58.33 45.61 4.26 4.26 0 0 0 62.59 41.35M77.19 42.9A4.26 4.26 0 1 0 72.93 47.16 4.26 4.26 0 0 0 77.19 42.9M91.78 46.35A4.26 4.26 0 1 0 87.52 50.61 4.26 4.26 0 0 0 91.78 46.35M106.38 51.39A4.26 4.26 0 1 0 102.12 55.65 4.26 4.26 0 0 0 106.38 51.39M120.97 57.67A4.26 4.26 0 1 0 116.71 61.93 4.26 4.26 0 0 0 120.97 57.67" fill="#FFFFFF"/>
+        <path d="M4.25 25.1A4.26 4.26 0 1 0 0 29.36 4.26 4.26 0 0 0 4.25 25.1M18.84 17.54A4.26 4.26 0 1 0 14.59 21.8 4.26 4.26 0 0 0 18.84 17.54M33.44 12.44A4.26 4.26 0 1 0 29.18 16.7 4.26 4.26 0 0 0 33.44 12.44M48 9.81A4.26 4.26 0 1 0 43.74 14.07 4.26 4.26 0 0 0 48 9.81M62.59 9.29A4.26 4.26 0 1 0 58.33 13.55 4.26 4.26 0 0 0 62.59 9.29M77.19 10.84A4.26 4.26 0 1 0 72.93 15.1 4.26 4.26 0 0 0 77.19 10.84M91.78 14.29A4.26 4.26 0 1 0 87.52 18.55 4.26 4.26 0 0 0 91.78 14.29M106.38 19.34A4.26 4.26 0 1 0 102.12 23.6 4.26 4.26 0 0 0 106.38 19.34M120.97 25.61A4.26 4.26 0 1 0 116.71 29.87 4.26 4.26 0 0 0 120.97 25.61" fill="#FFFFFF"/>
+      </g></g></g>
+    </svg>
+
+  </div><!-- /slide -->
+
+</div><!-- /deck -->
+
+<button class="nav-arrow prev" id="navPrev" type="button" aria-label="Previous slide" disabled>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 6 9 12 15 18"/></svg>
+</button>
+<button class="nav-arrow next" id="navNext" type="button" aria-label="Next slide" disabled>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+</button>
+
+<div class="slide-counter"><span id="current">1</span> / <span id="total">1</span></div>
+
+<script>
+(function() {
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const prevBtn = document.getElementById('navPrev');
+    const nextBtn = document.getElementById('navNext');
+    let current = 0;
+    let notesVisible = false;
+
+    function show(n) {
+        slides[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        document.getElementById('current').textContent = current + 1;
+    }
+
+    function advance() { show(current + 1); }
+    function retreat() { show(current - 1); }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { advance(); return; }
+        if (e.key === 'ArrowLeft') { retreat(); return; }
+        if (e.key === 'f' || e.key === 'F') {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+            else document.exitFullscreen();
+        }
+        if (e.key === 'o' || e.key === 'O') {
+            document.body.classList.toggle('overview-mode');
+        }
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', retreat);
+    if (nextBtn) nextBtn.addEventListener('click', advance);
+
+    let touchStartX = null;
+    document.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+        if (touchStartX === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 50) (dx < 0 ? advance() : retreat());
+        touchStartX = null;
+    });
+
+    document.getElementById('total').textContent = slides.length;
+    document.getElementById('current').textContent = 1;
+})();
+</script>
+</body>
+</html>
