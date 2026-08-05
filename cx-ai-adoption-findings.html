@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CX AI Assistant Adoption Findings</title>
+  <style>
+    :root {
+      --bg: #07131f;
+      --panel: #0d2032;
+      --ink: #ecf4ff;
+      --muted: #a8c2df;
+      --accent: #22d3ee;
+      --accent-2: #7dd3fc;
+      --good: #34d399;
+      --warn: #f59e0b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Bahnschrift", "Avenir Next", "Trebuchet MS", sans-serif;
+      background: radial-gradient(circle at 20% 10%, #123556 0%, var(--bg) 45%, #050b13 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .deck {
+      width: min(1200px, 94vw);
+      margin: 3vh auto;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      background: linear-gradient(145deg, rgba(13, 32, 50, 0.95), rgba(8, 20, 33, 0.92));
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      border-radius: 20px;
+      padding: 44px;
+      min-height: 82vh;
+      animation: rise 360ms ease;
+    }
+
+    .slide.active { display: block; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(32px, 4.2vw, 52px);
+      letter-spacing: 0.3px;
+    }
+
+    h2 {
+      margin: 10px 0 20px;
+      color: var(--accent-2);
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 600;
+    }
+
+    p, li { line-height: 1.5; }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 960px;
+      margin-bottom: 26px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid rgba(125, 211, 252, 0.22);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: rgba(10, 25, 40, 0.55);
+    }
+
+    .kpi {
+      font-size: clamp(24px, 3vw, 42px);
+      font-weight: 700;
+      color: var(--accent);
+      margin: 4px 0;
+    }
+
+    .label { color: var(--muted); font-size: 14px; }
+
+    .bars { margin-top: 8px; display: grid; gap: 9px; }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 250px 1fr 110px;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(168, 194, 223, 0.2);
+    }
+
+    .fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee, #34d399);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 0;
+    }
+
+    .chip {
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      background: rgba(7, 19, 31, 0.75);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .warn { color: var(--warn); font-weight: 700; }
+    .good { color: var(--good); font-weight: 700; }
+
+    .footer {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls { display: flex; gap: 10px; align-items: center; }
+
+    .dots { display: flex; gap: 6px; }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(168, 194, 223, 0.35);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .dot.active { background: var(--accent); }
+
+    .btn {
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      background: rgba(7, 19, 31, 0.7);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 24px; min-height: 78vh; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 150px 1fr 90px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active">
+      <h1>CX AI Assistant Adoption Findings</h1>
+      <h2>Updated Dataset Analysis | Apr-Aug</h2>
+      <p class="subtitle">
+        This deck uses only the corrected source upload. Analysis baseline: <span class="good">146,166 prompts</span>,
+        with explicit split using <strong>Previous Input</strong> blank vs populated.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Total Prompts</div>
+          <div class="kpi">146,166</div>
+          <div class="label">All rows in corrected source file</div>
+        </div>
+        <div class="card">
+          <div class="label">Input Prompt Share</div>
+          <div class="kpi">68.17%</div>
+          <div class="label">99,647 prompts with blank Previous Input</div>
+        </div>
+        <div class="card">
+          <div class="label">Follow-up Prompt Share</div>
+          <div class="kpi">31.83%</div>
+          <div class="label">46,519 prompts with populated Previous Input</div>
+        </div>
+        <div class="card">
+          <div class="label">Core Insight</div>
+          <p>
+            Adoption is substantial and conversational depth is real: nearly 1 in 3 prompts are follow-ups,
+            indicating iterative usage rather than one-shot asks.
+          </p>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip">Primary audience: Renewals roles</span>
+        <span class="chip">Largest region: Americas</span>
+        <span class="chip">Peak initial day: Monday</span>
+        <span class="chip">Peak follow-up days: Wed/Thu</span>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Initial Prompt Themes</h1>
+      <h2>What users ask first</h2>
+      <p class="subtitle">
+        Initial prompts are highly concentrated in performance reporting and operational retrieval, with
+        pipeline and account research next.
+      </p>
+      <div class="bars">
+        <div class="bar-row"><span>Reporting &amp; Dashboard</span><div class="bar"><div class="fill" style="width:44.86%"></div></div><strong>44.86%</strong></div>
+        <div class="bar-row"><span>Data Query &amp; Retrieval</span><div class="bar"><div class="fill" style="width:31.74%"></div></div><strong>31.74%</strong></div>
+        <div class="bar-row"><span>Sales &amp; Pipeline</span><div class="bar"><div class="fill" style="width:10.90%"></div></div><strong>10.90%</strong></div>
+        <div class="bar-row"><span>Other</span><div class="bar"><div class="fill" style="width:6.10%"></div></div><strong>6.10%</strong></div>
+        <div class="bar-row"><span>Customer/Account Research</span><div class="bar"><div class="fill" style="width:4.45%"></div></div><strong>4.45%</strong></div>
+      </div>
+      <div class="grid-2" style="margin-top:14px;">
+        <div class="card">
+          <strong>Title concentration (examples)</strong>
+          <ul>
+            <li>Reporting: Renewals Specialist, Renewals Manager</li>
+            <li>Data Query: Renewals Manager, Renewals Specialist</li>
+            <li>Sales/Pipeline: Renewals Specialist, Renewals Manager</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Regional concentration (examples)</strong>
+          <ul>
+            <li>Reporting: Americas 31,190; APJC 6,418; EMEA 5,679</li>
+            <li>Data Query: Americas 22,722; EMEA 5,348; APJC 2,770</li>
+            <li>Sales/Pipeline: Americas 6,944; EMEA 2,672; APJC 1,026</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Who Is Using It Most</h1>
+      <h2>Role and region profile</h2>
+      <p class="subtitle">
+        Usage is anchored in renewals operations. The heavy-user threshold (top 10%) is
+        <span class="good">262.2 prompts</span>, yielding 129 heavy users.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Top follow-up roles</strong>
+          <ul>
+            <li>Renewals Manager: 18,975</li>
+            <li>Renewals Specialist: 10,815</li>
+            <li>Renewals Manager [C]: 3,196</li>
+            <li>Leader, Renewals: 2,317</li>
+            <li>Business Development Manager: 2,183</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Top follow-up regions</strong>
+          <ul>
+            <li>Americas: 31,159</li>
+            <li>EMEA: 10,260</li>
+            <li>APJC: 3,812</li>
+            <li>Global Service Provider: 923</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Heavy-user archetype 1</strong>
+          <p>
+            <span class="good">Template executors</span>: high repetition in initial prompts,
+            low follow-up ratio, efficient recurring workflow usage.
+          </p>
+        </div>
+        <div class="card">
+          <strong>Heavy-user archetype 2</strong>
+          <p>
+            <span class="warn">Analytical iterators</span>: high follow-up ratio, deep thread refinement,
+            scenario testing, and comparative questioning.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>When Questions Are Asked</h1>
+      <h2>Activity timing and weekend behavior</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Initial prompts by day</strong>
+          <ul>
+            <li>Mon 20,452 | Tue 15,943 | Wed 16,416</li>
+            <li>Thu 16,714 | Fri 15,843</li>
+            <li>Sat 7,187 | Sun 6,941</li>
+          </ul>
+          <p>Monday is the top entry day for new asks.</p>
+        </div>
+        <div class="card">
+          <strong>Follow-ups by day</strong>
+          <ul>
+            <li>Mon 7,752 | Tue 9,014 | Wed 10,266</li>
+            <li>Thu 10,559 | Fri 7,766</li>
+            <li>Sat 599 | Sun 563</li>
+          </ul>
+          <p>Refinement intensity peaks on Wednesday and Thursday.</p>
+        </div>
+        <div class="card">
+          <strong>Weekend focus</strong>
+          <ul>
+            <li>Weekend prompts: 15,290 (10.46% of all usage)</li>
+            <li>Weekend initial: 14,128</li>
+            <li>Weekend follow-up: 1,162</li>
+            <li>Top 5 weekend users drive 52%+ of weekend volume</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Weekend concentration</strong>
+          <ul>
+            <li>Americas: 11,585 (about 75.8%)</li>
+            <li>APJC: 2,017 (about 13.2%)</li>
+            <li>GSP: 876 (about 5.7%)</li>
+            <li>EMEA: 800 (about 5.2%)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Adoption Actions</h1>
+      <h2>Recommended next moves for scale</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>1) Productize high-repeat asks</strong>
+          <p>Create role-based prompt packs for Renewals Specialist and Renewals Manager with guided parameters.</p>
+        </div>
+        <div class="card">
+          <strong>2) Strengthen midweek follow-up quality</strong>
+          <p>Inject contextual follow-up suggestions after first response, optimized for Tue-Thu refinement behavior.</p>
+        </div>
+        <div class="card">
+          <strong>3) Launch Monday workflow kits</strong>
+          <p>Publish weekly playbooks for pipeline health, renewal risk, and account priority to match Monday entry peak.</p>
+        </div>
+        <div class="card">
+          <strong>4) Build a weekend champion network</strong>
+          <p>Use top weekend contributors to identify repeatable workflows and convert them into reusable templates.</p>
+        </div>
+        <div class="card">
+          <strong>5) Segment enablement by user archetype</strong>
+          <p>Template executors: saved workflows. Analytical iterators: multi-step questioning, validation, and comparison guides.</p>
+        </div>
+        <div class="card">
+          <strong>6) Improve telemetry quality</strong>
+          <p>Standardize Region/Title values and enforce schema validation to improve confidence in adoption KPI reporting.</p>
+        </div>
+      </div>
+      <p class="subtitle" style="margin-top:14px;">
+        Expected outcome: better first-response quality, more consistent multi-turn success, and broader usage beyond current power-user clusters.
+      </p>
+    </section>
+
+    <div class="footer">
+      <span>Use Left/Right arrows or buttons</span>
+      <div class="controls">
+        <button class="btn" id="prev" type="button">Prev</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn" id="next" type="button">Next</button>
+        <span id="page">1 / 5</span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const page = document.getElementById('page');
+    const dotsWrap = document.getElementById('dots');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    let index = 0;
+
+    const dots = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.className = 'dot';
+      b.type = 'button';
+      b.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      b.addEventListener('click', () => show(i));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function show(i) {
+      index = Math.max(0, Math.min(i, slides.length - 1));
+      slides.forEach((s, n) => s.classList.toggle('active', n === index));
+      dots.forEach((d, n) => d.classList.toggle('active', n === index));
+      page.textContent = `${index + 1} / ${slides.length}`;
+    }
+
+    prev.addEventListener('click', () => show(index - 1));
+    next.addEventListener('click', () => show(index + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') show(index + 1);
+      if (e.key === 'ArrowLeft') show(index - 1);
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
