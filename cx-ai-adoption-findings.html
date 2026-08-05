@@ -178,10 +178,10 @@
   <main class="deck">
     <section class="slide active">
       <h1>CX AI Assistant Adoption Findings</h1>
-      <h2>Updated Dataset Analysis | Apr-Aug</h2>
+      <h2>Initial Question Intent Analysis | Apr-Aug</h2>
       <p class="subtitle">
         This deck uses only the corrected source upload. Analysis baseline: <span class="good">146,166 prompts</span>,
-        with explicit split using <strong>Previous Input</strong> blank vs populated.
+        with primary focus on <strong>initial prompts</strong> and the nature of asks.
       </p>
       <div class="grid-2">
         <div class="card">
@@ -190,112 +190,104 @@
           <div class="label">All rows in corrected source file</div>
         </div>
         <div class="card">
-          <div class="label">Input Prompt Share</div>
-          <div class="kpi">68.17%</div>
-          <div class="label">99,647 prompts with blank Previous Input</div>
+          <div class="label">Initial Prompt Volume</div>
+          <div class="kpi">99,647</div>
+          <div class="label">68.17% of all prompts</div>
         </div>
         <div class="card">
-          <div class="label">Follow-up Prompt Share</div>
-          <div class="kpi">31.83%</div>
-          <div class="label">46,519 prompts with populated Previous Input</div>
+          <div class="label">Intent Coverage</div>
+          <div class="kpi">86.42%</div>
+          <div class="label">Mapped to Risk, Pipeline, Deals, Customers, or Sales</div>
         </div>
         <div class="card">
           <div class="label">Core Insight</div>
           <p>
-            Adoption is substantial and conversational depth is real: nearly 1 in 3 prompts are follow-ups,
-            indicating iterative usage rather than one-shot asks.
+            Initial usage is strongly operational: risk, pipeline, deals, and customer/account asks dominate front-door demand.
           </p>
         </div>
       </div>
       <div class="chips">
-        <span class="chip">Primary audience: Renewals roles</span>
+        <span class="chip">Top intent: Risk (27.14%)</span>
+        <span class="chip">Next: Pipeline (23.95%)</span>
         <span class="chip">Largest region: Americas</span>
         <span class="chip">Peak initial day: Monday</span>
-        <span class="chip">Peak follow-up days: Wed/Thu</span>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Initial Prompt Themes</h1>
-      <h2>What users ask first</h2>
+      <h1>Nature Of Initial Questions</h1>
+      <h2>Intent mix across first prompts</h2>
       <p class="subtitle">
-        Initial prompts are highly concentrated in performance reporting and operational retrieval, with
-        pipeline and account research next.
+        Initial prompts were reclassified into business intents with priority logic to separate overlapping ask types.
       </p>
       <div class="bars">
-        <div class="bar-row"><span>Reporting &amp; Dashboard</span><div class="bar"><div class="fill" style="width:44.86%"></div></div><strong>44.86%</strong></div>
-        <div class="bar-row"><span>Data Query &amp; Retrieval</span><div class="bar"><div class="fill" style="width:31.74%"></div></div><strong>31.74%</strong></div>
-        <div class="bar-row"><span>Sales &amp; Pipeline</span><div class="bar"><div class="fill" style="width:10.90%"></div></div><strong>10.90%</strong></div>
-        <div class="bar-row"><span>Other</span><div class="bar"><div class="fill" style="width:6.10%"></div></div><strong>6.10%</strong></div>
-        <div class="bar-row"><span>Customer/Account Research</span><div class="bar"><div class="fill" style="width:4.45%"></div></div><strong>4.45%</strong></div>
+        <div class="bar-row"><span>Risk</span><div class="bar"><div class="fill" style="width:27.14%"></div></div><strong>27.14%</strong></div>
+        <div class="bar-row"><span>Opportunity Pipeline</span><div class="bar"><div class="fill" style="width:23.95%"></div></div><strong>23.95%</strong></div>
+        <div class="bar-row"><span>Deals</span><div class="bar"><div class="fill" style="width:16.71%"></div></div><strong>16.71%</strong></div>
+        <div class="bar-row"><span>Customers</span><div class="bar"><div class="fill" style="width:15.83%"></div></div><strong>15.83%</strong></div>
+        <div class="bar-row"><span>Sales</span><div class="bar"><div class="fill" style="width:2.81%"></div></div><strong>2.81%</strong></div>
       </div>
       <div class="grid-2" style="margin-top:14px;">
         <div class="card">
-          <strong>Title concentration (examples)</strong>
+          <strong>Intent takeaway</strong>
           <ul>
-            <li>Reporting: Renewals Specialist, Renewals Manager</li>
-            <li>Data Query: Renewals Manager, Renewals Specialist</li>
-            <li>Sales/Pipeline: Renewals Specialist, Renewals Manager</li>
+            <li>Risk + Pipeline together represent over 51% of initial demand.</li>
+            <li>Deals + Customers add another 32.54% of initial demand.</li>
+            <li>Initial questions are centered on execution and decision support.</li>
           </ul>
         </div>
         <div class="card">
-          <strong>Regional concentration (examples)</strong>
+          <strong>Coverage quality note</strong>
           <ul>
-            <li>Reporting: Americas 31,190; APJC 6,418; EMEA 5,679</li>
-            <li>Data Query: Americas 22,722; EMEA 5,348; APJC 2,770</li>
-            <li>Sales/Pipeline: Americas 6,944; EMEA 2,672; APJC 1,026</li>
+            <li>Only 13.58% remains in Other.</li>
+            <li>Current intent model captures most first-prompt business demand clearly.</li>
+            <li>This creates a strong baseline for enablement targeting.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Who Is Using It Most</h1>
-      <h2>Role and region profile</h2>
+      <h1>Intent By Role And Region</h1>
+      <h2>Who asks what first</h2>
       <p class="subtitle">
-        Usage is anchored in renewals operations. The heavy-user threshold (top 10%) is
-        <span class="good">262.2 prompts</span>, yielding 129 heavy users.
+        Each intent has distinct role and regional concentration, enabling targeted adoption plans.
       </p>
       <div class="grid-2">
         <div class="card">
-          <strong>Top follow-up roles</strong>
+          <strong>Risk intent</strong>
           <ul>
-            <li>Renewals Manager: 18,975</li>
-            <li>Renewals Specialist: 10,815</li>
-            <li>Renewals Manager [C]: 3,196</li>
-            <li>Leader, Renewals: 2,317</li>
-            <li>Business Development Manager: 2,183</li>
+            <li>Top regions: Americas 14,902; EMEA 6,727; APJC 4,165</li>
+            <li>Top titles: Renewals Specialist 11,567; Renewals Manager 8,026</li>
           </ul>
         </div>
         <div class="card">
-          <strong>Top follow-up regions</strong>
+          <strong>Opportunity Pipeline intent</strong>
           <ul>
-            <li>Americas: 31,159</li>
-            <li>EMEA: 10,260</li>
-            <li>APJC: 3,812</li>
-            <li>Global Service Provider: 923</li>
+            <li>Top regions: Americas 19,086; APJC 2,853; EMEA 1,526</li>
+            <li>Top titles: Renewals Specialist 15,208; Renewals Manager 5,455</li>
           </ul>
         </div>
         <div class="card">
-          <strong>Heavy-user archetype 1</strong>
-          <p>
-            <span class="good">Template executors</span>: high repetition in initial prompts,
-            low follow-up ratio, efficient recurring workflow usage.
-          </p>
+          <strong>Deals intent</strong>
+          <ul>
+            <li>Top regions: Americas 11,741; EMEA 3,220; APJC 1,333</li>
+            <li>Top titles: Renewals Manager 7,716; Renewals Specialist 4,905</li>
+          </ul>
         </div>
         <div class="card">
-          <strong>Heavy-user archetype 2</strong>
-          <p>
-            <span class="warn">Analytical iterators</span>: high follow-up ratio, deep thread refinement,
-            scenario testing, and comparative questioning.
-          </p>
+          <strong>Customers and Sales intents</strong>
+          <ul>
+            <li>Customers: Director, Strategy &amp; Planning 5,240 is the largest title cluster.</li>
+            <li>Sales: smaller but clear demand, led by Renewals Manager and Renewals Specialist.</li>
+          </ul>
         </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>When Questions Are Asked</h1>
-      <h2>Activity timing and weekend behavior</h2>
+      <h1>Activity Pattern Snapshot</h1>
+      <h2>Initial timing and one follow-up breakdown</h2>
       <div class="grid-2">
         <div class="card">
           <strong>Initial prompts by day</strong>
@@ -307,30 +299,27 @@
           <p>Monday is the top entry day for new asks.</p>
         </div>
         <div class="card">
-          <strong>Follow-ups by day</strong>
+          <strong>Single follow-up breakdown by day</strong>
           <ul>
             <li>Mon 7,752 | Tue 9,014 | Wed 10,266</li>
             <li>Thu 10,559 | Fri 7,766</li>
             <li>Sat 599 | Sun 563</li>
           </ul>
-          <p>Refinement intensity peaks on Wednesday and Thursday.</p>
+          <p>Included for context only. Peak follow-up days are Wednesday and Thursday.</p>
         </div>
         <div class="card">
-          <strong>Weekend focus</strong>
+          <strong>Initial demand implication</strong>
           <ul>
-            <li>Weekend prompts: 15,290 (10.46% of all usage)</li>
-            <li>Weekend initial: 14,128</li>
-            <li>Weekend follow-up: 1,162</li>
-            <li>Top 5 weekend users drive 52%+ of weekend volume</li>
+            <li>Front-door demand spikes early week, especially Monday.</li>
+            <li>Enablement and campaign drops should target Monday start.</li>
+            <li>Midweek coaching should reinforce risk/pipeline/deal workflows.</li>
           </ul>
         </div>
         <div class="card">
-          <strong>Weekend concentration</strong>
+          <strong>Regional context</strong>
           <ul>
-            <li>Americas: 11,585 (about 75.8%)</li>
-            <li>APJC: 2,017 (about 13.2%)</li>
-            <li>GSP: 876 (about 5.7%)</li>
-            <li>EMEA: 800 (about 5.2%)</li>
+            <li>Americas remains the dominant source of initial demand across all core intents.</li>
+            <li>EMEA and APJC show strongest pull in risk and deals themes.</li>
           </ul>
         </div>
       </div>
@@ -338,35 +327,35 @@
 
     <section class="slide">
       <h1>Adoption Actions</h1>
-      <h2>Recommended next moves for scale</h2>
+      <h2>Recommendations based on initial intent demand</h2>
       <div class="grid-2">
         <div class="card">
-          <strong>1) Productize high-repeat asks</strong>
-          <p>Create role-based prompt packs for Renewals Specialist and Renewals Manager with guided parameters.</p>
+          <strong>1) Build intent-first prompt packs</strong>
+          <p>Create guided packs for Risk, Pipeline, Deals, Customers, and Sales so users start with strong first prompts.</p>
         </div>
         <div class="card">
-          <strong>2) Strengthen midweek follow-up quality</strong>
-          <p>Inject contextual follow-up suggestions after first response, optimized for Tue-Thu refinement behavior.</p>
+          <strong>2) Launch role-based onboarding tracks</strong>
+          <p>Prioritize Renewals Specialist and Renewals Manager tracks because they dominate core intent usage.</p>
         </div>
         <div class="card">
-          <strong>3) Launch Monday workflow kits</strong>
-          <p>Publish weekly playbooks for pipeline health, renewal risk, and account priority to match Monday entry peak.</p>
+          <strong>3) Monday-first enablement cadence</strong>
+          <p>Release weekly kits on Monday morning focused on risk triage, pipeline prioritization, and deal review.</p>
         </div>
         <div class="card">
-          <strong>4) Build a weekend champion network</strong>
-          <p>Use top weekend contributors to identify repeatable workflows and convert them into reusable templates.</p>
+          <strong>4) Customer and deal acceleration workflows</strong>
+          <p>Package reusable prompts for account briefings, deal diagnostics, and next-best-action recommendations.</p>
         </div>
         <div class="card">
-          <strong>5) Segment enablement by user archetype</strong>
-          <p>Template executors: saved workflows. Analytical iterators: multi-step questioning, validation, and comparison guides.</p>
+          <strong>5) Region-specific playbooks</strong>
+          <p>Localize Americas-first templates, then tune risk/deal variants for EMEA and APJC operating models.</p>
         </div>
         <div class="card">
-          <strong>6) Improve telemetry quality</strong>
-          <p>Standardize Region/Title values and enforce schema validation to improve confidence in adoption KPI reporting.</p>
+          <strong>6) Improve intent telemetry</strong>
+          <p>Track intent at run-time and standardize Region and Title values to monitor adoption lift by question type.</p>
         </div>
       </div>
       <p class="subtitle" style="margin-top:14px;">
-        Expected outcome: better first-response quality, more consistent multi-turn success, and broader usage beyond current power-user clusters.
+        Expected outcome: faster first-response value, higher quality initial asks, and stronger adoption growth aligned to business-critical question types.
       </p>
     </section>
 
