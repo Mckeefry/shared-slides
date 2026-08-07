@@ -502,6 +502,82 @@
     </section>
 
     <section class="slide">
+      <h1>Prompt Library Behaviour</h1>
+      <h2>Users running very similar prompts repeatedly — regardless of time or date</h2>
+      <p class="subtitle">
+        Two signals identify likely library usage: <strong>repeated_ratio</strong> (exact duplicate prompts ÷ total prompts)
+        and <strong>template_ratio</strong> (prompts sharing the same first-120-character fingerprint).
+        951 users analysed (≥ 5 initial prompts each).
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Library-likely users (repeated ratio &gt; 50%)</strong>
+          <p style="margin:4px 0 8px;font-size:13px;color:var(--warn)">222 of 951 users (23.3%) show strong template reuse patterns.</p>
+          <ol style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.75">
+            <li>Erin Shanahan — Renewals Specialist, Americas · 99.6% repeated · <em>Cross-Architecture Renewal Report (Collab)</em></li>
+            <li>Joe Moran — Dir, Business Dev, Americas · 99.2% repeated · <em>Generate renewal opportunities table [template with placeholders]</em></li>
+            <li>Weijian Li — Renewals Manager, Americas · 99.0% repeated · <em>Execute predefined query: EA Subscription IDs</em></li>
+            <li>Scott Snyder — Renewals Manager, Americas · 98.6% repeated · <em>Total ATR for services H2 FY26 / H1 FY27, summarise by customer</em></li>
+            <li>Jade Mcpeak — Renewals Specialist, Americas · 98.4% repeated · <em>Renewal list: Collab BEs, US Commerce territory filter</em></li>
+            <li>Eric Calhoun — Dir, Business Dev, Americas · 98.4% repeated · <em>Top 20 high-risk renewals closing in current fiscal quarter</em></li>
+            <li>Jane Zhang — Dir, Strategy &amp; Planning, Americas · 98.3% repeated · <em>Commerce Orders in prior 24 hrs with Booking Value &gt; $1M</em></li>
+            <li>Megan Dearman — Renewals Specialist, EMEA · 98.2% repeated · <em>Show me opportunity notes on a deal</em></li>
+            <li>Paul Connors — Renewals Specialist, Americas · 97.9% repeated · <em>Summarize the renewal risk of a deal</em></li>
+            <li>Hammad Shaukat — Dir, Renewals Specialist, APJC · 97.6% repeated · <em>Latest opportunity notes for specific Deal ID</em></li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>Most diverse users (repeated ratio &lt; 15%, ≥ 20 prompts)</strong>
+          <p style="margin:4px 0 8px;font-size:13px;color:var(--good)">200 users ask predominantly unique questions — exploratory, manual usage.</p>
+          <ol style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.75">
+            <li>Yanika Bayanova — Renewals Manager [C], Americas · 538 unique / 607 total (11.4% repeated)</li>
+            <li>Angie Leiser — Renewals Specialist, Americas · 529 unique / 562 total (5.9% repeated)</li>
+            <li>Jill Cafferty — Renewals Manager, Americas · 340 unique / 398 total (14.6% repeated)</li>
+            <li>Jessica Park — Renewals Specialist, Americas · 323 unique / 355 total (9.0% repeated)</li>
+            <li>Christine Rees — BDM, Americas · 299 unique / 347 total (13.8% repeated)</li>
+            <li>Jayne Booth — Engineering PM, Americas · 271 unique / 294 total (7.8% repeated)</li>
+            <li>Thad Carey — Renewals Specialist, Americas · 267 unique / 290 total (7.9% repeated)</li>
+            <li>Akashdip Singh — Renewals Manager, GSP · 242 unique / 250 total (3.2% repeated)</li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>Diversity by title (avg % of prompts that are repeats)</strong>
+          <table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">
+            <thead><tr style="color:var(--muted)"><th style="text-align:left">Title</th><th style="text-align:center">Users</th><th style="text-align:center">Avg repeat %</th></tr></thead>
+            <tbody>
+              <tr><td>Director, Strategy &amp; Planning</td><td style="text-align:center">2</td><td style="text-align:center"><span class="warn">71.0%</span></td></tr>
+              <tr><td>Director, Renewals Specialist</td><td style="text-align:center">7</td><td style="text-align:center"><span class="warn">51.8%</span></td></tr>
+              <tr><td>Leader, Renewals Specialist</td><td style="text-align:center">28</td><td style="text-align:center">43.4%</td></tr>
+              <tr><td>Renewals Specialist</td><td style="text-align:center">199</td><td style="text-align:center">43.2%</td></tr>
+              <tr><td>Business Development Manager</td><td style="text-align:center">20</td><td style="text-align:center">38.3%</td></tr>
+              <tr><td>Customer Project Specialist</td><td style="text-align:center">19</td><td style="text-align:center">24.2%</td></tr>
+              <tr><td>Renewals Manager</td><td style="text-align:center">442</td><td style="text-align:center">25.4%</td></tr>
+              <tr><td>Leader, Renewals</td><td style="text-align:center">55</td><td style="text-align:center">22.2%</td></tr>
+              <tr><td>Renewals Manager [C]</td><td style="text-align:center">30</td><td style="text-align:center"><span class="good">18.1%</span></td></tr>
+              <tr><td>Business Operations Manager</td><td style="text-align:center">13</td><td style="text-align:center"><span class="good">9.8%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <strong>Diversity by region (avg % of prompts that are repeats)</strong>
+          <table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">
+            <thead><tr style="color:var(--muted)"><th style="text-align:left">Region</th><th style="text-align:center">Users</th><th style="text-align:center">Prompts</th><th style="text-align:center">Avg repeat %</th></tr></thead>
+            <tbody>
+              <tr><td>APJC</td><td style="text-align:center">115</td><td style="text-align:center">11,657</td><td style="text-align:center"><span class="warn">37.0%</span></td></tr>
+              <tr><td>Americas</td><td style="text-align:center">573</td><td style="text-align:center">67,878</td><td style="text-align:center">29.0%</td></tr>
+              <tr><td>Global Service Provider</td><td style="text-align:center">27</td><td style="text-align:center">3,373</td><td style="text-align:center">29.4%</td></tr>
+              <tr><td>EMEA</td><td style="text-align:center">228</td><td style="text-align:center">15,668</td><td style="text-align:center"><span class="good">24.1%</span></td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:10px;font-size:13px">
+            <span class="warn">APJC</span> has the highest avg repeat rate (37%) suggesting strong template/library adoption.
+            <span class="good">EMEA</span> shows the most diverse, exploratory usage at 24.1%.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
       <h1>Adoption Actions</h1>
       <h2>Recommendations based on initial intent demand</h2>
       <div class="grid-2">
@@ -541,7 +617,7 @@
         <button class="btn" id="prev" type="button">Prev</button>
         <div class="dots" id="dots"></div>
         <button class="btn" id="next" type="button">Next</button>
-        <span id="page">1 / 8</span>
+        <span id="page">1 / 9</span>
       </div>
     </div>
   </main>
