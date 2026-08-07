@@ -2,620 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>CX AI Assistant Adoption Findings</title>
   <style>
-    :root {
-      --bg: #07131f;
-      --panel: #0d2032;
-      --ink: #ecf4ff;
-      --muted: #a8c2df;
-      --accent: #22d3ee;
-      --accent-2: #7dd3fc;
-      --good: #34d399;
-      --warn: #f59e0b;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: "Bahnschrift", "Avenir Next", "Trebuchet MS", sans-serif;
-      background: radial-gradient(circle at 20% 10%, #123556 0%, var(--bg) 45%, #050b13 100%);
-      color: var(--ink);
-      min-height: 100vh;
-    }
-
-    .deck {
-      width: min(1200px, 94vw);
-      margin: 3vh auto;
-      position: relative;
-    }
-
-    .slide {
-      display: none;
-      background: linear-gradient(145deg, rgba(13, 32, 50, 0.95), rgba(8, 20, 33, 0.92));
-      border: 1px solid rgba(125, 211, 252, 0.25);
-      border-radius: 20px;
-      padding: 44px;
-      min-height: 82vh;
-      animation: rise 360ms ease;
-    }
-
-    .slide.active { display: block; }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(32px, 4.2vw, 52px);
-      letter-spacing: 0.3px;
-    }
-
-    h2 {
-      margin: 10px 0 20px;
-      color: var(--accent-2);
-      font-size: clamp(20px, 2.4vw, 30px);
-      font-weight: 600;
-    }
-
-    p, li { line-height: 1.5; }
-
-    .subtitle {
-      color: var(--muted);
-      max-width: 960px;
-      margin-bottom: 26px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .card {
-      border: 1px solid rgba(125, 211, 252, 0.22);
-      border-radius: 14px;
-      padding: 14px 16px;
-      background: rgba(10, 25, 40, 0.55);
-    }
-
-    .kpi {
-      font-size: clamp(24px, 3vw, 42px);
-      font-weight: 700;
-      color: var(--accent);
-      margin: 4px 0;
-    }
-
-    .label { color: var(--muted); font-size: 14px; }
-
-    .bars { margin-top: 8px; display: grid; gap: 9px; }
-
-    .bar-row {
-      display: grid;
-      grid-template-columns: 250px 1fr 110px;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .bar {
-      height: 12px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(168, 194, 223, 0.2);
-    }
-
-    .fill {
-      height: 100%;
-      background: linear-gradient(90deg, #22d3ee, #34d399);
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 0;
-    }
-
-    .chip {
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      background: rgba(7, 19, 31, 0.75);
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .warn { color: var(--warn); font-weight: 700; }
-    .good { color: var(--good); font-weight: 700; }
-
-    .footer {
-      margin-top: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .controls { display: flex; gap: 10px; align-items: center; }
-
-    .dots { display: flex; gap: 6px; }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(168, 194, 223, 0.35);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    .dot.active { background: var(--accent); }
-
-    .btn {
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      background: rgba(7, 19, 31, 0.7);
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 6px 10px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 900px) {
-      .slide { padding: 24px; min-height: 78vh; }
-      .grid-2 { grid-template-columns: 1fr; }
-      .bar-row { grid-template-columns: 150px 1fr 90px; }
-    }
-  </style>
+:root{--bg:#07131f;--panel:#0d2032;--ink:#ecf4ff;--muted:#a8c2df;--accent:#22d3ee;--accent2:#7dd3fc;--good:#34d399;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Bahnschrift","Avenir Next","Trebuchet MS",sans-serif;background:radial-gradient(circle at 20% 10%,#123556 0%,var(--bg) 45%,#050b13 100%);color:var(--ink);min-height:100vh}
+.deck{width:min(1200px,94vw);margin:2vh auto}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.filter-bar span{color:var(--muted);font-size:13px;margin-right:4px}
+.fbtn{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--muted);border-radius:999px;padding:5px 14px;cursor:pointer;font-size:13px;transition:all .2s}
+.fbtn.active,.fbtn:hover{background:var(--accent);color:#07131f;border-color:var(--accent);font-weight:700}
+.slide{display:none;background:linear-gradient(145deg,rgba(13,32,50,.95),rgba(8,20,33,.92));border:1px solid rgba(125,211,252,.25);border-radius:20px;padding:44px;min-height:80vh;animation:rise 360ms ease}
+.slide.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+h1{margin:0 0 8px;font-size:clamp(28px,4vw,48px)}
+h2{margin:8px 0 18px;color:var(--accent2);font-size:clamp(18px,2.2vw,28px);font-weight:600}
+p,li{line-height:1.5}
+.sub{color:var(--muted);max-width:960px;margin-bottom:22px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border:1px solid rgba(125,211,252,.22);border-radius:14px;padding:14px 16px;background:rgba(10,25,40,.55)}
+.kpi{font-size:clamp(22px,3vw,40px);font-weight:700;color:var(--accent);margin:4px 0}
+.lbl{color:var(--muted);font-size:13px}
+.bars{margin-top:6px;display:grid;gap:8px}
+.br{display:grid;grid-template-columns:200px 1fr 90px;align-items:center;gap:8px;font-size:13px}
+.bar{height:11px;border-radius:999px;overflow:hidden;background:rgba(168,194,223,.2)}
+.fill{height:100%;background:linear-gradient(90deg,#22d3ee,#34d399)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.chip{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.75);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted)}
+.warn{color:var(--warn);font-weight:700}
+.good{color:var(--good);font-weight:700}
+.footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+.controls{display:flex;gap:8px;align-items:center}
+.dots{display:flex;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(168,194,223,.35);border:none;cursor:pointer;padding:0}
+.dot.active{background:var(--accent)}
+.btn{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
+tbl{width:100%;font-size:12px;border-collapse:collapse;margin-top:6px}
+th{color:var(--muted);font-weight:600;padding:3px 4px;text-align:left}
+td{padding:3px 4px;border-top:1px solid rgba(125,211,252,.08)}
+.tc{text-align:center}
+ol.tight{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.8}
+@media(max-width:900px){.slide{padding:22px;min-height:72vh}.g2{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
+</style>
 </head>
 <body>
   <main class="deck">
-    <section class="slide active">
-      <h1>CX AI Assistant Adoption Findings</h1>
-      <h2>Initial Question Intent Analysis | Apr-Aug</h2>
-      <p class="subtitle">
-        This deck uses only the corrected source upload. Analysis baseline: <span class="good">146,166 prompts</span>,
-        with primary focus on <strong>initial prompts</strong> and the nature of asks.
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <div class="label">Total Prompts</div>
-          <div class="kpi">146,166</div>
-          <div class="label">All rows in corrected source file</div>
-        </div>
-        <div class="card">
-          <div class="label">Initial Prompt Volume</div>
-          <div class="kpi">99,647</div>
-          <div class="label">68.17% of all prompts</div>
-        </div>
-        <div class="card">
-          <div class="label">Intent Coverage</div>
-          <div class="kpi">86.42%</div>
-          <div class="label">Mapped to Risk, Pipeline, Deals, Customers, or Sales</div>
-        </div>
-        <div class="card">
-          <div class="label">Core Insight</div>
-          <p>
-            Initial usage is strongly operational: risk, pipeline, deals, and customer/account asks dominate front-door demand.
-          </p>
-        </div>
-      </div>
-      <div class="chips">
-        <span class="chip">Top intent: Risk (27.14%)</span>
-        <span class="chip">Next: Pipeline (23.95%)</span>
-        <span class="chip">Largest region: Americas</span>
-        <span class="chip">Peak initial day: Monday</span>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Nature Of Initial Questions</h1>
-      <h2>Intent mix across first prompts</h2>
-      <p class="subtitle">
-        Initial prompts were reclassified into business intents with priority logic to separate overlapping ask types.
-      </p>
-      <div class="bars">
-        <div class="bar-row"><span>Risk</span><div class="bar"><div class="fill" style="width:27.14%"></div></div><strong>27.14%</strong></div>
-        <div class="bar-row"><span>Opportunity Pipeline</span><div class="bar"><div class="fill" style="width:23.95%"></div></div><strong>23.95%</strong></div>
-        <div class="bar-row"><span>Deals</span><div class="bar"><div class="fill" style="width:16.71%"></div></div><strong>16.71%</strong></div>
-        <div class="bar-row"><span>Customers</span><div class="bar"><div class="fill" style="width:15.83%"></div></div><strong>15.83%</strong></div>
-        <div class="bar-row"><span>Sales</span><div class="bar"><div class="fill" style="width:2.81%"></div></div><strong>2.81%</strong></div>
-      </div>
-      <div class="grid-2" style="margin-top:14px;">
-        <div class="card">
-          <strong>Intent takeaway</strong>
-          <ul>
-            <li>Risk + Pipeline together represent over 51% of initial demand.</li>
-            <li>Deals + Customers add another 32.54% of initial demand.</li>
-            <li>Initial questions are centered on execution and decision support.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Coverage quality note</strong>
-          <ul>
-            <li>Only 13.58% remains in Other.</li>
-            <li>Current intent model captures most first-prompt business demand clearly.</li>
-            <li>This creates a strong baseline for enablement targeting.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Intent By Role And Region</h1>
-      <h2>Who asks what first</h2>
-      <p class="subtitle">
-        Each intent has distinct role and regional concentration, enabling targeted adoption plans.
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <strong>Risk intent</strong>
-          <ul>
-            <li>Top regions: Americas 14,902; EMEA 6,727; APJC 4,165</li>
-            <li>Top titles: Renewals Specialist 11,567; Renewals Manager 8,026</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Opportunity Pipeline intent</strong>
-          <ul>
-            <li>Top regions: Americas 19,086; APJC 2,853; EMEA 1,526</li>
-            <li>Top titles: Renewals Specialist 15,208; Renewals Manager 5,455</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Deals intent</strong>
-          <ul>
-            <li>Top regions: Americas 11,741; EMEA 3,220; APJC 1,333</li>
-            <li>Top titles: Renewals Manager 7,716; Renewals Specialist 4,905</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Customers and Sales intents</strong>
-          <ul>
-            <li>Customers: Director, Strategy &amp; Planning 5,240 is the largest title cluster.</li>
-            <li>Sales: smaller but clear demand, led by Renewals Manager and Renewals Specialist.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Activity Pattern Snapshot</h1>
-      <h2>Initial timing and one follow-up breakdown</h2>
-      <div class="grid-2">
-        <div class="card">
-          <strong>Initial prompts by day</strong>
-          <ul>
-            <li>Mon 20,452 | Tue 15,943 | Wed 16,416</li>
-            <li>Thu 16,714 | Fri 15,843</li>
-            <li>Sat 7,187 | Sun 6,941</li>
-          </ul>
-          <p>Monday is the top entry day for new asks.</p>
-        </div>
-        <div class="card">
-          <strong>Single follow-up breakdown by day</strong>
-          <ul>
-            <li>Mon 7,752 | Tue 9,014 | Wed 10,266</li>
-            <li>Thu 10,559 | Fri 7,766</li>
-            <li>Sat 599 | Sun 563</li>
-          </ul>
-          <p>Included for context only. Peak follow-up days are Wednesday and Thursday.</p>
-        </div>
-        <div class="card">
-          <strong>Initial demand implication</strong>
-          <ul>
-            <li>Front-door demand spikes early week, especially Monday.</li>
-            <li>Enablement and campaign drops should target Monday start.</li>
-            <li>Midweek coaching should reinforce risk/pipeline/deal workflows.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Regional context</strong>
-          <ul>
-            <li>Americas remains the dominant source of initial demand across all core intents.</li>
-            <li>EMEA and APJC show strongest pull in risk and deals themes.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Weekend Usage Breakdown</h1>
-      <h2>Region, title, question intent, and user spread</h2>
-      <p class="subtitle">
-        Weekend volume is meaningful: 15,290 prompts from 301 unique users. This indicates recurring weekend demand,
-        with a concentrated core group plus a broader long-tail user base.
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <strong>Weekend usage by region</strong>
-          <ul>
-            <li>Americas: 11,585 (75.77%)</li>
-            <li>APJC: 2,017 (13.19%)</li>
-            <li>Global Service Provider: 876 (5.73%)</li>
-            <li>EMEA: 800 (5.23%)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Weekend usage by title</strong>
-          <ul>
-            <li>Renewals Specialist: 7,338 (47.99%)</li>
-            <li>Renewals Manager: 4,505 (29.46%)</li>
-            <li>Director, Strategy &amp; Planning: 1,460 (9.55%)</li>
-            <li>Director, Renewals Specialist: 721 (4.72%)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Nature of weekend initial questions</strong>
-          <ul>
-            <li>Opportunity Pipeline: 6,182 (43.76%)</li>
-            <li>Risk: 3,123 (22.11%)</li>
-            <li>Customers: 2,296 (16.25%)</li>
-            <li>Deals: 1,368 (9.68%)</li>
-            <li>Sales: 425 (3.01%)</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Same users or spread of users?</strong>
-          <ul>
-            <li>Top 5 users drive 52.18% of weekend prompts.</li>
-            <li>Top 10 users drive 62.32% of weekend prompts.</li>
-            <li>301 unique weekend users total.</li>
-            <li>User spread: 116 users (1-5 prompts), 92 users (6-20), 93 users (20+).</li>
-          </ul>
-          <p>
-            Conclusion: weekend usage is <span class="warn">concentrated among recurring power users</span>,
-            but still includes a <span class="good">broad distributed tail</span> across many additional users.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Regular Users</h1>
-      <h2>Frequency of use by weekly, bi-weekly and monthly patterns</h2>
-      <p class="subtitle">
-        Dataset spans <span class="good">8 weeks across 3 months</span>. Weekly users = active in ≥ 75% of weeks.
-        Bi-weekly = 30–74%. Monthly = &lt; 30% of weeks but across ≥ 2 months.
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <strong>Top 10 weekly users</strong>
-          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
-            <li>Tj Hinton — Renewals Specialist, Americas (7,128 prompts, 8/8 wks)</li>
-            <li>Erin Shanahan — Renewals Specialist, Americas (5,838 prompts, 7/8 wks)</li>
-            <li>Jane Zhang — Dir, Strategy &amp; Planning, Americas (5,251 prompts, 8/8 wks)</li>
-            <li>Weijian Li — Renewals Manager, Americas (3,224 prompts, 8/8 wks)</li>
-            <li>Andrea Ghini — Renewals Specialist, EMEA (3,109 prompts, 7/8 wks)</li>
-            <li>Hammad Shaukat — Dir, Renewals Specialist, APJC (2,009 prompts, 8/8 wks)</li>
-            <li>Michael Mckeefry — Business Ops Manager, EMEA (1,483 prompts, 6/8 wks)</li>
-            <li>Charan Jit Kaur Thera Singh — Renewals Specialist, APJC (1,122 prompts, 8/8 wks)</li>
-            <li>Darin Messer — Renewals Manager, Americas (1,059 prompts, 7/8 wks)</li>
-            <li>Yanika Bayanova — Renewals Manager [C], Americas (1,019 prompts, 7/8 wks)</li>
-          </ol>
-        </div>
-        <div class="card">
-          <strong>Top 10 bi-weekly users</strong>
-          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
-            <li>Peter Caterinicchia — Renewals Manager, Americas (1,149 prompts)</li>
-            <li>Wade Ritter — Renewals Specialist, Americas (563 prompts)</li>
-            <li>Alva Mcclain — Renewals Manager [C], Americas (473 prompts)</li>
-            <li>Oscar Nepomuceno Flores — BDM, Americas (453 prompts)</li>
-            <li>Saam Farahmand — Renewals Specialist, Americas (439 prompts)</li>
-            <li>Stephanie Nwokedi — Renewals Manager, EMEA (438 prompts)</li>
-            <li>Vincent Griessmayer — Intern, EMEA (434 prompts)</li>
-            <li>Michele Miller — Leader, Renewals Specialist, Americas (430 prompts)</li>
-            <li>Jessica Park — Renewals Specialist, Americas (418 prompts)</li>
-            <li>Collin Schurr — Renewals Manager, Americas (403 prompts)</li>
-          </ol>
-        </div>
-        <div class="card">
-          <strong>Top 10 monthly users</strong>
-          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
-            <li>Joe Allen — Renewals Manager, GSP (1,738 prompts)</li>
-            <li>Brooks Powell — Renewals Manager, Americas (513 prompts)</li>
-            <li>Seda Guralp — Renewals Manager, EMEA (325 prompts)</li>
-            <li>Daniel Garcia — Renewals Manager, Americas (317 prompts)</li>
-            <li>Dustin Schiller — Renewals Manager, Americas (304 prompts)</li>
-            <li>Chanda Ingalls — Renewals Manager, Americas (264 prompts)</li>
-            <li>Niall Lynch — Renewals Specialist, EMEA (263 prompts)</li>
-            <li>Nako Takahashi — Renewals Manager, APJC (252 prompts)</li>
-            <li>Peter Komorowski — BDM, EMEA (222 prompts)</li>
-            <li>Taylor Mckain — Renewals Manager, Americas (204 prompts)</li>
-          </ol>
-        </div>
-        <div class="card">
-          <strong>User count by frequency and region</strong>
-          <table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:6px">
-            <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:3px 0">Region</th><th>Weekly</th><th>Bi-Wkly</th><th>Monthly</th><th>Occasional</th></tr></thead>
-            <tbody>
-              <tr><td>Americas</td><td style="text-align:center">189</td><td style="text-align:center">142</td><td style="text-align:center">120</td><td style="text-align:center">280</td></tr>
-              <tr><td>EMEA</td><td style="text-align:center">70</td><td style="text-align:center">53</td><td style="text-align:center">53</td><td style="text-align:center">101</td></tr>
-              <tr><td>APJC</td><td style="text-align:center">38</td><td style="text-align:center">13</td><td style="text-align:center">23</td><td style="text-align:center">78</td></tr>
-              <tr><td>GSP</td><td style="text-align:center">13</td><td style="text-align:center">6</td><td style="text-align:center">3</td><td style="text-align:center">10</td></tr>
-            </tbody>
-          </table>
-          <p style="margin-top:8px;font-size:13px">
-            <span class="good">310 weekly users</span> · <span class="warn">216 bi-weekly</span> · 201 monthly · 474 occasional.
-            The majority of regular users are in Americas, but all regions have a committed weekly cohort.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Scheduled Usage</h1>
-      <h2>Automated or recurring prompt patterns detected</h2>
-      <p class="subtitle">
-        Detection method: same user + same prompt text, run 3+ times with a coefficient of variation ≤ 0.40 on
-        inter-run intervals and consistent day-of-week alignment.
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <strong>What the data shows</strong>
-          <p>
-            Only <span class="warn">3 confirmed scheduled patterns</span> were detected across 99,647 initial prompts.
-            This is a significant finding: the <span class="good">vast majority of usage is organic and manual</span>,
-            not automated. Users are actively engaging with the tool rather than relying on automated runs.
-          </p>
-        </div>
-        <div class="card">
-          <strong>Scheduled pattern 1 — Weekly, every Monday</strong>
-          <ul>
-            <li><strong>User:</strong> Rahul Setiya (Strategy &amp; Planning Director, Americas)</li>
-            <li><strong>Cadence:</strong> Every 168 hours — every Monday, 100% day consistency</li>
-            <li><strong>Run count:</strong> 4 confirmed runs</li>
-            <li><strong>Intent:</strong> Risk</li>
-            <li><strong>Prompt:</strong> FY2026 Q4 Available To Renew (ATR) report for APJC, Enterprise Sw segment</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Scheduled pattern 2 — Weekly, every Friday</strong>
-          <ul>
-            <li><strong>User:</strong> Alison Kurtz (Renewals Specialist, Americas)</li>
-            <li><strong>Cadence:</strong> Every 168 hours — every Friday, 100% day consistency</li>
-            <li><strong>Run count:</strong> 3 confirmed runs</li>
-            <li><strong>Intent:</strong> Process / Task Management</li>
-            <li><strong>Prompt:</strong> Quarterly Task Review — review all active tasks, update or delete as needed</li>
-          </ul>
-        </div>
-        <div class="card">
-          <strong>Scheduled pattern 3 — Daily rotation</strong>
-          <ul>
-            <li><strong>User:</strong> Tj Hinton (Renewals Specialist, Americas)</li>
-            <li><strong>Cadence:</strong> Every 24 hours (daily refresh), 4 confirmed runs</li>
-            <li><strong>Intent:</strong> Risk</li>
-            <li><strong>Prompt:</strong> Sentiment analysis for Top 20 ATR customers (6–18 month window) using 4-day rotation</li>
-          </ul>
-          <p style="margin-top:8px;font-size:13px">
-            <span class="good">Key insight:</span> Scheduled use is rare and purpose-built. These prompts represent
-            high-value recurring operational reports that are strong candidates for native scheduled delivery inside the tool.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Prompt Library Behaviour</h1>
-      <h2>Users running very similar prompts repeatedly — regardless of time or date</h2>
-      <p class="subtitle">
-        Two signals identify likely library usage: <strong>repeated_ratio</strong> (exact duplicate prompts ÷ total prompts)
-        and <strong>template_ratio</strong> (prompts sharing the same first-120-character fingerprint).
-        951 users analysed (≥ 5 initial prompts each).
-      </p>
-      <div class="grid-2">
-        <div class="card">
-          <strong>Library-likely users (repeated ratio &gt; 50%)</strong>
-          <p style="margin:4px 0 8px;font-size:13px;color:var(--warn)">222 of 951 users (23.3%) show strong template reuse patterns.</p>
-          <table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:6px">
-            <thead><tr style="color:var(--muted)"><th style="text-align:left">User</th><th style="text-align:center">Initial prompts</th><th style="text-align:center">Repeat %</th><th style="text-align:left">Top prompt (preview)</th></tr></thead>
-            <tbody>
-              <tr><td>Erin Shanahan (RS, Americas)</td><td style="text-align:center">5,822</td><td style="text-align:center"><span class="warn">99.6%</span></td><td><em>Cross-Architecture Renewal Report (Collab)</em></td></tr>
-              <tr><td>Joe Moran (Dir BDM, Americas)</td><td style="text-align:center">124</td><td style="text-align:center"><span class="warn">99.2%</span></td><td><em>Generate renewal opps table [placeholders]</em></td></tr>
-              <tr><td>Weijian Li (RM, Americas)</td><td style="text-align:center">3,188</td><td style="text-align:center"><span class="warn">99.0%</span></td><td><em>Execute predefined query: EA Subscription IDs</em></td></tr>
-              <tr><td>Scott Snyder (RM, Americas)</td><td style="text-align:center">810</td><td style="text-align:center">98.6%</td><td><em>Total ATR H2 FY26 / H1 FY27 by customer</em></td></tr>
-              <tr><td>Jade Mcpeak (RS, Americas)</td><td style="text-align:center">442</td><td style="text-align:center">98.4%</td><td><em>Renewal list: Collab BEs, US Commerce filter</em></td></tr>
-              <tr><td>Eric Calhoun (Dir BDM, Americas)</td><td style="text-align:center">125</td><td style="text-align:center">98.4%</td><td><em>Top 20 high-risk renewals in current fiscal quarter</em></td></tr>
-              <tr><td>Jane Zhang (Dir S&amp;P, Americas)</td><td style="text-align:center">5,246</td><td style="text-align:center">98.3%</td><td><em>Commerce Orders prior 24 hrs &gt; $1M booking</em></td></tr>
-              <tr><td>Megan Dearman (RS, EMEA)</td><td style="text-align:center">112</td><td style="text-align:center">98.2%</td><td><em>Show me opportunity notes on a deal</em></td></tr>
-              <tr><td>Paul Connors (RS, Americas)</td><td style="text-align:center">479</td><td style="text-align:center">97.9%</td><td><em>Summarize the renewal risk of a deal</em></td></tr>
-              <tr><td>Hammad Shaukat (Dir RS, APJC)</td><td style="text-align:center">1,935</td><td style="text-align:center">97.6%</td><td><em>Latest opp notes for specific Deal ID</em></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card">
-          <strong>Most diverse users (repeated ratio &lt; 15%, ≥ 20 prompts)</strong>
-          <p style="margin:4px 0 8px;font-size:13px;color:var(--good)">200 users ask predominantly unique questions — exploratory, manual usage.</p>
-          <ol style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.75">
-            <li>Yanika Bayanova — Renewals Manager [C], Americas · 538 unique / 607 total (11.4% repeated)</li>
-            <li>Angie Leiser — Renewals Specialist, Americas · 529 unique / 562 total (5.9% repeated)</li>
-            <li>Jill Cafferty — Renewals Manager, Americas · 340 unique / 398 total (14.6% repeated)</li>
-            <li>Jessica Park — Renewals Specialist, Americas · 323 unique / 355 total (9.0% repeated)</li>
-            <li>Christine Rees — BDM, Americas · 299 unique / 347 total (13.8% repeated)</li>
-            <li>Jayne Booth — Engineering PM, Americas · 271 unique / 294 total (7.8% repeated)</li>
-            <li>Thad Carey — Renewals Specialist, Americas · 267 unique / 290 total (7.9% repeated)</li>
-            <li>Akashdip Singh — Renewals Manager, GSP · 242 unique / 250 total (3.2% repeated)</li>
-          </ol>
-        </div>
-        <div class="card">
-          <strong>Diversity by title (avg % of prompts that are repeats)</strong>
-          <table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">
-            <thead><tr style="color:var(--muted)"><th style="text-align:left">Title</th><th style="text-align:center">Users</th><th style="text-align:center">Initial prompts</th><th style="text-align:center">Avg repeat %</th></tr></thead>
-            <tbody>
-              <tr><td>Director, Strategy &amp; Planning</td><td style="text-align:center">2</td><td style="text-align:center">5,262</td><td style="text-align:center"><span class="warn">71.0%</span></td></tr>
-              <tr><td>Director, Renewals Specialist</td><td style="text-align:center">7</td><td style="text-align:center">2,610</td><td style="text-align:center"><span class="warn">51.8%</span></td></tr>
-              <tr><td>Leader, Renewals Specialist</td><td style="text-align:center">28</td><td style="text-align:center">3,220</td><td style="text-align:center">43.4%</td></tr>
-              <tr><td>Renewals Specialist</td><td style="text-align:center">199</td><td style="text-align:center">38,290</td><td style="text-align:center">43.2%</td></tr>
-              <tr><td>Business Development Manager</td><td style="text-align:center">20</td><td style="text-align:center">2,858</td><td style="text-align:center">38.3%</td></tr>
-              <tr><td>Customer Project Specialist</td><td style="text-align:center">19</td><td style="text-align:center">1,451</td><td style="text-align:center">24.2%</td></tr>
-              <tr><td>Renewals Manager</td><td style="text-align:center">442</td><td style="text-align:center">34,627</td><td style="text-align:center">25.4%</td></tr>
-              <tr><td>Leader, Renewals</td><td style="text-align:center">55</td><td style="text-align:center">2,603</td><td style="text-align:center">22.2%</td></tr>
-              <tr><td>Renewals Manager [C]</td><td style="text-align:center">30</td><td style="text-align:center">2,170</td><td style="text-align:center"><span class="good">18.1%</span></td></tr>
-              <tr><td>Business Operations Manager</td><td style="text-align:center">13</td><td style="text-align:center">1,227</td><td style="text-align:center"><span class="good">9.8%</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card">
-          <strong>Diversity by region (avg % of prompts that are repeats)</strong>
-          <table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">
-            <thead><tr style="color:var(--muted)"><th style="text-align:left">Region</th><th style="text-align:center">Users</th><th style="text-align:center">Prompts</th><th style="text-align:center">Avg repeat %</th></tr></thead>
-            <tbody>
-              <tr><td>APJC</td><td style="text-align:center">115</td><td style="text-align:center">11,657</td><td style="text-align:center"><span class="warn">37.0%</span></td></tr>
-              <tr><td>Americas</td><td style="text-align:center">573</td><td style="text-align:center">67,878</td><td style="text-align:center">29.0%</td></tr>
-              <tr><td>Global Service Provider</td><td style="text-align:center">27</td><td style="text-align:center">3,373</td><td style="text-align:center">29.4%</td></tr>
-              <tr><td>EMEA</td><td style="text-align:center">228</td><td style="text-align:center">15,668</td><td style="text-align:center"><span class="good">24.1%</span></td></tr>
-            </tbody>
-          </table>
-          <p style="margin-top:10px;font-size:13px">
-            <span class="warn">APJC</span> has the highest avg repeat rate (37%) suggesting strong template/library adoption.
-            <span class="good">EMEA</span> shows the most diverse, exploratory usage at 24.1%.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>Adoption Actions</h1>
-      <h2>Recommendations based on initial intent demand</h2>
-      <div class="grid-2">
-        <div class="card">
-          <strong>1) Build intent-first prompt packs</strong>
-          <p>Create guided packs for Risk, Pipeline, Deals, Customers, and Sales so users start with strong first prompts.</p>
-        </div>
-        <div class="card">
-          <strong>2) Launch role-based onboarding tracks</strong>
-          <p>Prioritize Renewals Specialist and Renewals Manager tracks because they dominate core intent usage.</p>
-        </div>
-        <div class="card">
-          <strong>3) Monday-first enablement cadence</strong>
-          <p>Release weekly kits on Monday morning focused on risk triage, pipeline prioritization, and deal review.</p>
-        </div>
-        <div class="card">
-          <strong>4) Customer and deal acceleration workflows</strong>
-          <p>Package reusable prompts for account briefings, deal diagnostics, and next-best-action recommendations.</p>
-        </div>
-        <div class="card">
-          <strong>5) Region-specific playbooks</strong>
-          <p>Localize Americas-first templates, then tune risk/deal variants for EMEA and APJC operating models.</p>
-        </div>
-        <div class="card">
-          <strong>6) Improve intent telemetry</strong>
-          <p>Track intent at run-time and standardize Region and Title values to monitor adoption lift by question type.</p>
-        </div>
-      </div>
-      <p class="subtitle" style="margin-top:14px;">
-        Expected outcome: faster first-response value, higher quality initial asks, and stronger adoption growth aligned to business-critical question types.
-      </p>
-    </section>
-
+    <div class="filter-bar"><span>Period:</span><button class="fbtn active" data-m="All" onclick="setMonth('All')">All</button><button class="fbtn" data-m="April" onclick="setMonth('April')">April</button><button class="fbtn" data-m="May" onclick="setMonth('May')">May</button><button class="fbtn" data-m="June" onclick="setMonth('June')">June</button><button class="fbtn" data-m="July" onclick="setMonth('July')">July</button><button class="fbtn" data-m="August" onclick="setMonth('August')">August</button></div>
+    <section class="slide  active"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
+    <section class="slide"></section>
     <div class="footer">
-      <span>Use Left/Right arrows or buttons</span>
+      <span>← → or buttons to navigate</span>
       <div class="controls">
         <button class="btn" id="prev" type="button">Prev</button>
         <div class="dots" id="dots"></div>
@@ -624,41 +68,332 @@
       </div>
     </div>
   </main>
-
   <script>
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const page = document.getElementById('page');
-    const dotsWrap = document.getElementById('dots');
-    const prev = document.getElementById('prev');
-    const next = document.getElementById('next');
-    let index = 0;
 
-    const dots = slides.map((_, i) => {
-      const b = document.createElement('button');
-      b.className = 'dot';
-      b.type = 'button';
-      b.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      b.addEventListener('click', () => show(i));
-      dotsWrap.appendChild(b);
-      return b;
-    });
+const RAW = {"months":["All","April","May","June","July","August"],"data":{"All":{"overview":{"total":146166,"input":99647,"follow":46519,"input_pct":68.2,"follow_pct":31.8},"intent":{"dist":[{"intent":"Risk","count":26954,"pct":27.0},{"intent":"Opportunity Pipeline","count":23895,"pct":24.0},{"intent":"Deals","count":16656,"pct":16.7},{"intent":"Customers","count":15782,"pct":15.8},{"intent":"Other","count":13678,"pct":13.7},{"intent":"Sales","count":2682,"pct":2.7}],"by_region":{"Customers":[{"Region":"Americas","count":11981},{"Region":"EMEA","count":1816},{"Region":"APJC","count":1587},{"Region":"Global Service Provider","count":354},{"Region":"Unknown","count":36}],"Deals":[{"Region":"Americas","count":11727},{"Region":"EMEA","count":3246},{"Region":"APJC","count":1329},{"Region":"Global Service Provider","count":308},{"Region":"Unknown","count":45}],"Opportunity Pipeline":[{"Region":"Americas","count":19152},{"Region":"APJC","count":2851},{"Region":"EMEA","count":1494},{"Region":"Global Service Provider","count":344},{"Region":"Unknown","count":54}],"Other":[{"Region":"Americas","count":8694},{"Region":"EMEA","count":2263},{"Region":"APJC","count":1390},{"Region":"Global Service Provider","count":1147},{"Region":"1","count":94}],"Risk":[{"Region":"Americas","count":14819},{"Region":"EMEA","count":6724},{"Region":"APJC","count":4165},{"Region":"Global Service Provider","count":1069},{"Region":"Unknown","count":172}],"Sales":[{"Region":"Americas","count":1854},{"Region":"APJC","count":421},{"Region":"EMEA","count":242},{"Region":"Global Service Provider","count":162},{"Region":"Unknown","count":3}]},"by_title":{"Customers":[{"Title":"Director, Strategy & Planning","count":5240},{"Title":"Renewals Manager","count":4817},{"Title":"Renewals Specialist","count":3300},{"Title":"Leader, Renewals","count":485},{"Title":"Renewals Manager [C]","count":328}],"Deals":[{"Title":"Renewals Manager","count":7698},{"Title":"Renewals Specialist","count":4904},{"Title":"Leader, Renewals Specialist","count":691},{"Title":"Business Development Manager","count":657},{"Title":"Renewals Manager [C]","count":641}],"Opportunity Pipeline":[{"Title":"Renewals Specialist","count":15203},{"Title":"Renewals Manager","count":5525},{"Title":"Customer Project Specialist","count":772},{"Title":"Leader, Renewals Specialist","count":722},{"Title":"Leader, Renewals","count":502}],"Other":[{"Title":"Renewals Manager","count":7670},{"Title":"Renewals Specialist","count":2540},{"Title":"Renewals Manager [C]","count":814},{"Title":"Leader, Renewals Specialist","count":378},{"Title":"Leader, Renewals","count":357}],"Risk":[{"Title":"Renewals Specialist","count":11567},{"Title":"Renewals Manager","count":7943},{"Title":"Director, Renewals Specialist","count":1770},{"Title":"Business Development Manager","count":1316},{"Title":"Leader, Renewals Specialist","count":1167}],"Sales":[{"Title":"Renewals Manager","count":1137},{"Title":"Renewals Specialist","count":814},{"Title":"Leader, Renewals","count":206},{"Title":"Leader, Renewals Specialist","count":138},{"Title":"Director, Renewals Specialist","count":126}]}},"activity":{"init_by_day":{"Monday":20452,"Tuesday":15943,"Wednesday":16416,"Thursday":16714,"Friday":15843,"Saturday":7187,"Sunday":6941},"follow_by_day":{"Monday":7752,"Tuesday":9014,"Wednesday":10266,"Thursday":10559,"Friday":7766,"Saturday":599,"Sunday":563}},"weekend":{"all":15290,"init":14128,"follow":1162,"pct_of_all":10.5,"top5_share":52.2,"top10_share":62.3,"unique_users":301,"spread_1_5":116,"spread_6_20":92,"spread_gt20":93,"by_region":[{"region":"Americas","count":11585,"pct":75.8},{"region":"APJC","count":2017,"pct":13.2},{"region":"Global Service Provider","count":876,"pct":5.7},{"region":"EMEA","count":800,"pct":5.2},{"region":"Unknown","count":6,"pct":0.0},{"region":"CX","count":6,"pct":0.0}],"by_title":[{"title":"Renewals Specialist","count":7338,"pct":48.0},{"title":"Renewals Manager","count":4505,"pct":29.5},{"title":"Director, Strategy & Planning","count":1460,"pct":9.5},{"title":"Director, Renewals Specialist","count":721,"pct":4.7},{"title":"Leader, Renewals Specialist","count":291,"pct":1.9},{"title":"Leader, Renewals","count":261,"pct":1.7}],"intent_dist":[{"intent":"Opportunity Pipeline","count":6182,"pct":43.8},{"intent":"Risk","count":3123,"pct":22.1},{"intent":"Customers","count":2296,"pct":16.3},{"intent":"Deals","count":1367,"pct":9.7},{"intent":"Other","count":746,"pct":5.3},{"intent":"Sales","count":414,"pct":2.9}],"top_users":[{"name":"Erin Shanahan","count":2849,"pct":18.6},{"name":"Tj Hinton","count":2008,"pct":13.1},{"name":"Jane Zhang","count":1458,"pct":9.5},{"name":"Weijian Li","count":940,"pct":6.1},{"name":"Joe Allen","count":723,"pct":4.7},{"name":"Hammad Shaukat","count":591,"pct":3.9},{"name":"Darin Messer","count":284,"pct":1.9},{"name":"Joanna Hubbard","count":250,"pct":1.6},{"name":"Scott Snyder","count":244,"pct":1.6},{"name":"Charan Jit Kaur Thera Singh","count":182,"pct":1.2}]},"regular":{"dataset_weeks":8,"freq_counts":{"Monthly":475,"Weekly":310,"Bi-Weekly":216,"Occasional":200},"top10_weekly":[{"name":"Tj Hinton","title":"Renewals Specialist","region":"Americas","total_prompts":7128,"weeks_active":8},{"name":"Erin Shanahan","title":"Renewals Specialist","region":"Americas","total_prompts":5838,"weeks_active":7},{"name":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","total_prompts":5251,"weeks_active":8},{"name":"Weijian Li","title":"Renewals Manager","region":"Americas","total_prompts":3224,"weeks_active":8},{"name":"Andrea Ghini","title":"Renewals Specialist","region":"EMEA","total_prompts":3109,"weeks_active":7},{"name":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","total_prompts":2009,"weeks_active":8},{"name":"Michael Mckeefry","title":"Business Operations Manager","region":"EMEA","total_prompts":1483,"weeks_active":6},{"name":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","total_prompts":1122,"weeks_active":8},{"name":"Darin Messer","title":"Renewals Manager","region":"Americas","total_prompts":1059,"weeks_active":7},{"name":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","total_prompts":1019,"weeks_active":7}],"top10_biweekly":[{"name":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","total_prompts":1149,"weeks_active":4},{"name":"Wade Ritter","title":"Renewals Specialist","region":"Americas","total_prompts":563,"weeks_active":5},{"name":"Alva Mcclain","title":"Renewals Manager [C]","region":"Americas","total_prompts":473,"weeks_active":3},{"name":"Oscar Nepomuceno Flores","title":"Business Development Manager","region":"Americas","total_prompts":453,"weeks_active":3},{"name":"Saam Farahmand","title":"Renewals Specialist","region":"Americas","total_prompts":439,"weeks_active":4},{"name":"Stephanie Nwokedi","title":"Renewals Manager","region":"EMEA","total_prompts":438,"weeks_active":5},{"name":"Vincent Griessmayer","title":"Non-Technical Intern I","region":"EMEA","total_prompts":434,"weeks_active":5},{"name":"Michele Miller","title":"Leader, Renewals Specialist","region":"Americas","total_prompts":430,"weeks_active":4},{"name":"Jessica Park","title":"Renewals Specialist","region":"Americas","total_prompts":418,"weeks_active":5},{"name":"Collin Schurr","title":"Renewals Manager","region":"Americas","total_prompts":403,"weeks_active":5}],"top10_monthly":[{"name":"Joe Allen","title":"Renewals Manager","region":"Global Service Provider","total_prompts":1738,"weeks_active":2},{"name":"Brooks Powell","title":"Renewals Manager","region":"Americas","total_prompts":513,"weeks_active":2},{"name":"Arlette Oscos Pe\u00e3\u00b1a","title":"Business Development Manager","region":"Americas","total_prompts":446,"weeks_active":1},{"name":"Ann Pierce","title":"Renewals Manager","region":"Americas","total_prompts":375,"weeks_active":1},{"name":"Lindsay Yanisch","title":"Renewals Specialist","region":"Americas","total_prompts":358,"weeks_active":1},{"name":"Brandon Wright","title":"Renewals Manager","region":"Americas","total_prompts":347,"weeks_active":1},{"name":"Seda Guralp","title":"Renewals Manager","region":"EMEA","total_prompts":325,"weeks_active":2},{"name":"Daniel Garcia","title":"Renewals Manager","region":"Americas","total_prompts":317,"weeks_active":2},{"name":"Dustin Schiller","title":"Renewals Manager","region":"Americas","total_prompts":304,"weeks_active":2},{"name":"Chanda Ingalls","title":"Renewals Manager","region":"Americas","total_prompts":264,"weeks_active":2}],"region_freq":{"APJC":{"Monthly":70,"Weekly":38,"Occasional":31,"Bi-Weekly":13},"Americas":{"Monthly":276,"Weekly":189,"Bi-Weekly":142,"Occasional":124},"CX":{"Occasional":4,"Monthly":1},"EMEA":{"Monthly":118,"Weekly":70,"Bi-Weekly":53,"Occasional":36},"Global Service Provider":{"Weekly":13,"Monthly":9,"Bi-Weekly":6,"Occasional":4},"Unknown":{"Bi-Weekly":2,"Monthly":1,"Occasional":1}}},"scheduled":{"total":3,"cadence_summary":{"Weekly":2,"Daily":1},"patterns":[{"user":"Rahul Setiya","title":"Strategy & Planning Director","region":"Americas","run_count":4,"cadence":"Weekly","mean_interval_h":168.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":100.0,"intent":"Risk","prompt_preview":"Retrieve the FY2026 Q4 Available To Renew (ATR) report for Sales Region (L1): APJC and BUSINESS_ENTITY IN (Enterprise Switching, E"},{"user":"Tj Hinton","title":"Renewals Specialist","region":"Americas","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Friday","day_cons_pct":25.0,"intent":"Risk","prompt_preview":"Run sentiment analysis for Top 20 ATR customers (6\u201318 month window starting 2026-12-10 to 2027-12-10) using 4-day rotation cycle ("},{"user":"Alison Kurtz","title":"Renewals Specialist","region":"Americas","run_count":3,"cadence":"Weekly","mean_interval_h":168.0,"interval_cv":0.0,"mode_day":"Friday","day_cons_pct":100.0,"intent":"Other","prompt_preview":"Quarterly Task Review: Please review all active tasks and determine if any should be updated or deleted. If you would like to dele"}]},"diversity":{"analysed_users":951,"library_count":222,"diverse_count":200,"library_top10":[{"user":"Erin Shanahan","title":"Renewals Specialist","region":"Americas","initial":5822,"rep_pct":99.6,"top_repeat_count":5658,"prompt_preview":"Run the Cross-Architecture Renewal Report to identify customers with the largest Collaboration and CollaborationZZ renewal opportu"},{"user":"Joe Moran","title":"Director, Business Development","region":"Americas","initial":124,"rep_pct":99.2,"top_repeat_count":124,"prompt_preview":"Generate a renewal opportunities table using the following inputs:\nInput Parameters:\nFiscal Period: [Enter Fiscal Period - e.g., F"},{"user":"Weijian Li","title":"Renewals Manager","region":"Americas","initial":3188,"rep_pct":99.0,"top_repeat_count":1190,"prompt_preview":"Execute the predefined query (stage1_define_data_query) to retrieve all newly created Enterprise Agreement (EA) Subscription IDs f"},{"user":"Scott Snyder","title":"Renewals Manager","region":"Americas","initial":810,"rep_pct":98.6,"top_repeat_count":124,"prompt_preview":"What is my total Available to Renew (ATR) for services for second half FY26 and first half FY27. Summarize by customer in a table."},{"user":"Jade Mcpeak","title":"Renewals Specialist","region":"Americas","initial":442,"rep_pct":98.4,"top_repeat_count":88,"prompt_preview":"Create a list of all renewal opportunities where BUSINESS_ENTITY IN ('Collaboration', 'CollaborationZZ'), Sales Theater = US COMME"},{"user":"Eric Calhoun","title":"Director, Business Development","region":"Americas","initial":125,"rep_pct":98.4,"top_repeat_count":124,"prompt_preview":"Retrieve my top 20 high-risk renewal opportunities with a close date in the current fiscal quarter FY2026 Q3 (2026-01-25 to 2026-0"},{"user":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","initial":5246,"rep_pct":98.3,"top_repeat_count":911,"prompt_preview":"Query Commerce Orders created within the prior 24 hours. Filter for orders where Total Booking Value > 1,000,000 USD. If NO qualif"},{"user":"Megan Dearman","title":"Renewals Specialist","region":"EMEA","initial":112,"rep_pct":98.2,"top_repeat_count":111,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Paul Connors","title":"Renewals Specialist","region":"Americas","initial":479,"rep_pct":97.9,"top_repeat_count":120,"prompt_preview":"Summarize the renewal risk of a deal"},{"user":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","initial":1935,"rep_pct":97.6,"top_repeat_count":1654,"prompt_preview":"Retrieve and summarize the latest opportunity notes for Deal ID 55010191 from Renewals Console, including date, owner, and note co"}],"diverse_top10":[{"user":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","initial":607,"unique":538,"rep_pct":11.4},{"user":"Angie Leiser","title":"Renewals Specialist","region":"Americas","initial":562,"unique":529,"rep_pct":5.9},{"user":"Jill Cafferty","title":"Renewals Manager","region":"Americas","initial":398,"unique":340,"rep_pct":14.6},{"user":"Jessica Park","title":"Renewals Specialist","region":"Americas","initial":355,"unique":323,"rep_pct":9.0},{"user":"Christine Rees","title":"Business Development Manager","region":"Americas","initial":347,"unique":299,"rep_pct":13.8},{"user":"Jayne Booth","title":"Engineering Product Manager","region":"Americas","initial":294,"unique":271,"rep_pct":7.8},{"user":"Thad Carey","title":"Renewals Specialist","region":"Americas","initial":290,"unique":267,"rep_pct":7.9},{"user":"Akashdip Singh","title":"Renewals Manager","region":"Global Service Provider","initial":250,"unique":242,"rep_pct":3.2},{"user":"Jason Tom","title":"Renewals Specialist","region":"Americas","initial":241,"unique":213,"rep_pct":11.6},{"user":"Chanda Ingalls","title":"Renewals Manager","region":"Americas","initial":229,"unique":209,"rep_pct":8.7}],"title_div":[{"title":"Renewals Specialist","users":199,"total_initial":38290,"avg_rep_pct":43.2},{"title":"Renewals Manager","users":442,"total_initial":34627,"avg_rep_pct":25.4},{"title":"Director, Strategy & Planning","users":2,"total_initial":5262,"avg_rep_pct":71.0},{"title":"Leader, Renewals Specialist","users":28,"total_initial":3220,"avg_rep_pct":43.4},{"title":"Business Development Manager","users":20,"total_initial":2858,"avg_rep_pct":38.3},{"title":"Director, Renewals Specialist","users":7,"total_initial":2610,"avg_rep_pct":51.8},{"title":"Leader, Renewals","users":55,"total_initial":2603,"avg_rep_pct":22.2},{"title":"Renewals Manager [C]","users":30,"total_initial":2170,"avg_rep_pct":18.1},{"title":"Customer Project Specialist","users":19,"total_initial":1451,"avg_rep_pct":24.2},{"title":"Business Operations Manager","users":13,"total_initial":1227,"avg_rep_pct":9.8}],"region_div":[{"region":"Americas","users":573,"total_initial":67878,"avg_rep_pct":29.0},{"region":"EMEA","users":228,"total_initial":15668,"avg_rep_pct":24.1},{"region":"APJC","users":115,"total_initial":11657,"avg_rep_pct":37.0},{"region":"Global Service Provider","users":27,"total_initial":3373,"avg_rep_pct":29.4},{"region":"Unknown","users":3,"total_initial":331,"avg_rep_pct":30.5},{"region":"CX","users":4,"total_initial":22,"avg_rep_pct":14.2},{"region":"1","users":1,"total_initial":6,"avg_rep_pct":83.3}]}},"April":{"overview":{"total":34220,"input":18161,"follow":16059,"input_pct":53.1,"follow_pct":46.9},"intent":{"dist":[{"intent":"Deals","count":5161,"pct":28.4},{"intent":"Risk","count":4687,"pct":25.8},{"intent":"Other","count":3739,"pct":20.6},{"intent":"Customers","count":2911,"pct":16.0},{"intent":"Opportunity Pipeline","count":1228,"pct":6.8},{"intent":"Sales","count":435,"pct":2.4}],"by_region":{"Customers":[{"Region":"Americas","count":2026},{"Region":"EMEA","count":523},{"Region":"APJC","count":290},{"Region":"Global Service Provider","count":51},{"Region":"Unknown","count":16}],"Deals":[{"Region":"Americas","count":3183},{"Region":"EMEA","count":1405},{"Region":"APJC","count":467},{"Region":"Global Service Provider","count":68},{"Region":"Unknown","count":37}],"Opportunity Pipeline":[{"Region":"Americas","count":790},{"Region":"APJC","count":216},{"Region":"EMEA","count":196},{"Region":"Unknown","count":16},{"Region":"Global Service Provider","count":10}],"Other":[{"Region":"Americas","count":2639},{"Region":"EMEA","count":546},{"Region":"APJC","count":401},{"Region":"Global Service Provider","count":145},{"Region":"Unknown","count":7}],"Risk":[{"Region":"Americas","count":2673},{"Region":"EMEA","count":933},{"Region":"APJC","count":925},{"Region":"Unknown","count":102},{"Region":"Global Service Provider","count":52}],"Sales":[{"Region":"Americas","count":287},{"Region":"APJC","count":72},{"Region":"EMEA","count":69},{"Region":"Global Service Provider","count":7}]},"by_title":{"Customers":[{"Title":"Renewals Manager","count":1687},{"Title":"Renewals Specialist","count":556},{"Title":"Leader, Renewals","count":142},{"Title":"Business Development Manager","count":128},{"Title":"Renewals Manager [C]","count":106}],"Deals":[{"Title":"Renewals Manager","count":2159},{"Title":"Renewals Specialist","count":1425},{"Title":"Leader, Renewals Specialist","count":310},{"Title":"Director, Renewals Specialist","count":293},{"Title":"Business Development Manager","count":239}],"Opportunity Pipeline":[{"Title":"Renewals Manager","count":520},{"Title":"Renewals Specialist","count":208},{"Title":"Business Development Manager","count":165},{"Title":"Leader, Renewals Specialist","count":94},{"Title":"Leader, Renewals","count":73}],"Other":[{"Title":"Renewals Manager","count":2064},{"Title":"Renewals Specialist","count":721},{"Title":"Renewals Manager [C]","count":249},{"Title":"Leader, Renewals","count":131},{"Title":"Leader, Renewals Specialist","count":125}],"Risk":[{"Title":"Renewals Manager","count":1446},{"Title":"Renewals Specialist","count":1077},{"Title":"Business Development Manager","count":661},{"Title":"Director, Renewals Specialist","count":521},{"Title":"Business Operations Manager","count":228}],"Sales":[{"Title":"Renewals Manager","count":253},{"Title":"Renewals Specialist","count":45},{"Title":"Director, Renewals Specialist","count":29},{"Title":"Business Operations Manager","count":24},{"Title":"Leader, Renewals","count":24}]}},"activity":{"init_by_day":{"Monday":3062,"Tuesday":2724,"Wednesday":3816,"Thursday":4442,"Friday":3207,"Saturday":429,"Sunday":481},"follow_by_day":{"Monday":2472,"Tuesday":2603,"Wednesday":3685,"Thursday":4129,"Friday":2821,"Saturday":158,"Sunday":191}},"weekend":{"all":1259,"init":910,"follow":349,"pct_of_all":3.7,"top5_share":35.5,"top10_share":46.3,"unique_users":124,"spread_1_5":69,"spread_6_20":41,"spread_gt20":14,"by_region":[{"region":"Americas","count":711,"pct":56.5},{"region":"APJC","count":359,"pct":28.5},{"region":"EMEA","count":174,"pct":13.8},{"region":"Unknown","count":6,"pct":0.5},{"region":"CX","count":6,"pct":0.5},{"region":"Global Service Provider","count":3,"pct":0.2}],"by_title":[{"title":"Renewals Manager","count":551,"pct":43.8},{"title":"Director, Renewals Specialist","count":241,"pct":19.1},{"title":"Renewals Specialist","count":224,"pct":17.8},{"title":"Renewals Manager [C]","count":80,"pct":6.4},{"title":"Leader, Renewals","count":46,"pct":3.7},{"title":"Business Development Manager","count":29,"pct":2.3}],"intent_dist":[{"intent":"Risk","count":307,"pct":33.7},{"intent":"Deals","count":254,"pct":27.9},{"intent":"Customers","count":122,"pct":13.4},{"intent":"Opportunity Pipeline","count":108,"pct":11.9},{"intent":"Other","count":87,"pct":9.6},{"intent":"Sales","count":32,"pct":3.5}],"top_users":[{"name":"Hammad Shaukat","count":223,"pct":17.7},{"name":"Wade Ritter","count":72,"pct":5.7},{"name":"Weijian Li","count":68,"pct":5.4},{"name":"Scott Snyder","count":48,"pct":3.8},{"name":"Bee Lee","count":36,"pct":2.9},{"name":"Missy Goodman","count":32,"pct":2.5},{"name":"Mary Catherine Dolehide","count":28,"pct":2.2},{"name":"Ghadeer Al Kiyumi","count":26,"pct":2.1},{"name":"Norberto Valle","count":26,"pct":2.1},{"name":"Richard Holmes","count":24,"pct":1.9}]},"regular":{"dataset_weeks":1,"freq_counts":{"Weekly":960},"top10_weekly":[{"name":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","total_prompts":803,"weeks_active":1},{"name":"Michael Mckeefry","title":"Business Operations Manager","region":"EMEA","total_prompts":545,"weeks_active":1},{"name":"Arlette Oscos Pe\u00e3\u00b1a","title":"Business Development Manager","region":"Americas","total_prompts":336,"weeks_active":1},{"name":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","total_prompts":322,"weeks_active":1},{"name":"Grzegorz Zyra","title":"Business Development Manager","region":"EMEA","total_prompts":301,"weeks_active":1},{"name":"Daniel Garcia","title":"Renewals Manager","region":"Americas","total_prompts":294,"weeks_active":1},{"name":"Gowtham Tamilselvan","title":"Business Development Manager","region":"Americas","total_prompts":287,"weeks_active":1},{"name":"Jill Sanchez","title":"Renewals Manager","region":"Americas","total_prompts":286,"weeks_active":1},{"name":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","total_prompts":286,"weeks_active":1},{"name":"Seda Guralp","title":"Renewals Manager","region":"EMEA","total_prompts":271,"weeks_active":1}],"top10_biweekly":[],"top10_monthly":[],"region_freq":{"APJC":{"Weekly":119},"Americas":{"Weekly":598},"CX":{"Weekly":2},"EMEA":{"Weekly":213},"Global Service Provider":{"Weekly":24},"Unknown":{"Weekly":4}}},"scheduled":{"total":0,"cadence_summary":{},"patterns":[]},"diversity":{"analysed_users":625,"library_count":104,"diverse_count":66,"library_top10":[{"user":"Andreia Marques","title":"Renewals Specialist","region":"EMEA","initial":144,"rep_pct":98.6,"top_repeat_count":131,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Megan Dearman","title":"Renewals Specialist","region":"EMEA","initial":112,"rep_pct":98.2,"top_repeat_count":111,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Kinga Nied\u00e5\u00bawied\u00e5\u00ba","title":"Renewals Specialist","region":"EMEA","initial":162,"rep_pct":98.1,"top_repeat_count":159,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Andra Paraipan","title":"Renewals Specialist","region":"EMEA","initial":164,"rep_pct":97.6,"top_repeat_count":160,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Daniel Garcia","title":"Renewals Manager","region":"Americas","initial":120,"rep_pct":97.5,"top_repeat_count":115,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","initial":150,"rep_pct":97.3,"top_repeat_count":142,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Seda Guralp","title":"Renewals Manager","region":"EMEA","initial":132,"rep_pct":97.0,"top_repeat_count":69,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Joe Moran","title":"Director, Business Development","region":"Americas","initial":29,"rep_pct":96.6,"top_repeat_count":29,"prompt_preview":"Generate a renewal opportunities table using the following inputs:\nInput Parameters:\nFiscal Period: [Enter Fiscal Period - e.g., F"},{"user":"Daniela Carvalho","title":"Renewals Specialist","region":"EMEA","initial":26,"rep_pct":96.2,"top_repeat_count":26,"prompt_preview":"Show me opportunity notes on a deal"},{"user":"Adrian Cox","title":"Leader, Renewals Specialist","region":"EMEA","initial":148,"rep_pct":95.9,"top_repeat_count":142,"prompt_preview":"Show me opportunity notes on a deal"}],"diverse_top10":[{"user":"Chanda Ingalls","title":"Renewals Manager","region":"Americas","initial":191,"unique":174,"rep_pct":8.9},{"user":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","initial":190,"unique":163,"rep_pct":14.2},{"user":"Christine Rees","title":"Business Development Manager","region":"Americas","initial":144,"unique":128,"rep_pct":11.1},{"user":"Angie Leiser","title":"Renewals Specialist","region":"Americas","initial":126,"unique":112,"rep_pct":11.1},{"user":"Jill Cafferty","title":"Renewals Manager","region":"Americas","initial":99,"unique":92,"rep_pct":7.1},{"user":"Jessica Park","title":"Renewals Specialist","region":"Americas","initial":85,"unique":76,"rep_pct":10.6},{"user":"Akashdip Singh","title":"Renewals Manager","region":"Global Service Provider","initial":82,"unique":79,"rep_pct":3.7},{"user":"Jason Tom","title":"Renewals Specialist","region":"Americas","initial":68,"unique":65,"rep_pct":4.4},{"user":"Ang Tan","title":"Renewals Manager","region":"Americas","initial":62,"unique":62,"rep_pct":0.0},{"user":"Niall Lynch","title":"Renewals Specialist","region":"EMEA","initial":55,"unique":49,"rep_pct":10.9}],"title_div":[{"title":"Renewals Manager","users":313,"total_initial":7802,"avg_rep_pct":20.6},{"title":"Renewals Specialist","users":136,"total_initial":3919,"avg_rep_pct":33.3},{"title":"Business Development Manager","users":18,"total_initial":1313,"avg_rep_pct":33.2},{"title":"Director, Renewals Specialist","users":5,"total_initial":859,"avg_rep_pct":62.3},{"title":"Leader, Renewals Specialist","users":25,"total_initial":786,"avg_rep_pct":31.5},{"title":"Leader, Renewals","users":37,"total_initial":697,"avg_rep_pct":16.4},{"title":"Renewals Manager [C]","users":19,"total_initial":631,"avg_rep_pct":22.5},{"title":"Business Operations Manager","users":9,"total_initial":452,"avg_rep_pct":6.7},{"title":"Director, Renewals","users":10,"total_initial":113,"avg_rep_pct":14.6},{"title":"Director, Business Development","users":3,"total_initial":101,"avg_rep_pct":83.4}],"region_div":[{"region":"Americas","users":396,"total_initial":11153,"avg_rep_pct":24.4},{"region":"EMEA","users":132,"total_initial":3497,"avg_rep_pct":23.1},{"region":"APJC","users":76,"total_initial":2273,"avg_rep_pct":27.5},{"region":"Global Service Provider","users":17,"total_initial":318,"avg_rep_pct":12.7},{"region":"Unknown","users":3,"total_initial":175,"avg_rep_pct":34.0},{"region":"CX","users":1,"total_initial":5,"avg_rep_pct":20.0}]}},"May":{"overview":{"total":33480,"input":20328,"follow":13152,"input_pct":60.7,"follow_pct":39.3},"intent":{"dist":[{"intent":"Risk","count":5480,"pct":27.0},{"intent":"Deals","count":3957,"pct":19.5},{"intent":"Other","count":3509,"pct":17.3},{"intent":"Opportunity Pipeline","count":3484,"pct":17.1},{"intent":"Customers","count":3181,"pct":15.6},{"intent":"Sales","count":717,"pct":3.5}],"by_region":{"Customers":[{"Region":"Americas","count":2349},{"Region":"EMEA","count":492},{"Region":"APJC","count":276},{"Region":"Global Service Provider","count":53},{"Region":"Unknown","count":10}],"Deals":[{"Region":"Americas","count":3178},{"Region":"EMEA","count":497},{"Region":"APJC","count":195},{"Region":"Global Service Provider","count":81},{"Region":"Unknown","count":6}],"Opportunity Pipeline":[{"Region":"Americas","count":2595},{"Region":"APJC","count":504},{"Region":"EMEA","count":289},{"Region":"Global Service Provider","count":81},{"Region":"Unknown","count":15}],"Other":[{"Region":"Americas","count":2389},{"Region":"EMEA","count":679},{"Region":"APJC","count":323},{"Region":"Global Service Provider","count":104},{"Region":"Unknown","count":9}],"Risk":[{"Region":"Americas","count":3226},{"Region":"EMEA","count":1143},{"Region":"APJC","count":982},{"Region":"Global Service Provider","count":93},{"Region":"Unknown","count":36}],"Sales":[{"Region":"Americas","count":431},{"Region":"APJC","count":134},{"Region":"Global Service Provider","count":83},{"Region":"EMEA","count":67},{"Region":"Unknown","count":2}]},"by_title":{"Customers":[{"Title":"Renewals Manager","count":1195},{"Title":"Director, Strategy & Planning","count":701},{"Title":"Renewals Specialist","count":691},{"Title":"Leader, Renewals","count":136},{"Title":"Business Development Manager","count":106}],"Deals":[{"Title":"Renewals Manager","count":2164},{"Title":"Renewals Specialist","count":929},{"Title":"Renewals Manager [C]","count":153},{"Title":"Business Development Manager","count":140},{"Title":"Leader, Renewals","count":93}],"Opportunity Pipeline":[{"Title":"Renewals Manager","count":1283},{"Title":"Renewals Specialist","count":1267},{"Title":"Customer Project Specialist","count":255},{"Title":"Leader, Renewals","count":198},{"Title":"Leader, Renewals Specialist","count":192}],"Other":[{"Title":"Renewals Manager","count":1911},{"Title":"Renewals Specialist","count":691},{"Title":"Renewals Manager [C]","count":151},{"Title":"Leader, Renewals","count":120},{"Title":"Leader, Renewals Specialist","count":106}],"Risk":[{"Title":"Renewals Manager","count":1966},{"Title":"Renewals Specialist","count":1848},{"Title":"Director, Renewals Specialist","count":381},{"Title":"Business Development Manager","count":325},{"Title":"Leader, Renewals Specialist","count":238}],"Sales":[{"Title":"Renewals Manager","count":292},{"Title":"Renewals Specialist","count":225},{"Title":"Leader, Renewals","count":60},{"Title":"Leader, Renewals Specialist","count":41},{"Title":"Director, Renewals Specialist","count":32}]}},"activity":{"init_by_day":{"Monday":3814,"Tuesday":3345,"Wednesday":3849,"Thursday":3428,"Friday":3764,"Saturday":1003,"Sunday":1125},"follow_by_day":{"Monday":1957,"Tuesday":2682,"Wednesday":2957,"Thursday":2550,"Friday":2679,"Saturday":179,"Sunday":148}},"weekend":{"all":2455,"init":2128,"follow":327,"pct_of_all":7.3,"top5_share":37.3,"top10_share":45.7,"unique_users":151,"spread_1_5":64,"spread_6_20":56,"spread_gt20":31,"by_region":[{"region":"Americas","count":1778,"pct":72.4},{"region":"APJC","count":456,"pct":18.6},{"region":"EMEA","count":146,"pct":5.9},{"region":"Global Service Provider","count":75,"pct":3.1}],"by_title":[{"title":"Renewals Manager","count":1010,"pct":41.1},{"title":"Renewals Specialist","count":685,"pct":27.9},{"title":"Director, Strategy & Planning","count":254,"pct":10.3},{"title":"Director, Renewals Specialist","count":167,"pct":6.8},{"title":"Leader, Renewals","count":81,"pct":3.3},{"title":"Leader, Renewals Specialist","count":80,"pct":3.3}],"intent_dist":[{"intent":"Opportunity Pipeline","count":592,"pct":27.8},{"intent":"Risk","count":548,"pct":25.8},{"intent":"Customers","count":384,"pct":18.0},{"intent":"Deals","count":362,"pct":17.0},{"intent":"Other","count":127,"pct":6.0},{"intent":"Sales","count":115,"pct":5.4}],"top_users":[{"name":"Weijian Li","count":311,"pct":12.7},{"name":"Jane Zhang","count":252,"pct":10.3},{"name":"Tj Hinton","count":160,"pct":6.5},{"name":"Hammad Shaukat","count":129,"pct":5.3},{"name":"Scott Snyder","count":64,"pct":2.6},{"name":"Wade Ritter","count":47,"pct":1.9},{"name":"Ben Stevens","count":40,"pct":1.6},{"name":"Darin Messer","count":40,"pct":1.6},{"name":"Jade Mcpeak","count":40,"pct":1.6},{"name":"Scott Hall","count":40,"pct":1.6}]},"regular":{"dataset_weeks":1,"freq_counts":{"Weekly":931},"top10_weekly":[{"name":"Weijian Li","title":"Renewals Manager","region":"Americas","total_prompts":981,"weeks_active":1},{"name":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","total_prompts":702,"weeks_active":1},{"name":"Tj Hinton","title":"Renewals Specialist","region":"Americas","total_prompts":454,"weeks_active":1},{"name":"Michael Mckeefry","title":"Business Operations Manager","region":"EMEA","total_prompts":400,"weeks_active":1},{"name":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","total_prompts":379,"weeks_active":1},{"name":"Hugo Barrocas","title":"Renewals Manager","region":"EMEA","total_prompts":317,"weeks_active":1},{"name":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","total_prompts":311,"weeks_active":1},{"name":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","total_prompts":293,"weeks_active":1},{"name":"Alva Mcclain","title":"Renewals Manager [C]","region":"Americas","total_prompts":234,"weeks_active":1},{"name":"Brooks Powell","title":"Renewals Manager","region":"Americas","total_prompts":218,"weeks_active":1}],"top10_biweekly":[],"top10_monthly":[],"region_freq":{"APJC":{"Weekly":117},"Americas":{"Weekly":553},"CX":{"Weekly":2},"EMEA":{"Weekly":230},"Global Service Provider":{"Weekly":26},"Unknown":{"Weekly":3}}},"scheduled":{"total":0,"cadence_summary":{},"patterns":[]},"diversity":{"analysed_users":614,"library_count":124,"diverse_count":85,"library_top10":[{"user":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","initial":366,"rep_pct":98.9,"top_repeat_count":363,"prompt_preview":"Retrieve and summarize the latest opportunity notes for Deal ID 55010191 from Renewals Console, including date, owner, and note co"},{"user":"Weijian Li","title":"Renewals Manager","region":"Americas","initial":969,"rep_pct":98.9,"top_repeat_count":364,"prompt_preview":"Execute the predefined query (stage1_define_data_query) to retrieve all newly created Enterprise Agreement (EA) Subscription IDs f"},{"user":"Brandon Wright","title":"Renewals Manager","region":"Americas","initial":132,"rep_pct":97.7,"top_repeat_count":130,"prompt_preview":"show me opportunity note on deal ID 73257529"},{"user":"Jordan Adair","title":"Leader, Renewals","region":"Americas","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Generate a report of past due TS (Tech Support) opportunities for Sales Level 3 (L3) GVSE Commercial (Global Virtual Sales & Engin"},{"user":"Andrew Jones","title":"Renewals Manager","region":"APJC","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Run the Andrews Daily report and include filter: Sales level 3 is equal to \"ANZ_Scale\"."},{"user":"Eric Calhoun","title":"Director, Business Development","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Retrieve my top 20 high-risk renewal opportunities with a close date in the current fiscal quarter FY2026 Q3 (2026-01-25 to 2026-0"},{"user":"Peter Cahill","title":"Renewals Specialist","region":"APJC","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Generate and deliver a 'Renewals Coffee Dashboard' for all open SFDC Renewal Opportunities in my pipeline.\n\nAll date windows must "},{"user":"Joe Moran","title":"Director, Business Development","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Generate a renewal opportunities table using the following inputs:\nInput Parameters:\nFiscal Period: [Enter Fiscal Period - e.g., F"},{"user":"Ben Stevens","title":"Customer Project Specialist","region":"Americas","initial":134,"rep_pct":96.3,"top_repeat_count":130,"prompt_preview":"Show me my top 5 renewals across all customers for the next 2 fiscal quarters. Include relevant opportunity details such as opport"},{"user":"Shweta Chouhan","title":"Renewals Manager","region":"APJC","initial":125,"rep_pct":96.0,"top_repeat_count":31,"prompt_preview":"Retrieve TS (Technical Services \u2013 TS-S business entity) renewal opportunities that are overdue OR have a Prior Contract Expiration"}],"diverse_top10":[{"user":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","initial":197,"unique":188,"rep_pct":4.6},{"user":"Angie Leiser","title":"Renewals Specialist","region":"Americas","initial":147,"unique":144,"rep_pct":2.0},{"user":"Jessica Park","title":"Renewals Specialist","region":"Americas","initial":100,"unique":97,"rep_pct":3.0},{"user":"Andre Lemos","title":"Customer Project Specialist","region":"Americas","initial":93,"unique":80,"rep_pct":14.0},{"user":"Marcos Uson","title":"Leader, Renewals","region":"Americas","initial":91,"unique":87,"rep_pct":4.4},{"user":"Christine Rees","title":"Business Development Manager","region":"Americas","initial":90,"unique":83,"rep_pct":7.8},{"user":"Lindsay Yanisch","title":"Renewals Specialist","region":"Americas","initial":82,"unique":72,"rep_pct":12.2},{"user":"Jayne Booth","title":"Engineering Product Manager","region":"Americas","initial":71,"unique":65,"rep_pct":8.5},{"user":"Tyanna Adjie","title":"Business Development Manager","region":"Americas","initial":68,"unique":59,"rep_pct":13.2},{"user":"Akashdip Singh","title":"Renewals Manager","region":"Global Service Provider","initial":68,"unique":68,"rep_pct":0.0}],"title_div":[{"title":"Renewals Manager","users":291,"total_initial":8463,"avg_rep_pct":22.2},{"title":"Renewals Specialist","users":161,"total_initial":5592,"avg_rep_pct":33.0},{"title":"Leader, Renewals","users":37,"total_initial":784,"avg_rep_pct":21.0},{"title":"Business Development Manager","users":18,"total_initial":756,"avg_rep_pct":33.2},{"title":"Director, Strategy & Planning","users":1,"total_initial":702,"avg_rep_pct":94.2},{"title":"Leader, Renewals Specialist","users":19,"total_initial":662,"avg_rep_pct":27.3},{"title":"Director, Renewals Specialist","users":5,"total_initial":563,"avg_rep_pct":62.8},{"title":"Customer Project Specialist","users":13,"total_initial":535,"avg_rep_pct":30.0},{"title":"Renewals Manager [C]","users":13,"total_initial":426,"avg_rep_pct":8.7},{"title":"Business Operations Manager","users":9,"total_initial":320,"avg_rep_pct":9.1}],"region_div":[{"region":"Americas","users":394,"total_initial":13838,"avg_rep_pct":26.0},{"region":"EMEA","users":140,"total_initial":2949,"avg_rep_pct":16.4},{"region":"APJC","users":61,"total_initial":2294,"avg_rep_pct":48.4},{"region":"Global Service Provider","users":15,"total_initial":467,"avg_rep_pct":23.0},{"region":"Unknown","users":3,"total_initial":78,"avg_rep_pct":13.8},{"region":"CX","users":1,"total_initial":5,"avg_rep_pct":20.0}]}},"June":{"overview":{"total":44081,"input":34226,"follow":9855,"input_pct":77.6,"follow_pct":22.4},"intent":{"dist":[{"intent":"Opportunity Pipeline","count":11881,"pct":34.7},{"intent":"Risk","count":8944,"pct":26.1},{"intent":"Customers","count":5102,"pct":14.9},{"intent":"Deals","count":3858,"pct":11.3},{"intent":"Other","count":3684,"pct":10.8},{"intent":"Sales","count":757,"pct":2.2}],"by_region":{"Customers":[{"Region":"Americas","count":4110},{"Region":"EMEA","count":482},{"Region":"APJC","count":286},{"Region":"Global Service Provider","count":213},{"Region":"Unknown","count":9}],"Deals":[{"Region":"Americas","count":2704},{"Region":"EMEA","count":770},{"Region":"APJC","count":296},{"Region":"Global Service Provider","count":87},{"Region":"Unknown","count":1}],"Opportunity Pipeline":[{"Region":"Americas","count":10323},{"Region":"APJC","count":925},{"Region":"EMEA","count":460},{"Region":"Global Service Provider","count":150},{"Region":"Unknown","count":23}],"Other":[{"Region":"Americas","count":1975},{"Region":"Global Service Provider","count":829},{"Region":"EMEA","count":624},{"Region":"APJC","count":247},{"Region":"Unknown","count":6}],"Risk":[{"Region":"Americas","count":4858},{"Region":"EMEA","count":2239},{"Region":"APJC","count":976},{"Region":"Global Service Provider","count":847},{"Region":"Unknown","count":21}],"Sales":[{"Region":"Americas","count":548},{"Region":"APJC","count":104},{"Region":"EMEA","count":60},{"Region":"Global Service Provider","count":44},{"Region":"Unknown","count":1}]},"by_title":{"Customers":[{"Title":"Director, Strategy & Planning","count":2479},{"Title":"Renewals Manager","count":1206},{"Title":"Renewals Specialist","count":823},{"Title":"Customer Experience Customer Success Specialist","count":114},{"Title":"Leader, Renewals","count":111}],"Deals":[{"Title":"Renewals Manager","count":1682},{"Title":"Renewals Specialist","count":1297},{"Title":"Business Development Manager","count":170},{"Title":"Leader, Renewals Specialist","count":159},{"Title":"Renewals Manager [C]","count":133}],"Opportunity Pipeline":[{"Title":"Renewals Specialist","count":9273},{"Title":"Renewals Manager","count":1727},{"Title":"Customer Project Specialist","count":286},{"Title":"Leader, Renewals Specialist","count":206},{"Title":"Leader, Renewals","count":113}],"Other":[{"Title":"Renewals Manager","count":2417},{"Title":"Renewals Specialist","count":575},{"Title":"Renewals Manager [C]","count":103},{"Title":"Leader, Renewals Specialist","count":76},{"Title":"Customer Experience Customer Success Technical Leader","count":68}],"Risk":[{"Title":"Renewals Specialist","count":4087},{"Title":"Renewals Manager","count":3160},{"Title":"Director, Renewals Specialist","count":383},{"Title":"Leader, Renewals Specialist","count":332},{"Title":"Business Development Manager","count":187}],"Sales":[{"Title":"Renewals Manager","count":316},{"Title":"Renewals Specialist","count":253},{"Title":"Leader, Renewals","count":59},{"Title":"Leader, Renewals Specialist","count":49},{"Title":"Director, Renewals Specialist","count":30}]}},"activity":{"init_by_day":{"Monday":7592,"Tuesday":5822,"Wednesday":3881,"Thursday":4125,"Friday":5646,"Saturday":3832,"Sunday":3328},"follow_by_day":{"Monday":1854,"Tuesday":2301,"Wednesday":1722,"Thursday":2101,"Friday":1574,"Saturday":164,"Sunday":139}},"weekend":{"all":7463,"init":7160,"follow":303,"pct_of_all":16.9,"top5_share":71.9,"top10_share":79.9,"unique_users":141,"spread_1_5":49,"spread_6_20":62,"spread_gt20":30,"by_region":[{"region":"Americas","count":6022,"pct":80.7},{"region":"Global Service Provider","count":756,"pct":10.1},{"region":"APJC","count":406,"pct":5.4},{"region":"EMEA","count":279,"pct":3.7}],"by_title":[{"title":"Renewals Specialist","count":4456,"pct":59.7},{"title":"Renewals Manager","count":1842,"pct":24.7},{"title":"Director, Strategy & Planning","count":681,"pct":9.1},{"title":"Director, Renewals Specialist","count":127,"pct":1.7},{"title":"Leader, Renewals Specialist","count":79,"pct":1.1},{"title":"Customer Experience Customer Success Technical Leader","count":70,"pct":0.9}],"intent_dist":[{"intent":"Opportunity Pipeline","count":4042,"pct":56.5},{"intent":"Risk","count":1372,"pct":19.2},{"intent":"Customers","count":909,"pct":12.7},{"intent":"Other","count":382,"pct":5.3},{"intent":"Deals","count":326,"pct":4.6},{"intent":"Sales","count":129,"pct":1.8}],"top_users":[{"name":"Erin Shanahan","count":2849,"pct":38.2},{"name":"Tj Hinton","count":865,"pct":11.6},{"name":"Joe Allen","count":722,"pct":9.7},{"name":"Jane Zhang","count":681,"pct":9.1},{"name":"Weijian Li","count":249,"pct":3.3},{"name":"Darin Messer","count":244,"pct":3.3},{"name":"Simon Reid","count":100,"pct":1.3},{"name":"Hammad Shaukat","count":95,"pct":1.3},{"name":"Joanna Hubbard","count":95,"pct":1.3},{"name":"Natasja Dodds","count":62,"pct":0.8}]},"regular":{"dataset_weeks":6,"freq_counts":{"Weekly":330,"Bi-Weekly":306,"Occasional":266},"top10_weekly":[{"name":"Erin Shanahan","title":"Renewals Specialist","region":"Americas","total_prompts":5656,"weeks_active":6},{"name":"Tj Hinton","title":"Renewals Specialist","region":"Americas","total_prompts":3027,"weeks_active":6},{"name":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","total_prompts":2479,"weeks_active":6},{"name":"Andrea Ghini","title":"Renewals Specialist","region":"EMEA","total_prompts":1291,"weeks_active":6},{"name":"Weijian Li","title":"Renewals Manager","region":"Americas","total_prompts":953,"weeks_active":6},{"name":"Darin Messer","title":"Renewals Manager","region":"Americas","total_prompts":852,"weeks_active":6},{"name":"Michael Mckeefry","title":"Business Operations Manager","region":"EMEA","total_prompts":468,"weeks_active":5},{"name":"Paul Connors","title":"Renewals Specialist","region":"Americas","total_prompts":441,"weeks_active":6},{"name":"Jia Ping Sng","title":"Renewals Manager","region":"APJC","total_prompts":369,"weeks_active":6},{"name":"Joanna Hubbard","title":"Renewals Specialist","region":"Americas","total_prompts":367,"weeks_active":5}],"top10_biweekly":[{"name":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","total_prompts":255,"weeks_active":4},{"name":"Claudia Lopes","title":"Renewals Specialist","region":"EMEA","total_prompts":136,"weeks_active":2},{"name":"Samantha Brown","title":"Leader, Renewals Specialist","region":"Americas","total_prompts":131,"weeks_active":3},{"name":"Michele Miller","title":"Leader, Renewals Specialist","region":"Americas","total_prompts":131,"weeks_active":4},{"name":"Isaiah Archuleta","title":"Customer Experience Customer Success Specialist","region":"Americas","total_prompts":109,"weeks_active":3},{"name":"Frank Seibold","title":"Renewals Specialist","region":"EMEA","total_prompts":102,"weeks_active":3},{"name":"Saam Farahmand","title":"Renewals Specialist","region":"Americas","total_prompts":100,"weeks_active":4},{"name":"Brooks Powell","title":"Renewals Manager","region":"Americas","total_prompts":100,"weeks_active":2},{"name":"Thad Carey","title":"Renewals Specialist","region":"Americas","total_prompts":94,"weeks_active":3},{"name":"Demetrius Cox","title":"Renewals Specialist","region":"Americas","total_prompts":86,"weeks_active":3}],"top10_monthly":[],"region_freq":{"APJC":{"Weekly":38,"Occasional":30,"Bi-Weekly":21},"Americas":{"Weekly":205,"Bi-Weekly":192,"Occasional":158},"CX":{"Bi-Weekly":1,"Occasional":1},"EMEA":{"Bi-Weekly":84,"Weekly":74,"Occasional":67},"Global Service Provider":{"Weekly":13,"Occasional":9,"Bi-Weekly":6},"Unknown":{"Bi-Weekly":2,"Occasional":1}}},"scheduled":{"total":416,"cadence_summary":{"Weekly":411,"Bi-Weekly":4,"Daily":1},"patterns":[{"user":"Gabriel Monteiro De Sousa","title":"Renewals Specialist","region":"EMEA","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Opportunity Pipeline","prompt_preview":"Run a Renewals domain report for open renewal opportunities only (Record Type = Renewals Opportunity, Is Closed = FALSE, Stage doe"},{"user":"Darling Guillin","title":"Renewals Specialist","region":"Americas","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Risk","prompt_preview":"Run the Collaboration renewal opportunities report with the following filters: Business Entity = \"Collaboration\"; OPPTY_DEAL_PULSE"},{"user":"Naglaa Sockar","title":"Renewals Manager","region":"Americas","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Risk","prompt_preview":"Generate the 'Top 20 ATR Expiring in Next 180 Days' renewal report sorted by ATR descending. Include full opportunity detail table"},{"user":"Ola Krol","title":"Renewals Specialist","region":"EMEA","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Risk","prompt_preview":"Generate the full FY2027 renewal de-risk analysis for Business Entity: Collaboration and CollaborationZZ; Sales Level: L2 \u2013 EMEA_S"},{"user":"Jonathan Kennington","title":"Renewals Specialist","region":"Americas","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Deals","prompt_preview":"Execute the predefined query to generate the Top 25 open renewal opportunities for BUSINESS_ENTITY \"Security\".\n\nFilters & Conditio"},{"user":"Liliana Nino","title":"Renewals Specialist","region":"Americas","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Opportunity Pipeline","prompt_preview":"Retrieve the top ten CAI (Collaboration Adoption Incentive) opportunities in the territory I cover for the current fiscal quarter."},{"user":"Aaron Anderson","title":"Renewals Manager","region":"Americas","run_count":6,"cadence":"Weekly","mean_interval_h":134.4,"interval_cv":0.348,"mode_day":"Monday","day_cons_pct":83.3,"intent":"Risk","prompt_preview":"Generate a report for renewal opportunities expiring in the next 180 days (Prior Contract Expiration Date between current date and"},{"user":"Tanya Bailey","title":"Renewals Manager","region":"Americas","run_count":5,"cadence":"Weekly","mean_interval_h":168.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":100.0,"intent":"Risk","prompt_preview":"Generate a report of the top 10 accounts by Annualized Recurring Revenue (ARR) with renewals in FY2026 Q4. Include the following f"},{"user":"Sukhdev Singh A L Bhagat Singh","title":"Renewals Manager","region":"APJC","run_count":5,"cadence":"Weekly","mean_interval_h":168.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":100.0,"intent":"Opportunity Pipeline","prompt_preview":"Show me current quarter open renewal opportunities for APJ which are at stage 1 (1 \u2013 Qualify)."},{"user":"Stephen Hamby","title":"Renewals Manager","region":"Americas","run_count":5,"cadence":"Weekly","mean_interval_h":168.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":100.0,"intent":"Deals","prompt_preview":"Run the report for the Top 10 Services Available To Renew (ATR) deals expiring in FY2026 Q4 (2026-04-26 to 2026-07-25). Filter for"}]},"diversity":{"analysed_users":585,"library_count":187,"diverse_count":68,"library_top10":[{"user":"Erin Shanahan","title":"Renewals Specialist","region":"Americas","initial":5655,"rep_pct":99.7,"top_repeat_count":5630,"prompt_preview":"Run the Cross-Architecture Renewal Report to identify customers with the largest Collaboration and CollaborationZZ renewal opportu"},{"user":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","initial":351,"rep_pct":99.4,"top_repeat_count":350,"prompt_preview":"Retrieve and summarize the latest opportunity notes for Deal ID 55010191 from Renewals Console, including date, owner, and note co"},{"user":"Weijian Li","title":"Renewals Manager","region":"Americas","initial":942,"rep_pct":98.3,"top_repeat_count":352,"prompt_preview":"Execute the predefined query (stage1_define_data_query) to retrieve all newly created Enterprise Agreement (EA) Subscription IDs f"},{"user":"Paul Connors","title":"Renewals Specialist","region":"Americas","initial":219,"rep_pct":97.3,"top_repeat_count":54,"prompt_preview":"Summarize the case notes on a deal"},{"user":"Eric Calhoun","title":"Director, Business Development","region":"Americas","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Retrieve my top 20 high-risk renewal opportunities with a close date in the current fiscal quarter FY2026 Q3 (2026-01-25 to 2026-0"},{"user":"Haley Bauer","title":"Renewals Specialist","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Retrieve the Top 10 customers by Available To Renew (ATR) for Sales Level 4 = GVSE_USC West Operation for the current fiscal quart"},{"user":"Joe Moran","title":"Director, Business Development","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Generate a renewal opportunities table using the following inputs:\nInput Parameters:\nFiscal Period: [Enter Fiscal Period - e.g., F"},{"user":"Jordan Hasty","title":"Renewals Specialist","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Retrieve the Collaboration-only renewal pipeline report for opportunities expiring in the next 180 days, filtered to BUSINESS_ENTI"},{"user":"Jade Mcpeak","title":"Renewals Specialist","region":"Americas","initial":150,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Generate the list of Renewal Opportunities with the following filters:\n- Record Type: Renewals Opportunity\n- BUSINESS_ENTITY: Coll"},{"user":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","initial":2479,"rep_pct":96.7,"top_repeat_count":467,"prompt_preview":"Query Commerce Orders created within the prior 24 hours. Filter for orders where Total Booking Value > 1,000,000 USD. If NO qualif"}],"diverse_top10":[{"user":"Michael Mckeefry","title":"Business Operations Manager","region":"EMEA","initial":169,"unique":155,"rep_pct":8.3},{"user":"Angie Leiser","title":"Renewals Specialist","region":"Americas","initial":142,"unique":136,"rep_pct":4.2},{"user":"Jill Cafferty","title":"Renewals Manager","region":"Americas","initial":127,"unique":118,"rep_pct":7.1},{"user":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","initial":110,"unique":97,"rep_pct":11.8},{"user":"Jessica Park","title":"Renewals Specialist","region":"Americas","initial":107,"unique":106,"rep_pct":0.9},{"user":"Eva Pernicova","title":"Renewals Specialist","region":"EMEA","initial":94,"unique":80,"rep_pct":14.9},{"user":"Jayne Booth","title":"Engineering Product Manager","region":"Americas","initial":92,"unique":90,"rep_pct":2.2},{"user":"Jason Tom","title":"Renewals Specialist","region":"Americas","initial":71,"unique":64,"rep_pct":9.9},{"user":"Christine Rees","title":"Business Development Manager","region":"Americas","initial":70,"unique":64,"rep_pct":8.6},{"user":"Savannah Perry","title":"Renewals Specialist","region":"Americas","initial":66,"unique":60,"rep_pct":9.1}],"title_div":[{"title":"Renewals Specialist","users":156,"total_initial":16239,"avg_rep_pct":44.9},{"title":"Renewals Manager","users":273,"total_initial":10182,"avg_rep_pct":29.2},{"title":"Director, Strategy & Planning","users":1,"total_initial":2479,"avg_rep_pct":96.7},{"title":"Leader, Renewals Specialist","users":20,"total_initial":831,"avg_rep_pct":47.3},{"title":"Director, Renewals Specialist","users":5,"total_initial":519,"avg_rep_pct":68.9},{"title":"Leader, Renewals","users":24,"total_initial":513,"avg_rep_pct":37.0},{"title":"Business Development Manager","users":15,"total_initial":464,"avg_rep_pct":55.8},{"title":"Customer Project Specialist","users":11,"total_initial":445,"avg_rep_pct":34.2},{"title":"Renewals Manager [C]","users":16,"total_initial":357,"avg_rep_pct":9.0},{"title":"Business Operations Manager","users":8,"total_initial":289,"avg_rep_pct":14.2}],"region_div":[{"region":"Americas","users":373,"total_initial":24117,"avg_rep_pct":33.0},{"region":"EMEA","users":137,"total_initial":4439,"avg_rep_pct":27.0},{"region":"APJC","users":53,"total_initial":2769,"avg_rep_pct":62.2},{"region":"Global Service Provider","users":19,"total_initial":2153,"avg_rep_pct":40.4},{"region":"Unknown","users":2,"total_initial":59,"avg_rep_pct":26.0},{"region":"CX","users":1,"total_initial":6,"avg_rep_pct":0.0}]}},"July":{"overview":{"total":31588,"input":24511,"follow":7077,"input_pct":77.6,"follow_pct":22.4},"intent":{"dist":[{"intent":"Risk","count":7103,"pct":29.0},{"intent":"Opportunity Pipeline","count":6593,"pct":26.9},{"intent":"Customers","count":4349,"pct":17.7},{"intent":"Deals","count":3362,"pct":13.7},{"intent":"Other","count":2408,"pct":9.8},{"intent":"Sales","count":696,"pct":2.8}],"by_region":{"Customers":[{"Region":"Americas","count":3379},{"Region":"APJC","count":644},{"Region":"EMEA","count":292},{"Region":"Global Service Provider","count":33},{"Region":"Unknown","count":1}],"Deals":[{"Region":"Americas","count":2439},{"Region":"EMEA","count":527},{"Region":"APJC","count":329},{"Region":"Global Service Provider","count":66},{"Region":"Unknown","count":1}],"Opportunity Pipeline":[{"Region":"Americas","count":4918},{"Region":"APJC","count":1105},{"Region":"EMEA","count":480},{"Region":"Global Service Provider","count":90}],"Other":[{"Region":"Americas","count":1574},{"Region":"APJC","count":389},{"Region":"EMEA","count":378},{"Region":"Global Service Provider","count":65},{"Region":"Unknown","count":2}],"Risk":[{"Region":"Americas","count":3649},{"Region":"EMEA","count":2262},{"Region":"APJC","count":1111},{"Region":"Global Service Provider","count":69},{"Region":"Unknown","count":12}],"Sales":[{"Region":"Americas","count":530},{"Region":"APJC","count":101},{"Region":"EMEA","count":41},{"Region":"Global Service Provider","count":24}]},"by_title":{"Customers":[{"Title":"Director, Strategy & Planning","count":2046},{"Title":"Renewals Specialist","count":1102},{"Title":"Renewals Manager","count":664},{"Title":"Renewals Manager [C]","count":115},{"Title":"Customer Experience Customer Success Specialist","count":90}],"Deals":[{"Title":"Renewals Manager","count":1516},{"Title":"Renewals Specialist","count":1172},{"Title":"Renewals Manager [C]","count":154},{"Title":"Leader, Renewals Specialist","count":118},{"Title":"Business Development Manager","count":102}],"Opportunity Pipeline":[{"Title":"Renewals Specialist","count":4035},{"Title":"Renewals Manager","count":1800},{"Title":"Leader, Renewals Specialist","count":208},{"Title":"Customer Project Specialist","count":201},{"Title":"Leader, Renewals","count":105}],"Other":[{"Title":"Renewals Manager","count":1168},{"Title":"Renewals Specialist","count":523},{"Title":"Renewals Manager [C]","count":298},{"Title":"Leader, Renewals Specialist","count":69},{"Title":"Customer Experience Customer Success Technical Leader","count":61}],"Risk":[{"Title":"Renewals Specialist","count":4209},{"Title":"Renewals Manager","count":1179},{"Title":"Director, Renewals Specialist","count":392},{"Title":"Leader, Renewals Specialist","count":368},{"Title":"Business Development Manager","count":131}],"Sales":[{"Title":"Renewals Specialist","count":265},{"Title":"Renewals Manager","count":246},{"Title":"Leader, Renewals","count":56},{"Title":"Leader, Renewals Specialist","count":34},{"Title":"Director, Renewals Specialist","count":31}]}},"activity":{"init_by_day":{"Monday":4967,"Tuesday":3434,"Wednesday":4870,"Thursday":4719,"Friday":3226,"Saturday":1606,"Sunday":1689},"follow_by_day":{"Monday":1255,"Tuesday":1272,"Wednesday":1902,"Thursday":1779,"Friday":692,"Saturday":93,"Sunday":84}},"weekend":{"all":3472,"init":3295,"follow":177,"pct_of_all":11.0,"top5_share":53.6,"top10_share":62.8,"unique_users":146,"spread_1_5":59,"spread_6_20":61,"spread_gt20":26,"by_region":[{"region":"Americas","count":2654,"pct":76.4},{"region":"APJC","count":617,"pct":17.8},{"region":"EMEA","count":170,"pct":4.9},{"region":"Global Service Provider","count":31,"pct":0.9}],"by_title":[{"title":"Renewals Specialist","count":1636,"pct":47.1},{"title":"Renewals Manager","count":913,"pct":26.3},{"title":"Director, Strategy & Planning","count":521,"pct":15.0},{"title":"Director, Renewals Specialist","count":130,"pct":3.7},{"title":"Leader, Renewals Specialist","count":84,"pct":2.4},{"title":"Leader, Renewals","count":49,"pct":1.4}],"intent_dist":[{"intent":"Opportunity Pipeline","count":1187,"pct":36.0},{"intent":"Customers","count":808,"pct":24.5},{"intent":"Risk","count":708,"pct":21.5},{"intent":"Deals","count":344,"pct":10.4},{"intent":"Other","count":133,"pct":4.0},{"intent":"Sales","count":115,"pct":3.5}],"top_users":[{"name":"Tj Hinton","count":845,"pct":24.3},{"name":"Jane Zhang","count":521,"pct":15.0},{"name":"Weijian Li","count":250,"pct":7.2},{"name":"Joanna Hubbard","count":125,"pct":3.6},{"name":"Charan Jit Kaur Thera Singh","count":121,"pct":3.5},{"name":"Hammad Shaukat","count":96,"pct":2.8},{"name":"Scott Snyder","count":62,"pct":1.8},{"name":"Collin Schurr","count":60,"pct":1.7},{"name":"Fayroz Mehdi","count":52,"pct":1.5},{"name":"Phalla Ros","count":50,"pct":1.4}]},"regular":{"dataset_weeks":1,"freq_counts":{"Weekly":796},"top10_weekly":[{"name":"Tj Hinton","title":"Renewals Specialist","region":"Americas","total_prompts":3375,"weeks_active":1},{"name":"Jane Zhang","title":"Director, Strategy & Planning","region":"Americas","total_prompts":2050,"weeks_active":1},{"name":"Andrea Ghini","title":"Renewals Specialist","region":"EMEA","total_prompts":1556,"weeks_active":1},{"name":"Weijian Li","title":"Renewals Manager","region":"Americas","total_prompts":956,"weeks_active":1},{"name":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","total_prompts":534,"weeks_active":1},{"name":"Joanna Hubbard","title":"Renewals Specialist","region":"Americas","total_prompts":465,"weeks_active":1},{"name":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","total_prompts":386,"weeks_active":1},{"name":"Jia Ping Sng","title":"Renewals Manager","region":"APJC","total_prompts":380,"weeks_active":1},{"name":"Peter Caterinicchia","title":"Renewals Manager","region":"Americas","total_prompts":315,"weeks_active":1},{"name":"Rajalakshmi Duraisamy","title":"Customer Experience Product Manager","region":"Americas","total_prompts":260,"weeks_active":1}],"top10_biweekly":[],"top10_monthly":[],"region_freq":{"APJC":{"Weekly":95},"Americas":{"Weekly":491},"EMEA":{"Weekly":186},"Global Service Provider":{"Weekly":22},"Unknown":{"Weekly":2}}},"scheduled":{"total":0,"cadence_summary":{},"patterns":[]},"diversity":{"analysed_users":495,"library_count":197,"diverse_count":40,"library_top10":[{"user":"Weijian Li","title":"Renewals Manager","region":"Americas","initial":956,"rep_pct":99.5,"top_repeat_count":362,"prompt_preview":"Execute the predefined query (stage1_define_data_query) to retrieve all newly created Enterprise Agreement (EA) Subscription IDs f"},{"user":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","initial":376,"rep_pct":98.7,"top_repeat_count":372,"prompt_preview":"Retrieve and summarize the latest opportunity notes for Deal ID 55010191 from Renewals Console, including date, owner, and note co"},{"user":"Phalla Ros","title":"Renewals Specialist","region":"APJC","initial":184,"rep_pct":97.8,"top_repeat_count":92,"prompt_preview":"Analyze Public Sector AUS customers only. Identify customers with upcoming renewal opportunities within the next six fiscal quarte"},{"user":"Eric Calhoun","title":"Director, Business Development","region":"Americas","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Retrieve my top 20 high-risk renewal opportunities with a close date in the current fiscal quarter FY2026 Q3 (2026-01-25 to 2026-0"},{"user":"Karissa Travis","title":"Renewals Specialist","region":"Americas","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Retrieve the full Available To Renew (ATR) dataset for BUSINESS_ENTITY = 'Collaboration' subscriptions expiring in FY2026 Q4 (2026"},{"user":"Joe Moran","title":"Director, Business Development","region":"Americas","initial":31,"rep_pct":96.8,"top_repeat_count":31,"prompt_preview":"Generate a renewal opportunities table using the following inputs:\nInput Parameters:\nFiscal Period: [Enter Fiscal Period - e.g., F"},{"user":"Suzanne Manrique","title":"Leader, Renewals Specialist","region":"Americas","initial":122,"rep_pct":96.7,"top_repeat_count":32,"prompt_preview":"Re-run the renewal opportunities export for Fiscal Period FY2027 Q1 using the exact same filters, sorting, and column structure as"},{"user":"Jennifer Martins","title":"Leader, Renewals Specialist","region":"EMEA","initial":91,"rep_pct":96.7,"top_repeat_count":31,"prompt_preview":"Run the closed\u2011lost renewal query for Business Entity = Security and Sales Theater (L2) = EMEA_SOUTH.\n\nFilters (do not change):\n- "},{"user":"Scott Snyder","title":"Renewals Manager","region":"Americas","initial":211,"rep_pct":96.7,"top_repeat_count":31,"prompt_preview":"What is my total Available to Renew (ATR) for services for second half FY26 and first half FY27. Summarize by customer in a table."},{"user":"Jeff Stutts","title":"Renewals Specialist","region":"Americas","initial":30,"rep_pct":96.7,"top_repeat_count":30,"prompt_preview":"Generate an export report of open Renewal Opportunities for SLED \u2013 Central Operation in FY2026 Q4 (2026-04-26 to 2026-07-25) where"}],"diverse_top10":[{"user":"Thad Carey","title":"Renewals Specialist","region":"Americas","initial":169,"unique":152,"rep_pct":10.1},{"user":"Angie Leiser","title":"Renewals Specialist","region":"Americas","initial":139,"unique":133,"rep_pct":4.3},{"user":"Marty Snead","title":"Renewals Manager","region":"Americas","initial":95,"unique":84,"rep_pct":11.6},{"user":"Jayne Booth","title":"Engineering Product Manager","region":"Americas","initial":94,"unique":81,"rep_pct":13.8},{"user":"Reed Jefferson Rodelas Santos","title":"Renewals Manager [C]","region":"APJC","initial":93,"unique":89,"rep_pct":4.3},{"user":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","initial":92,"unique":83,"rep_pct":9.8},{"user":"Suzette Morgan","title":"Renewals Manager [C]","region":"Americas","initial":85,"unique":77,"rep_pct":9.4},{"user":"Savannah Perry","title":"Renewals Specialist","region":"Americas","initial":83,"unique":74,"rep_pct":10.8},{"user":"Eva Pernicova","title":"Renewals Specialist","region":"EMEA","initial":76,"unique":70,"rep_pct":7.9},{"user":"Sowanee Su Khun","title":"Renewals Manager [C]","region":"APJC","initial":70,"unique":66,"rep_pct":5.7}],"title_div":[{"title":"Renewals Specialist","users":143,"total_initial":11220,"avg_rep_pct":49.6},{"title":"Renewals Manager","users":204,"total_initial":6261,"avg_rep_pct":37.5},{"title":"Director, Strategy & Planning","users":1,"total_initial":2048,"avg_rep_pct":95.8},{"title":"Leader, Renewals Specialist","users":22,"total_initial":815,"avg_rep_pct":50.9},{"title":"Renewals Manager [C]","users":18,"total_initial":664,"avg_rep_pct":7.8},{"title":"Director, Renewals Specialist","users":4,"total_initial":542,"avg_rep_pct":71.0},{"title":"Leader, Renewals","users":20,"total_initial":388,"avg_rep_pct":42.5},{"title":"Customer Project Specialist","users":12,"total_initial":316,"avg_rep_pct":32.0},{"title":"Business Development Manager","users":14,"total_initial":291,"avg_rep_pct":48.3},{"title":"Customer Experience Customer Success Specialist","users":7,"total_initial":171,"avg_rep_pct":22.9}],"region_div":[{"region":"Americas","users":313,"total_initial":16126,"avg_rep_pct":38.9},{"region":"EMEA","users":110,"total_initial":3816,"avg_rep_pct":35.1},{"region":"APJC","users":55,"total_initial":3584,"avg_rep_pct":59.3},{"region":"Global Service Provider","users":15,"total_initial":330,"avg_rep_pct":41.2},{"region":"Unknown","users":2,"total_initial":16,"avg_rep_pct":24.5}]}},"August":{"overview":{"total":2646,"input":2270,"follow":376,"input_pct":85.8,"follow_pct":14.2},"intent":{"dist":[{"intent":"Risk","count":740,"pct":32.6},{"intent":"Opportunity Pipeline","count":709,"pct":31.2},{"intent":"Deals","count":318,"pct":14.0},{"intent":"Customers","count":239,"pct":10.5},{"intent":"Other","count":187,"pct":8.2},{"intent":"Sales","count":77,"pct":3.4}],"by_region":{"Customers":[{"Region":"Americas","count":117},{"Region":"APJC","count":91},{"Region":"EMEA","count":27},{"Region":"Global Service Provider","count":4}],"Deals":[{"Region":"Americas","count":223},{"Region":"EMEA","count":47},{"Region":"APJC","count":42},{"Region":"Global Service Provider","count":6}],"Opportunity Pipeline":[{"Region":"Americas","count":526},{"Region":"APJC","count":101},{"Region":"EMEA","count":69},{"Region":"Global Service Provider","count":13}],"Other":[{"Region":"Americas","count":117},{"Region":"EMEA","count":36},{"Region":"APJC","count":30},{"Region":"Global Service Provider","count":4}],"Risk":[{"Region":"Americas","count":413},{"Region":"APJC","count":171},{"Region":"EMEA","count":147},{"Region":"Global Service Provider","count":8},{"Region":"Unknown","count":1}],"Sales":[{"Region":"Americas","count":58},{"Region":"APJC","count":10},{"Region":"EMEA","count":5},{"Region":"Global Service Provider","count":4}]},"by_title":{"Customers":[{"Title":"Renewals Specialist","count":128},{"Title":"Renewals Manager","count":65},{"Title":"Leader, Renewals","count":11},{"Title":"Director, Strategy & Planning","count":8},{"Title":"Customer Experience Customer Success Technical Leader","count":8}],"Deals":[{"Title":"Renewals Manager","count":177},{"Title":"Renewals Specialist","count":81},{"Title":"Leader, Renewals Specialist","count":16},{"Title":"Director, Renewals Specialist","count":9},{"Title":"Business Operations Manager","count":8}],"Opportunity Pipeline":[{"Title":"Renewals Specialist","count":420},{"Title":"Renewals Manager","count":195},{"Title":"Leader, Renewals Specialist","count":22},{"Title":"Customer Project Specialist","count":21},{"Title":"Renewals Manager [C]","count":19}],"Other":[{"Title":"Renewals Manager","count":110},{"Title":"Renewals Specialist","count":30},{"Title":"Renewals Manager [C]","count":13},{"Title":"Customer Experience Customer Success Technical Leader","count":10},{"Title":"Customer Project Specialist","count":5}],"Risk":[{"Title":"Renewals Specialist","count":346},{"Title":"Renewals Manager","count":192},{"Title":"Director, Renewals Specialist","count":93},{"Title":"Leader, Renewals Specialist","count":29},{"Title":"Leader, Renewals","count":22}],"Sales":[{"Title":"Renewals Manager","count":30},{"Title":"Renewals Specialist","count":26},{"Title":"Leader, Renewals","count":7},{"Title":"Director, Renewals Specialist","count":4},{"Title":"Leader, Renewals Specialist","count":4}]}},"activity":{"init_by_day":{"Monday":1017,"Tuesday":618,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":317,"Sunday":318},"follow_by_day":{"Monday":214,"Tuesday":156,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":5,"Sunday":1}},"weekend":{"all":641,"init":635,"follow":6,"pct_of_all":24.2,"top5_share":49.8,"top10_share":58.7,"unique_users":105,"spread_1_5":82,"spread_6_20":18,"spread_gt20":5,"by_region":[{"region":"Americas","count":420,"pct":65.5},{"region":"APJC","count":179,"pct":27.9},{"region":"EMEA","count":31,"pct":4.8},{"region":"Global Service Provider","count":11,"pct":1.7}],"by_title":[{"title":"Renewals Specialist","count":337,"pct":52.6},{"title":"Renewals Manager","count":189,"pct":29.5},{"title":"Director, Renewals Specialist","count":56,"pct":8.7},{"title":"Leader, Renewals Specialist","count":21,"pct":3.3},{"title":"Leader, Renewals","count":19,"pct":3.0},{"title":"Director, Business Development","count":4,"pct":0.6}],"intent_dist":[{"intent":"Opportunity Pipeline","count":253,"pct":39.8},{"intent":"Risk","count":188,"pct":29.6},{"intent":"Deals","count":81,"pct":12.8},{"intent":"Customers","count":73,"pct":11.5},{"intent":"Sales","count":23,"pct":3.6},{"intent":"Other","count":17,"pct":2.7}],"top_users":[{"name":"Tj Hinton","count":138,"pct":21.5},{"name":"Weijian Li","count":62,"pct":9.7},{"name":"Hammad Shaukat","count":48,"pct":7.5},{"name":"Charan Jit Kaur Thera Singh","count":41,"pct":6.4},{"name":"Joanna Hubbard","count":30,"pct":4.7},{"name":"Scott Snyder","count":14,"pct":2.2},{"name":"Phalla Ros","count":12,"pct":1.9},{"name":"Tomie Okoshi","count":11,"pct":1.7},{"name":"Colby Smith","count":10,"pct":1.6},{"name":"Farzana Qureshi","count":10,"pct":1.6}]},"regular":{"dataset_weeks":2,"freq_counts":{"Bi-Weekly":320,"Weekly":88},"top10_weekly":[{"name":"Tj Hinton","title":"Renewals Specialist","region":"Americas","total_prompts":272,"weeks_active":2},{"name":"Weijian Li","title":"Renewals Manager","region":"Americas","total_prompts":120,"weeks_active":2},{"name":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","total_prompts":89,"weeks_active":2},{"name":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","total_prompts":83,"weeks_active":2},{"name":"Joanna Hubbard","title":"Renewals Specialist","region":"Americas","total_prompts":61,"weeks_active":2},{"name":"Yishu Fang","title":"Renewals Specialist","region":"APJC","total_prompts":30,"weeks_active":2},{"name":"Scott Snyder","title":"Renewals Manager","region":"Americas","total_prompts":28,"weeks_active":2},{"name":"Phalla Ros","title":"Renewals Specialist","region":"APJC","total_prompts":24,"weeks_active":2},{"name":"Tomie Okoshi","title":"Renewals Specialist","region":"APJC","total_prompts":23,"weeks_active":2},{"name":"Colby Smith","title":"Renewals Specialist","region":"Americas","total_prompts":22,"weeks_active":2}],"top10_biweekly":[{"name":"Andrea Ghini","title":"Renewals Specialist","region":"EMEA","total_prompts":82,"weeks_active":1},{"name":"Dustin Schiller","title":"Renewals Manager","region":"Americas","total_prompts":55,"weeks_active":1},{"name":"Tanja Vandenbossche","title":"Renewals Manager","region":"Americas","total_prompts":38,"weeks_active":1},{"name":"Brian Morrissey","title":"Customer Experience Customer Success Technical Leader","region":"Americas","total_prompts":35,"weeks_active":1},{"name":"Yanika Bayanova","title":"Renewals Manager [C]","region":"Americas","total_prompts":34,"weeks_active":1},{"name":"Seven Deng","title":"Renewals Specialist","region":"APJC","total_prompts":25,"weeks_active":1},{"name":"Susanne Nielsen","title":"Business Operations Manager","region":"EMEA","total_prompts":25,"weeks_active":1},{"name":"Ben Adamson","title":"Leader, Renewals Specialist","region":"Americas","total_prompts":21,"weeks_active":1},{"name":"Ben Stevens","title":"Customer Project Specialist","region":"Americas","total_prompts":20,"weeks_active":1},{"name":"Yusuf Bello","title":"Customer Project Specialist","region":"Americas","total_prompts":17,"weeks_active":1}],"top10_monthly":[],"region_freq":{"APJC":{"Bi-Weekly":28,"Weekly":20},"Americas":{"Bi-Weekly":194,"Weekly":56},"EMEA":{"Bi-Weekly":85,"Weekly":10},"Global Service Provider":{"Bi-Weekly":12,"Weekly":2},"Unknown":{"Bi-Weekly":1}}},"scheduled":{"total":192,"cadence_summary":{"Daily":192},"patterns":[{"user":"Amit Pandey","title":"Renewals Manager","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Opportunity Pipeline","prompt_preview":"Generate a Daily Deal Close Date Dashboard including summary counts of On Track, Overdue, and Closing Today deals, followed by a d"},{"user":"Amit Pandey","title":"Renewals Manager","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Opportunity Pipeline","prompt_preview":"Generate the Daily Deal Close Date Dashboard for RBAC-accessible open deals. \n\nAt the top of the Webex message, include a SUMMARY "},{"user":"Amit Pandey","title":"Renewals Manager","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Opportunity Pipeline","prompt_preview":"Generate the Deal Close Date Status report for all accessible deals within my RBAC scope. Include: Deal Identifier (Opportunity/De"},{"user":"Betsy Garcia","title":"Renewals Manager","region":"Americas","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Risk","prompt_preview":"Retrieve my top 10 renewal opportunities where Record Type = Renewals Opportunity, Fiscal Quarter Name = FY2026 Q4, Is Closed = FA"},{"user":"Carlos Ceballos Zaizar","title":"Renewals Specialist","region":"EMEA","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Risk","prompt_preview":"Run the Top 10 BE: Collaboration opportunities report with the following parameters:\n\nFilters:\n- Business Entity: Collaboration, C"},{"user":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Customers","prompt_preview":"Analyze customer sentiment for CIMB BANK BERHAD."},{"user":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Customers","prompt_preview":"Analyze customer sentiment for customer BANK INDONESIA."},{"user":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Customers","prompt_preview":"Analyze customer sentiment for customer BANK NEGARA INDONESIA / BNI 46."},{"user":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Customers","prompt_preview":"Analyze customer sentiment for customer PT MAYBANK INDONESIA."},{"user":"Charan Jit Kaur Thera Singh","title":"Renewals Specialist","region":"APJC","run_count":4,"cadence":"Daily","mean_interval_h":24.0,"interval_cv":0.0,"mode_day":"Monday","day_cons_pct":25.0,"intent":"Customers","prompt_preview":"Analyze customer sentiment for customer Jabatan Akauntan Negara Malaysia."}]},"diversity":{"analysed_users":104,"library_count":40,"diverse_count":1,"library_top10":[{"user":"Hammad Shaukat","title":"Director, Renewals Specialist","region":"APJC","initial":89,"rep_pct":98.9,"top_repeat_count":89,"prompt_preview":"Retrieve and summarize the latest opportunity notes for Deal ID 55010191 from Renewals Console, including date, owner, and note co"},{"user":"Weijian Li","title":"Renewals Manager","region":"Americas","initial":120,"rep_pct":96.7,"top_repeat_count":45,"prompt_preview":"Execute the predefined query (stage1_define_data_query) to retrieve all newly created Enterprise Agreement (EA) Subscription IDs f"},{"user":"Phalla Ros","title":"Renewals Specialist","region":"APJC","initial":24,"rep_pct":91.7,"top_repeat_count":12,"prompt_preview":"Analyze Public Sector AUS customers only. Identify customers with upcoming renewal opportunities within the next six fiscal quarte"},{"user":"Lucinda Kontos","title":"Renewals Manager","region":"Americas","initial":12,"rep_pct":83.3,"top_repeat_count":8,"prompt_preview":"Generate the Renewals Coffee Dashboard for STR_AMERICAN_EAGLE_OUTFITTERS, STR_BROWN UNIVERSITY HEALTH, STR_CORTEVA, STR_PIONEER HI"},{"user":"Patrice Touboul","title":"Director, Renewals","region":"EMEA","initial":5,"rep_pct":80.0,"top_repeat_count":5,"prompt_preview":"Generate Top 10 SERVICES Renewals deals for EMEA SOUTH for: (1) This Week, (2) This Fiscal Month, and (3) This Fiscal Quarter usin"},{"user":"Rosanna Ravelo","title":"Leader, Renewals","region":"Americas","initial":14,"rep_pct":78.6,"top_repeat_count":6,"prompt_preview":"Search in Salesforce DC daily for open opportunities owned by the following direct reports: sturnage@cisco.com, kywhite@cisco.com,"},{"user":"James Turbyfill","title":"Renewals Manager","region":"Americas","initial":9,"rep_pct":77.8,"top_repeat_count":5,"prompt_preview":"Query renewals data and list all deals with Annual Contract Value (ACV) greater than 200,000 for fiscal quarters FY2026 Q1, FY2026"},{"user":"Tj Hinton","title":"Renewals Specialist","region":"Americas","initial":272,"rep_pct":76.8,"top_repeat_count":42,"prompt_preview":"Retrieve fresh renewal opportunity data each day using the following filters: Sales Level 3 (L3) = GVSE_US Commercial; Business En"},{"user":"Joanna Hubbard","title":"Renewals Specialist","region":"Americas","initial":61,"rep_pct":75.4,"top_repeat_count":5,"prompt_preview":"Identify the top 5 customers assigned to me ranked by highest Renewal Risk Severity (descending). For each customer, return: Custo"},{"user":"Jennifer Martins","title":"Leader, Renewals Specialist","region":"EMEA","initial":12,"rep_pct":75.0,"top_repeat_count":4,"prompt_preview":"Run the Security renewal opportunities report for EMEA_SOUTH with the following filters: BUSINESS_ENTITY = Security; Sales Theater"}],"diverse_top10":[{"user":"Dustin Schiller","title":"Renewals Manager","region":"Americas","initial":55,"unique":55,"rep_pct":0.0}],"title_div":[{"title":"Renewals Specialist","users":38,"total_initial":866,"avg_rep_pct":44.8},{"title":"Renewals Manager","users":37,"total_initial":490,"avg_rep_pct":39.9},{"title":"Director, Renewals Specialist","users":2,"total_initial":107,"avg_rep_pct":82.8},{"title":"Leader, Renewals Specialist","users":7,"total_initial":62,"avg_rep_pct":35.5},{"title":"Customer Project Specialist","users":5,"total_initial":34,"avg_rep_pct":19.1},{"title":"Leader, Renewals","users":4,"total_initial":32,"avg_rep_pct":19.6},{"title":"Renewals Manager [C]","users":3,"total_initial":30,"avg_rep_pct":6.7},{"title":"Customer Experience Customer Success Technical Leader","users":2,"total_initial":20,"avg_rep_pct":37.9},{"title":"Strategy & Planning Director","users":1,"total_initial":13,"avg_rep_pct":7.7},{"title":"Director, Strategy & Planning","users":1,"total_initial":9,"avg_rep_pct":66.7}],"region_div":[{"region":"Americas","users":64,"total_initial":1078,"avg_rep_pct":36.0},{"region":"APJC","users":22,"total_initial":397,"avg_rep_pct":56.1},{"region":"EMEA","users":17,"total_initial":194,"avg_rep_pct":30.3},{"region":"Global Service Provider","users":1,"total_initial":16,"avg_rep_pct":75.0}]}}}};
 
-    function show(i) {
-      index = Math.max(0, Math.min(i, slides.length - 1));
-      slides.forEach((s, n) => s.classList.toggle('active', n === index));
-      dots.forEach((d, n) => d.classList.toggle('active', n === index));
-      page.textContent = `${index + 1} / ${slides.length}`;
-    }
+const MONTHS = RAW.months;
+let currentMonth = "All";
 
-    prev.addEventListener('click', () => show(index - 1));
-    next.addEventListener('click', () => show(index + 1));
+// ── utils ──────────────────────────────────────────────────────────
+const n = v => (v ?? 0).toLocaleString();
+const pct = v => (v ?? 0).toFixed(1) + "%";
+const clr = (v, hi=50, lo=20) => v >= hi ? 'warn' : v <= lo ? 'good' : '';
+const bar  = (p, max=100) => `<div class="bar"><div class="fill" style="width:${Math.min(p/max*100,100)}%"></div></div>`;
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') show(index + 1);
-      if (e.key === 'ArrowLeft') show(index - 1);
-    });
+// ── render helpers ────────────────────────────────────────────────
+function kpiCard(label, value, sub='') {
+  return `<div class="card"><div class="lbl">${label}</div><div class="kpi">${value}</div><div class="lbl">${sub}</div></div>`;
+}
+function tableHead(...cols){
+  return `<thead><tr>${cols.map(c=>`<th class="${c[1]||''}">${c[0]}</th>`).join('')}</tr></thead>`;
+}
+function intent_color(intent){
+  const map={Risk:'warn','Opportunity Pipeline':'','Deals':'','Customers':'good',Sales:''};
+  return map[intent]||'';
+}
 
-    show(0);
+// ── slide 1: Overview ─────────────────────────────────────────────
+function renderSlide1(d) {
+  const ov = d.overview;
+  const topIntent = d.intent.dist[0] || {};
+  const topRegion = d.intent.by_region?.[topIntent.intent]?.[0]?.region || 'Americas';
+  return `
+  <h1>CX AI Assistant Adoption Findings</h1>
+  <h2>Initial Question Intent Analysis | ${currentMonth}</h2>
+  <p class="sub">Corrected source upload. Intent filter applied to initial prompts only (Previous&nbsp;Input blank).</p>
+  <div class="g2">
+    ${kpiCard('Total Prompts', n(ov.total), 'All prompts in selected period')}
+    ${kpiCard('Initial Prompts', n(ov.input), pct(ov.input_pct) + ' of all prompts')}
+    ${kpiCard('Follow-up Prompts', n(ov.follow), pct(ov.follow_pct) + ' of all prompts')}
+    <div class="card"><div class="lbl">Core Insight</div>
+      <p style="margin:6px 0 0">Initial usage is strongly operational — risk, pipeline, deals and customer/account asks dominate front-door demand.</p>
+    </div>
+  </div>
+  <div class="chips">
+    <span class="chip">Top intent: ${topIntent.intent||'—'} (${pct(topIntent.pct||0)})</span>
+    <span class="chip">Largest region: ${topRegion}</span>
+    <span class="chip">Peak initial day: ${peakDay(d.activity.init_by_day)}</span>
+  </div>`;
+}
+
+function peakDay(byDay) {
+  return Object.entries(byDay||{}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
+}
+
+// ── slide 2: Intent distribution ─────────────────────────────────
+function renderSlide2(d) {
+  const dist = d.intent.dist || [];
+  const total = dist.reduce((s,r)=>s+r.count,0);
+  const maxP  = Math.max(...dist.map(r=>r.pct));
+  const rows  = dist.map(r=>`
+    <div class="br"><span>${r.intent}</span>${bar(r.pct,maxP)}<strong>${pct(r.pct)}</strong></div>`).join('');
+  return `
+  <h1>Nature Of Initial Questions</h1>
+  <h2>Intent mix across first prompts — ${currentMonth}</h2>
+  <p class="sub">Initial prompts reclassified into business intents. ${n(total)} initial prompts in scope.</p>
+  <div class="bars">${rows}</div>
+  <div class="g2" style="margin-top:12px">
+    <div class="card"><strong>Intent takeaway</strong><ul>
+      <li>Risk + Pipeline together: ${pct(dist.filter(r=>r.intent==='Risk'||r.intent==='Opportunity Pipeline').reduce((s,r)=>s+r.pct,0))} of initial demand</li>
+      <li>Deals + Customers add another ${pct(dist.filter(r=>r.intent==='Deals'||r.intent==='Customers').reduce((s,r)=>s+r.pct,0))}</li>
+      <li>Questions are centered on execution and decision support</li>
+    </ul></div>
+    <div class="card"><strong>Coverage note</strong><ul>
+      <li>${pct(dist.find(r=>r.intent==='Other')?.pct||0)} remains in Other — most demand is captured</li>
+      <li>Intent model creates a strong baseline for enablement targeting</li>
+    </ul></div>
+  </div>`;
+}
+
+// ── slide 3: Intent by role & region ─────────────────────────────
+function renderSlide3(d) {
+  const intents = ['Risk','Opportunity Pipeline','Deals','Customers','Sales'];
+  const cards = intents.map(intent => {
+    const regions = (d.intent.by_region?.[intent]||[]).slice(0,4);
+    const titles  = (d.intent.by_title?.[intent]||[]).slice(0,3);
+    return `<div class="card"><strong>${intent} intent</strong>
+      <ul>
+        ${regions.map(r=>`<li>Region: ${r.region} ${n(r.count)}</li>`).join('')}
+        ${titles.map(t=>`<li>${t.title.replace('Director,','Dir,').replace('Specialist','Spec')}: ${n(t.count)}</li>`).join('')}
+      </ul></div>`;
+  }).join('');
+  return `
+  <h1>Intent By Role And Region</h1>
+  <h2>Who asks what first — ${currentMonth}</h2>
+  <p class="sub">Each intent has distinct role and regional concentration, enabling targeted adoption plans.</p>
+  <div class="g2">${cards}</div>`;
+}
+
+// ── slide 4: Activity timing ──────────────────────────────────────
+function renderSlide4(d) {
+  const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const id = d.activity.init_by_day || {};
+  const fd = d.activity.follow_by_day || {};
+  const maxI = Math.max(...DAYS.map(day=>id[day]||0));
+  const maxF = Math.max(...DAYS.map(day=>fd[day]||0));
+  const initRows = DAYS.map(day=>`<div class="br"><span>${day}</span>${bar(id[day]||0,maxI)}<strong>${n(id[day]||0)}</strong></div>`).join('');
+  const folRows  = DAYS.map(day=>`<div class="br"><span>${day}</span>${bar(fd[day]||0,maxF)}<strong>${n(fd[day]||0)}</strong></div>`).join('');
+  return `
+  <h1>Activity Pattern Snapshot</h1>
+  <h2>Initial timing and follow-up breakdown — ${currentMonth}</h2>
+  <div class="g2">
+    <div class="card"><strong>Initial prompts by day</strong><div class="bars" style="margin-top:8px">${initRows}</div></div>
+    <div class="card"><strong>Follow-up prompts by day</strong><div class="bars" style="margin-top:8px">${folRows}</div>
+      <p style="margin-top:8px;font-size:12px">Follow-up peaks ${peakDay(fd)} — refinement intensity mid-week.</p>
+    </div>
+    <div class="card"><strong>Initial demand implication</strong><ul>
+      <li>Front-door demand peaks ${peakDay(id)}.</li>
+      <li>Enablement drops should target ${peakDay(id)} morning.</li>
+      <li>Midweek coaching reinforces risk/pipeline/deal workflows.</li>
+    </ul></div>
+    <div class="card"><strong>Weekend share</strong><ul>
+      <li>Sat + Sun initial: ${n((id['Saturday']||0)+(id['Sunday']||0))}</li>
+      <li>Sat + Sun follow-up: ${n((fd['Saturday']||0)+(fd['Sunday']||0))}</li>
+      <li>Americas leads weekend activity across all intent types.</li>
+    </ul></div>
+  </div>`;
+}
+
+// ── slide 5: Weekend ──────────────────────────────────────────────
+function renderSlide5(d) {
+  const wk = d.weekend;
+  const regRows = (wk.by_region||[]).slice(0,5).map(r=>
+    `<tr><td>${r.region}</td><td class="tc">${n(r.count)}</td><td class="tc">${pct(r.pct)}</td></tr>`).join('');
+  const titRows = (wk.by_title||[]).slice(0,5).map(r=>
+    `<tr><td>${r.title}</td><td class="tc">${n(r.count)}</td><td class="tc">${pct(r.pct)}</td></tr>`).join('');
+  const intRows = (wk.intent_dist||[]).map(r=>
+    `<div class="br"><span>${r.intent}</span>${bar(r.pct,Math.max(...(wk.intent_dist||[]).map(x=>x.pct)))}<strong>${pct(r.pct)}</strong></div>`).join('');
+  return `
+  <h1>Weekend Usage Breakdown</h1>
+  <h2>Region, title, question intent and user spread — ${currentMonth}</h2>
+  <p class="sub">${n(wk.all)} weekend prompts from ${n(wk.unique_users)} unique users.</p>
+  <div class="g2">
+    <div class="card"><strong>By region</strong>
+      <table class="tbl">${tableHead(['Region'],['Count','tc'],['%','tc'])}<tbody>${regRows}</tbody></table></div>
+    <div class="card"><strong>By title</strong>
+      <table class="tbl">${tableHead(['Title'],['Count','tc'],['%','tc'])}<tbody>${titRows}</tbody></table></div>
+    <div class="card"><strong>Nature of weekend initial questions</strong><div class="bars" style="margin-top:8px">${intRows}</div></div>
+    <div class="card"><strong>Same users or spread?</strong>
+      <ul>
+        <li>Top 5 users: <span class="warn">${pct(wk.top5_share)}</span> of weekend volume</li>
+        <li>Top 10 users: ${pct(wk.top10_share)} of weekend volume</li>
+        <li>User spread: ${n(wk.spread_1_5)} casual (1–5), ${n(wk.spread_6_20)} moderate (6–20), ${n(wk.spread_gt20)} power (20+)</li>
+      </ul>
+      <p style="font-size:12px"><span class="warn">Concentrated</span> core power users + <span class="good">broad</span> long-tail distribution.</p>
+    </div>
+  </div>`;
+}
+
+// ── slide 6: Regular users ────────────────────────────────────────
+function renderSlide6(d) {
+  const r = d.regular;
+  const fc = r.freq_counts || {};
+  const topRegions = Object.entries(r.region_freq||{})
+    .filter(([rg])=>['Americas','EMEA','APJC','Global Service Provider'].includes(rg));
+
+  function userList(arr) {
+    return (arr||[]).slice(0,5).map((u,i)=>
+      `<li>${u.name} — ${u.title.replace('Director,','Dir,').replace('Specialist','Spec')}, ${u.region} (${n(u.total_prompts)} prompts, ${u.weeks_active}/${r.dataset_weeks} wks)</li>`
+    ).join('');
+  }
+  const regRows = topRegions.map(([rg,freqs])=>
+    `<tr><td>${rg}</td><td class="tc">${n(freqs.Weekly||0)}</td><td class="tc">${n(freqs['Bi-Weekly']||0)}</td><td class="tc">${n(freqs.Monthly||0)}</td><td class="tc">${n(freqs.Occasional||0)}</td></tr>`
+  ).join('');
+  return `
+  <h1>Regular Users</h1>
+  <h2>Frequency of use — ${currentMonth} (${r.dataset_weeks} weeks)</h2>
+  <p class="sub">Weekly ≥ 75% of weeks active. Bi-Weekly 30–74%. Monthly active across ≥ 2 months but &lt; 30% of weeks.</p>
+  <div class="g2">
+    <div class="card"><strong>Top 5 weekly users</strong><ol class="tight">${userList(r.top10_weekly)}</ol></div>
+    <div class="card"><strong>Top 5 bi-weekly users</strong><ol class="tight">${userList(r.top10_biweekly)}</ol></div>
+    <div class="card"><strong>Top 5 monthly users</strong><ol class="tight">${userList(r.top10_monthly)}</ol></div>
+    <div class="card"><strong>User count by frequency and region</strong>
+      <table class="tbl">${tableHead(['Region'],['Weekly','tc'],['Bi-Wkly','tc'],['Monthly','tc'],['Occasional','tc'])}
+        <tbody>${regRows}</tbody></table>
+      <p style="margin-top:8px;font-size:12px">
+        <span class="good">${n(fc.Weekly||0)} weekly</span> · <span class="warn">${n(fc['Bi-Weekly']||0)} bi-weekly</span> · ${n(fc.Monthly||0)} monthly · ${n(fc.Occasional||0)} occasional
+      </p>
+    </div>
+  </div>`;
+}
+
+// ── slide 7: Scheduled usage ──────────────────────────────────────
+function renderSlide7(d) {
+  const s = d.scheduled;
+  const patterns = s.patterns || [];
+  const cadenceSummary = Object.entries(s.cadence_summary||{}).map(([k,v])=>`${v} ${k}`).join(' · ');
+  const cards = patterns.length === 0
+    ? `<div class="card" style="grid-column:1/-1"><p>No statistically regular scheduled patterns detected in this period. Usage is predominantly organic and manual — a positive indicator of active engagement.</p></div>`
+    : patterns.slice(0,4).map(p=>`<div class="card">
+        <strong>${p.cadence} · ${p.mode_day} (${p.day_cons_pct}% consistency)</strong>
+        <ul style="margin:6px 0 0">
+          <li><strong>User:</strong> ${p.user} (${p.title.replace('Director,','Dir,').replace('Specialist','Spec')}, ${p.region})</li>
+          <li><strong>Runs:</strong> ${p.run_count} · every ~${p.mean_interval_h}h · CV ${p.interval_cv}</li>
+          <li><strong>Intent:</strong> ${p.intent}</li>
+          <li><em>${p.prompt_preview}</em></li>
+        </ul></div>`).join('');
+  return `
+  <h1>Scheduled Usage</h1>
+  <h2>Automated or recurring prompt patterns — ${currentMonth}</h2>
+  <p class="sub">Detection: same user + identical prompt, 3+ runs, interval CV ≤ 0.40. ${s.total} pattern(s) found. ${cadenceSummary||'No recurring cadences.'}</p>
+  <div class="g2">
+    <div class="card"><strong>Key finding</strong>
+      <p>Only <span class="warn">${s.total} confirmed scheduled pattern(s)</span> across initial prompts in this period.
+      The <span class="good">vast majority of usage is organic and manual</span> — users are actively engaging rather than relying on automation.</p>
+      <p style="margin-top:8px;font-size:12px">The few patterns detected are strong candidates for native scheduled delivery inside the tool.</p>
+    </div>
+    ${cards}
+  </div>`;
+}
+
+// ── slide 8: Prompt library behaviour ─────────────────────────────
+function renderSlide8(d) {
+  const div = d.diversity;
+  const libRows = (div.library_top10||[]).map(u=>`
+    <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td>
+    <td class="tc"><span class="${clr(u.rep_pct,80,30)}">${pct(u.rep_pct)}</span></td>
+    <td style="font-size:11px"><em>${(u.prompt_preview||'').slice(0,60)}…</em></td></tr>`).join('');
+  const divRows = (div.diverse_top10||[]).slice(0,8).map(u=>`
+    <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td><td class="tc">${n(u.unique)}</td>
+    <td class="tc"><span class="good">${pct(u.rep_pct)}</span></td></tr>`).join('');
+  const titRows = (div.title_div||[]).map(r=>`
+    <tr><td>${r.title.replace('Director,','Dir,').replace('Specialist','Spec')}</td>
+    <td class="tc">${n(r.users)}</td><td class="tc">${n(r.total_initial)}</td>
+    <td class="tc"><span class="${clr(r.avg_rep_pct,60,20)}">${pct(r.avg_rep_pct)}</span></td></tr>`).join('');
+  const regRows = (div.region_div||[]).filter(r=>r.region&&r.region!=='Unknown'&&r.region!=='1').map(r=>`
+    <tr><td>${r.region}</td><td class="tc">${n(r.users)}</td><td class="tc">${n(r.total_initial)}</td>
+    <td class="tc"><span class="${clr(r.avg_rep_pct,40,20)}">${pct(r.avg_rep_pct)}</span></td></tr>`).join('');
+  return `
+  <h1>Prompt Library Behaviour</h1>
+  <h2>Repeated similar prompts regardless of time — ${currentMonth}</h2>
+  <p class="sub">${n(div.analysed_users)} users analysed (≥ 5 initial prompts). <span class="warn">${n(div.library_count)}</span> library-likely (repeat &gt;50%). <span class="good">${n(div.diverse_count)}</span> diverse explorers (&lt;15%).</p>
+  <div class="g2">
+    <div class="card"><strong>Library-likely users (top 10, repeat &gt; 50%)</strong>
+      <table class="tbl">${tableHead(['User'],['Initial','tc'],['Repeat %','tc'],['Top prompt',''])}
+      <tbody>${libRows}</tbody></table></div>
+    <div class="card"><strong>Most diverse users (top 8, repeat &lt; 15%)</strong>
+      <table class="tbl">${tableHead(['User'],['Initial','tc'],['Unique','tc'],['Repeat %','tc'])}
+      <tbody>${divRows}</tbody></table></div>
+    <div class="card"><strong>Avg repeat % by title</strong>
+      <table class="tbl">${tableHead(['Title'],['Users','tc'],['Initial prompts','tc'],['Avg repeat %','tc'])}
+      <tbody>${titRows}</tbody></table></div>
+    <div class="card"><strong>Avg repeat % by region</strong>
+      <table class="tbl">${tableHead(['Region'],['Users','tc'],['Initial prompts','tc'],['Avg repeat %','tc'])}
+      <tbody>${regRows}</tbody></table>
+      <p style="margin-top:8px;font-size:12px">Highest repeat % = likely template/library-driven usage.</p></div>
+  </div>`;
+}
+
+// ── slide 9: Adoption actions (static) ────────────────────────────
+function renderSlide9() {
+  return `
+  <h1>Adoption Actions</h1>
+  <h2>Recommendations based on initial intent demand</h2>
+  <div class="g2">
+    <div class="card"><strong>1) Build intent-first prompt packs</strong>
+      <p>Create guided packs for Risk, Pipeline, Deals, Customers, and Sales so users start with strong first prompts.</p></div>
+    <div class="card"><strong>2) Launch role-based onboarding tracks</strong>
+      <p>Prioritise Renewals Specialist and Renewals Manager tracks — they dominate core intent usage.</p></div>
+    <div class="card"><strong>3) Monday-first enablement cadence</strong>
+      <p>Release weekly kits on Monday morning focused on risk triage, pipeline prioritisation, and deal review.</p></div>
+    <div class="card"><strong>4) Customer and deal acceleration workflows</strong>
+      <p>Package reusable prompts for account briefings, deal diagnostics, and next-best-action recommendations.</p></div>
+    <div class="card"><strong>5) Region-specific playbooks</strong>
+      <p>Localise Americas-first templates, then tune risk/deal variants for EMEA and APJC operating models.</p></div>
+    <div class="card"><strong>6) Improve intent telemetry</strong>
+      <p>Track intent at run-time and standardise Region/Title values to monitor adoption lift by question type.</p></div>
+  </div>
+  <p class="sub" style="margin-top:14px">Expected outcome: faster first-response value, higher-quality initial asks, and stronger adoption growth aligned to business-critical question types.</p>`;
+}
+
+const RENDERERS = [renderSlide1,renderSlide2,renderSlide3,renderSlide4,renderSlide5,renderSlide6,renderSlide7,renderSlide8,renderSlide9];
+const N = RENDERERS.length;
+let index = 0;
+let dots = [];
+
+function renderAll() {
+  const d = RAW.data[currentMonth] || RAW.data['All'];
+  document.querySelectorAll('.slide').forEach((el, i) => {
+    const fn = RENDERERS[i];
+    el.innerHTML = fn ? fn(d) : '';
+  });
+}
+
+function show(i) {
+  index = Math.max(0, Math.min(i, N - 1));
+  document.querySelectorAll('.slide').forEach((s, n) => s.classList.toggle('active', n === index));
+  dots.forEach((d, n) => d.classList.toggle('active', n === index));
+  document.getElementById('page').textContent = `${index+1} / ${N}`;
+}
+
+function setMonth(m) {
+  currentMonth = m;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.toggle('active', b.dataset.m === m));
+  renderAll();
+  show(index);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < N; i++) {
+    const b = document.createElement('button');
+    b.className = 'dot'; b.type = 'button';
+    b.setAttribute('aria-label', `Slide ${i+1}`);
+    b.addEventListener('click', () => show(i));
+    dotsEl.appendChild(b);
+    dots.push(b);
+  }
+  document.getElementById('prev').addEventListener('click', () => show(index - 1));
+  document.getElementById('next').addEventListener('click', () => show(index + 1));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') show(index + 1);
+    if (e.key === 'ArrowLeft')  show(index - 1);
+  });
+  renderAll();
+  show(0);
+});
+
   </script>
 </body>
 </html>
