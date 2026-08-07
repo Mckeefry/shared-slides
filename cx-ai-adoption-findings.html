@@ -378,6 +378,130 @@
     </section>
 
     <section class="slide">
+      <h1>Regular Users</h1>
+      <h2>Frequency of use by weekly, bi-weekly and monthly patterns</h2>
+      <p class="subtitle">
+        Dataset spans <span class="good">8 weeks across 3 months</span>. Weekly users = active in ≥ 75% of weeks.
+        Bi-weekly = 30–74%. Monthly = &lt; 30% of weeks but across ≥ 2 months.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Top 10 weekly users</strong>
+          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
+            <li>Tj Hinton — Renewals Specialist, Americas (7,128 prompts, 8/8 wks)</li>
+            <li>Erin Shanahan — Renewals Specialist, Americas (5,838 prompts, 7/8 wks)</li>
+            <li>Jane Zhang — Dir, Strategy &amp; Planning, Americas (5,251 prompts, 8/8 wks)</li>
+            <li>Weijian Li — Renewals Manager, Americas (3,224 prompts, 8/8 wks)</li>
+            <li>Andrea Ghini — Renewals Specialist, EMEA (3,109 prompts, 7/8 wks)</li>
+            <li>Hammad Shaukat — Dir, Renewals Specialist, APJC (2,009 prompts, 8/8 wks)</li>
+            <li>Michael Mckeefry — Business Ops Manager, EMEA (1,483 prompts, 6/8 wks)</li>
+            <li>Charan Jit Kaur Thera Singh — Renewals Specialist, APJC (1,122 prompts, 8/8 wks)</li>
+            <li>Darin Messer — Renewals Manager, Americas (1,059 prompts, 7/8 wks)</li>
+            <li>Yanika Bayanova — Renewals Manager [C], Americas (1,019 prompts, 7/8 wks)</li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>Top 10 bi-weekly users</strong>
+          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
+            <li>Peter Caterinicchia — Renewals Manager, Americas (1,149 prompts)</li>
+            <li>Wade Ritter — Renewals Specialist, Americas (563 prompts)</li>
+            <li>Alva Mcclain — Renewals Manager [C], Americas (473 prompts)</li>
+            <li>Oscar Nepomuceno Flores — BDM, Americas (453 prompts)</li>
+            <li>Saam Farahmand — Renewals Specialist, Americas (439 prompts)</li>
+            <li>Stephanie Nwokedi — Renewals Manager, EMEA (438 prompts)</li>
+            <li>Vincent Griessmayer — Intern, EMEA (434 prompts)</li>
+            <li>Michele Miller — Leader, Renewals Specialist, Americas (430 prompts)</li>
+            <li>Jessica Park — Renewals Specialist, Americas (418 prompts)</li>
+            <li>Collin Schurr — Renewals Manager, Americas (403 prompts)</li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>Top 10 monthly users</strong>
+          <ol style="margin:6px 0 0; padding-left:18px; font-size:13px; line-height:1.7">
+            <li>Joe Allen — Renewals Manager, GSP (1,738 prompts)</li>
+            <li>Brooks Powell — Renewals Manager, Americas (513 prompts)</li>
+            <li>Seda Guralp — Renewals Manager, EMEA (325 prompts)</li>
+            <li>Daniel Garcia — Renewals Manager, Americas (317 prompts)</li>
+            <li>Dustin Schiller — Renewals Manager, Americas (304 prompts)</li>
+            <li>Chanda Ingalls — Renewals Manager, Americas (264 prompts)</li>
+            <li>Niall Lynch — Renewals Specialist, EMEA (263 prompts)</li>
+            <li>Nako Takahashi — Renewals Manager, APJC (252 prompts)</li>
+            <li>Peter Komorowski — BDM, EMEA (222 prompts)</li>
+            <li>Taylor Mckain — Renewals Manager, Americas (204 prompts)</li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>User count by frequency and region</strong>
+          <table style="width:100%;font-size:13px;border-collapse:collapse;margin-top:6px">
+            <thead><tr style="color:var(--muted)"><th style="text-align:left;padding:3px 0">Region</th><th>Weekly</th><th>Bi-Wkly</th><th>Monthly</th><th>Occasional</th></tr></thead>
+            <tbody>
+              <tr><td>Americas</td><td style="text-align:center">189</td><td style="text-align:center">142</td><td style="text-align:center">120</td><td style="text-align:center">280</td></tr>
+              <tr><td>EMEA</td><td style="text-align:center">70</td><td style="text-align:center">53</td><td style="text-align:center">53</td><td style="text-align:center">101</td></tr>
+              <tr><td>APJC</td><td style="text-align:center">38</td><td style="text-align:center">13</td><td style="text-align:center">23</td><td style="text-align:center">78</td></tr>
+              <tr><td>GSP</td><td style="text-align:center">13</td><td style="text-align:center">6</td><td style="text-align:center">3</td><td style="text-align:center">10</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:8px;font-size:13px">
+            <span class="good">310 weekly users</span> · <span class="warn">216 bi-weekly</span> · 201 monthly · 474 occasional.
+            The majority of regular users are in Americas, but all regions have a committed weekly cohort.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Scheduled Usage</h1>
+      <h2>Automated or recurring prompt patterns detected</h2>
+      <p class="subtitle">
+        Detection method: same user + same prompt text, run 3+ times with a coefficient of variation ≤ 0.40 on
+        inter-run intervals and consistent day-of-week alignment.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <strong>What the data shows</strong>
+          <p>
+            Only <span class="warn">3 confirmed scheduled patterns</span> were detected across 99,647 initial prompts.
+            This is a significant finding: the <span class="good">vast majority of usage is organic and manual</span>,
+            not automated. Users are actively engaging with the tool rather than relying on automated runs.
+          </p>
+        </div>
+        <div class="card">
+          <strong>Scheduled pattern 1 — Weekly, every Monday</strong>
+          <ul>
+            <li><strong>User:</strong> Rahul Setiya (Strategy &amp; Planning Director, Americas)</li>
+            <li><strong>Cadence:</strong> Every 168 hours — every Monday, 100% day consistency</li>
+            <li><strong>Run count:</strong> 4 confirmed runs</li>
+            <li><strong>Intent:</strong> Risk</li>
+            <li><strong>Prompt:</strong> FY2026 Q4 Available To Renew (ATR) report for APJC, Enterprise Sw segment</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Scheduled pattern 2 — Weekly, every Friday</strong>
+          <ul>
+            <li><strong>User:</strong> Alison Kurtz (Renewals Specialist, Americas)</li>
+            <li><strong>Cadence:</strong> Every 168 hours — every Friday, 100% day consistency</li>
+            <li><strong>Run count:</strong> 3 confirmed runs</li>
+            <li><strong>Intent:</strong> Process / Task Management</li>
+            <li><strong>Prompt:</strong> Quarterly Task Review — review all active tasks, update or delete as needed</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Scheduled pattern 3 — Daily rotation</strong>
+          <ul>
+            <li><strong>User:</strong> Tj Hinton (Renewals Specialist, Americas)</li>
+            <li><strong>Cadence:</strong> Every 24 hours (daily refresh), 4 confirmed runs</li>
+            <li><strong>Intent:</strong> Risk</li>
+            <li><strong>Prompt:</strong> Sentiment analysis for Top 20 ATR customers (6–18 month window) using 4-day rotation</li>
+          </ul>
+          <p style="margin-top:8px;font-size:13px">
+            <span class="good">Key insight:</span> Scheduled use is rare and purpose-built. These prompts represent
+            high-value recurring operational reports that are strong candidates for native scheduled delivery inside the tool.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
       <h1>Adoption Actions</h1>
       <h2>Recommendations based on initial intent demand</h2>
       <div class="grid-2">
@@ -417,7 +541,7 @@
         <button class="btn" id="prev" type="button">Prev</button>
         <div class="dots" id="dots"></div>
         <button class="btn" id="next" type="button">Next</button>
-        <span id="page">1 / 6</span>
+        <span id="page">1 / 8</span>
       </div>
     </div>
   </main>
