@@ -8,9 +8,12 @@
 :root{--bg:#07131f;--panel:#0d2032;--ink:#ecf4ff;--muted:#a8c2df;--accent:#22d3ee;--accent2:#7dd3fc;--good:#34d399;--warn:#f59e0b}
 *{box-sizing:border-box}
 body{margin:0;font-family:"Bahnschrift","Avenir Next","Trebuchet MS",sans-serif;background:radial-gradient(circle at 20% 10%,#123556 0%,var(--bg) 45%,#050b13 100%);color:var(--ink);min-height:100vh}
-.deck{width:min(1200px,94vw);margin:2vh auto}
+.deck{width:min(1200px,94vw);margin:2vh auto;position:relative;padding-right:130px}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 .filter-bar span{color:var(--muted);font-size:13px;margin-right:4px}
+.renewals-side{position:absolute;right:0;top:64px;display:flex;flex-direction:column;gap:8px;align-items:stretch;width:118px}
+.renewals-side span{color:var(--muted);font-size:13px;text-align:right;padding-right:4px}
+.renewals-side .fbtn{width:100%}
 .fbtn{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--muted);border-radius:999px;padding:5px 14px;cursor:pointer;font-size:13px;transition:all .2s}
 .fbtn.active,.fbtn:hover{background:var(--accent);color:#07131f;border-color:var(--accent);font-weight:700}
 .slide{display:none;background:linear-gradient(145deg,rgba(13,32,50,.95),rgba(8,20,33,.92));border:1px solid rgba(125,211,252,.25);border-radius:20px;padding:44px;min-height:80vh;animation:rise 360ms ease}
@@ -43,12 +46,13 @@ th{color:var(--muted);font-weight:600;padding:3px 4px;text-align:left}
 td{padding:3px 4px;border-top:1px solid rgba(125,211,252,.08)}
 .tc{text-align:center}
 ol.tight{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.8}
-@media(max-width:900px){.slide{padding:22px;min-height:72vh}.g2{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
+@media(max-width:900px){.deck{padding-right:0}.renewals-side{position:static;flex-direction:row;flex-wrap:wrap;width:auto;margin:0 0 12px}.renewals-side span{text-align:left;padding-right:0;width:100%}.slide{padding:22px;min-height:72vh}.g2{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
 </style>
 </head>
 <body>
   <main class="deck">
-    <div class="filter-bar"><span>Period:</span><button class="fbtn active" data-m="All" onclick="toggleMonth('All')">All</button><button class="fbtn" data-m="April" onclick="toggleMonth('April')">April</button><button class="fbtn" data-m="May" onclick="toggleMonth('May')">May</button><button class="fbtn" data-m="June" onclick="toggleMonth('June')">June</button><button class="fbtn" data-m="July" onclick="toggleMonth('July')">July</button><button class="fbtn" data-m="August" onclick="toggleMonth('August')">August</button><span style="margin-left:10px">Renewals:</span><button class="fbtn" data-s="Y" onclick="toggleSales('Y')">Y</button><button class="fbtn" data-s="N" onclick="toggleSales('N')">N</button><button class="fbtn active" data-s="Both" onclick="toggleSales('Both')">Both</button></div>
+    <div class="filter-bar"><span>Period:</span><button class="fbtn active" data-m="All" onclick="toggleMonth('All')">All</button><button class="fbtn" data-m="April" onclick="toggleMonth('April')">April</button><button class="fbtn" data-m="May" onclick="toggleMonth('May')">May</button><button class="fbtn" data-m="June" onclick="toggleMonth('June')">June</button><button class="fbtn" data-m="July" onclick="toggleMonth('July')">July</button><button class="fbtn" data-m="August" onclick="toggleMonth('August')">August</button></div>
+    <aside class="renewals-side"><span>Renewals:</span><button class="fbtn" data-s="Y" onclick="toggleSales('Y')">Y</button><button class="fbtn" data-s="N" onclick="toggleSales('N')">N</button><button class="fbtn active" data-s="Both" onclick="toggleSales('Both')">Both</button></aside>
     <section class="slide  active"></section>
     <section class="slide"></section>
     <section class="slide"></section>
