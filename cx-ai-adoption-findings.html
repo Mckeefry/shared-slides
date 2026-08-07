@@ -513,18 +513,21 @@
         <div class="card">
           <strong>Library-likely users (repeated ratio &gt; 50%)</strong>
           <p style="margin:4px 0 8px;font-size:13px;color:var(--warn)">222 of 951 users (23.3%) show strong template reuse patterns.</p>
-          <ol style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.75">
-            <li>Erin Shanahan — Renewals Specialist, Americas · 99.6% repeated · <em>Cross-Architecture Renewal Report (Collab)</em></li>
-            <li>Joe Moran — Dir, Business Dev, Americas · 99.2% repeated · <em>Generate renewal opportunities table [template with placeholders]</em></li>
-            <li>Weijian Li — Renewals Manager, Americas · 99.0% repeated · <em>Execute predefined query: EA Subscription IDs</em></li>
-            <li>Scott Snyder — Renewals Manager, Americas · 98.6% repeated · <em>Total ATR for services H2 FY26 / H1 FY27, summarise by customer</em></li>
-            <li>Jade Mcpeak — Renewals Specialist, Americas · 98.4% repeated · <em>Renewal list: Collab BEs, US Commerce territory filter</em></li>
-            <li>Eric Calhoun — Dir, Business Dev, Americas · 98.4% repeated · <em>Top 20 high-risk renewals closing in current fiscal quarter</em></li>
-            <li>Jane Zhang — Dir, Strategy &amp; Planning, Americas · 98.3% repeated · <em>Commerce Orders in prior 24 hrs with Booking Value &gt; $1M</em></li>
-            <li>Megan Dearman — Renewals Specialist, EMEA · 98.2% repeated · <em>Show me opportunity notes on a deal</em></li>
-            <li>Paul Connors — Renewals Specialist, Americas · 97.9% repeated · <em>Summarize the renewal risk of a deal</em></li>
-            <li>Hammad Shaukat — Dir, Renewals Specialist, APJC · 97.6% repeated · <em>Latest opportunity notes for specific Deal ID</em></li>
-          </ol>
+          <table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:6px">
+            <thead><tr style="color:var(--muted)"><th style="text-align:left">User</th><th style="text-align:center">Initial prompts</th><th style="text-align:center">Repeat %</th><th style="text-align:left">Top prompt (preview)</th></tr></thead>
+            <tbody>
+              <tr><td>Erin Shanahan (RS, Americas)</td><td style="text-align:center">5,822</td><td style="text-align:center"><span class="warn">99.6%</span></td><td><em>Cross-Architecture Renewal Report (Collab)</em></td></tr>
+              <tr><td>Joe Moran (Dir BDM, Americas)</td><td style="text-align:center">124</td><td style="text-align:center"><span class="warn">99.2%</span></td><td><em>Generate renewal opps table [placeholders]</em></td></tr>
+              <tr><td>Weijian Li (RM, Americas)</td><td style="text-align:center">3,188</td><td style="text-align:center"><span class="warn">99.0%</span></td><td><em>Execute predefined query: EA Subscription IDs</em></td></tr>
+              <tr><td>Scott Snyder (RM, Americas)</td><td style="text-align:center">810</td><td style="text-align:center">98.6%</td><td><em>Total ATR H2 FY26 / H1 FY27 by customer</em></td></tr>
+              <tr><td>Jade Mcpeak (RS, Americas)</td><td style="text-align:center">442</td><td style="text-align:center">98.4%</td><td><em>Renewal list: Collab BEs, US Commerce filter</em></td></tr>
+              <tr><td>Eric Calhoun (Dir BDM, Americas)</td><td style="text-align:center">125</td><td style="text-align:center">98.4%</td><td><em>Top 20 high-risk renewals in current fiscal quarter</em></td></tr>
+              <tr><td>Jane Zhang (Dir S&amp;P, Americas)</td><td style="text-align:center">5,246</td><td style="text-align:center">98.3%</td><td><em>Commerce Orders prior 24 hrs &gt; $1M booking</em></td></tr>
+              <tr><td>Megan Dearman (RS, EMEA)</td><td style="text-align:center">112</td><td style="text-align:center">98.2%</td><td><em>Show me opportunity notes on a deal</em></td></tr>
+              <tr><td>Paul Connors (RS, Americas)</td><td style="text-align:center">479</td><td style="text-align:center">97.9%</td><td><em>Summarize the renewal risk of a deal</em></td></tr>
+              <tr><td>Hammad Shaukat (Dir RS, APJC)</td><td style="text-align:center">1,935</td><td style="text-align:center">97.6%</td><td><em>Latest opp notes for specific Deal ID</em></td></tr>
+            </tbody>
+          </table>
         </div>
         <div class="card">
           <strong>Most diverse users (repeated ratio &lt; 15%, ≥ 20 prompts)</strong>
@@ -543,18 +546,18 @@
         <div class="card">
           <strong>Diversity by title (avg % of prompts that are repeats)</strong>
           <table style="width:100%;font-size:12.5px;border-collapse:collapse;margin-top:6px">
-            <thead><tr style="color:var(--muted)"><th style="text-align:left">Title</th><th style="text-align:center">Users</th><th style="text-align:center">Avg repeat %</th></tr></thead>
+            <thead><tr style="color:var(--muted)"><th style="text-align:left">Title</th><th style="text-align:center">Users</th><th style="text-align:center">Initial prompts</th><th style="text-align:center">Avg repeat %</th></tr></thead>
             <tbody>
-              <tr><td>Director, Strategy &amp; Planning</td><td style="text-align:center">2</td><td style="text-align:center"><span class="warn">71.0%</span></td></tr>
-              <tr><td>Director, Renewals Specialist</td><td style="text-align:center">7</td><td style="text-align:center"><span class="warn">51.8%</span></td></tr>
-              <tr><td>Leader, Renewals Specialist</td><td style="text-align:center">28</td><td style="text-align:center">43.4%</td></tr>
-              <tr><td>Renewals Specialist</td><td style="text-align:center">199</td><td style="text-align:center">43.2%</td></tr>
-              <tr><td>Business Development Manager</td><td style="text-align:center">20</td><td style="text-align:center">38.3%</td></tr>
-              <tr><td>Customer Project Specialist</td><td style="text-align:center">19</td><td style="text-align:center">24.2%</td></tr>
-              <tr><td>Renewals Manager</td><td style="text-align:center">442</td><td style="text-align:center">25.4%</td></tr>
-              <tr><td>Leader, Renewals</td><td style="text-align:center">55</td><td style="text-align:center">22.2%</td></tr>
-              <tr><td>Renewals Manager [C]</td><td style="text-align:center">30</td><td style="text-align:center"><span class="good">18.1%</span></td></tr>
-              <tr><td>Business Operations Manager</td><td style="text-align:center">13</td><td style="text-align:center"><span class="good">9.8%</span></td></tr>
+              <tr><td>Director, Strategy &amp; Planning</td><td style="text-align:center">2</td><td style="text-align:center">5,262</td><td style="text-align:center"><span class="warn">71.0%</span></td></tr>
+              <tr><td>Director, Renewals Specialist</td><td style="text-align:center">7</td><td style="text-align:center">2,610</td><td style="text-align:center"><span class="warn">51.8%</span></td></tr>
+              <tr><td>Leader, Renewals Specialist</td><td style="text-align:center">28</td><td style="text-align:center">3,220</td><td style="text-align:center">43.4%</td></tr>
+              <tr><td>Renewals Specialist</td><td style="text-align:center">199</td><td style="text-align:center">38,290</td><td style="text-align:center">43.2%</td></tr>
+              <tr><td>Business Development Manager</td><td style="text-align:center">20</td><td style="text-align:center">2,858</td><td style="text-align:center">38.3%</td></tr>
+              <tr><td>Customer Project Specialist</td><td style="text-align:center">19</td><td style="text-align:center">1,451</td><td style="text-align:center">24.2%</td></tr>
+              <tr><td>Renewals Manager</td><td style="text-align:center">442</td><td style="text-align:center">34,627</td><td style="text-align:center">25.4%</td></tr>
+              <tr><td>Leader, Renewals</td><td style="text-align:center">55</td><td style="text-align:center">2,603</td><td style="text-align:center">22.2%</td></tr>
+              <tr><td>Renewals Manager [C]</td><td style="text-align:center">30</td><td style="text-align:center">2,170</td><td style="text-align:center"><span class="good">18.1%</span></td></tr>
+              <tr><td>Business Operations Manager</td><td style="text-align:center">13</td><td style="text-align:center">1,227</td><td style="text-align:center"><span class="good">9.8%</span></td></tr>
             </tbody>
           </table>
         </div>
