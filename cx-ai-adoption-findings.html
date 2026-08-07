@@ -154,8 +154,8 @@ function renderSlide3(d) {
     const titles  = (d.intent.by_title?.[intent]||[]).slice(0,3);
     return `<div class="card"><strong>${intent} intent</strong>
       <ul>
-        ${regions.map(r=>`<li>Region: ${r.region} ${n(r.count)}</li>`).join('')}
-        ${titles.map(t=>`<li>${t.title.replace('Director,','Dir,').replace('Specialist','Spec')}: ${n(t.count)}</li>`).join('')}
+        ${regions.map(r=>`<li>Region: ${r.Region||r.region||'—'} ${n(r.count)}</li>`).join('')}
+        ${titles.map(t=>`<li>${(t.Title||t.title||'').replace('Director,','Dir,').replace('Specialist','Spec')}: ${n(t.count)}</li>`).join('')}
       </ul></div>`;
   }).join('');
   return `
@@ -356,7 +356,9 @@ function renderAll() {
   const d = RAW.data[currentMonth] || RAW.data['All'];
   document.querySelectorAll('.slide').forEach((el, i) => {
     const fn = RENDERERS[i];
-    el.innerHTML = fn ? fn(d) : '';
+    if (!fn) return;
+    try { el.innerHTML = fn(d); }
+    catch(e) { el.innerHTML = `<p style="color:var(--warn)">Render error on slide ${i+1}: ${e.message}</p>`; }
   });
 }
 
