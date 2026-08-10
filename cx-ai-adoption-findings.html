@@ -24,7 +24,9 @@ h2{margin:8px 0 18px;color:var(--accent2);font-size:clamp(18px,2.2vw,28px);font-
 p,li{line-height:1.5}
 .sub{color:var(--muted);max-width:960px;margin-bottom:22px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .card{border:1px solid rgba(125,211,252,.22);border-radius:14px;padding:14px 16px;background:rgba(10,25,40,.55)}
+.card.compact{padding:10px 12px}
 .kpi{font-size:clamp(22px,3vw,40px);font-weight:700;color:var(--accent);margin:4px 0}
 .lbl{color:var(--muted);font-size:13px}
 .bars{margin-top:6px;display:grid;gap:8px}
@@ -44,6 +46,8 @@ p,li{line-height:1.5}
 tbl{width:100%;font-size:12px;border-collapse:collapse;margin-top:6px}
 th{color:var(--muted);font-weight:600;padding:3px 4px;text-align:left}
 td{padding:3px 4px;border-top:1px solid rgba(125,211,252,.08)}
+.tbl-sm{font-size:11px}
+.tbl-sm th,.tbl-sm td{padding:2px 4px}
 .tc{text-align:center}
 ol.tight{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.8}
 @media(max-width:900px){.deck{padding-right:0}.renewals-side{position:static;flex-direction:row;flex-wrap:wrap;width:auto;margin:0 0 12px}.renewals-side span{text-align:left;padding-right:0;width:100%}.slide{padding:22px;min-height:72vh}.g2{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
@@ -161,19 +165,19 @@ function renderSlide2(d) {
 function renderSlide3(d) {
   const intents = ['Risk','Opportunity Pipeline','Deals','Customers','Sales'];
   const cards = intents.map(intent => {
-    const regions = (d.intent.by_region?.[intent]||[]).slice(0,4);
-    const titles  = (d.intent.by_title?.[intent]||[]).slice(0,3);
-    return `<div class="card"><strong>${intent} intent</strong>
-      <ul>
-        ${regions.map(r=>`<li>Region: ${r.Region||r.region||'—'} ${n(r.count)}</li>`).join('')}
-        ${titles.map(t=>`<li>${(t.Title||t.title||'').replace('Director,','Dir,').replace('Specialist','Spec')}: ${n(t.count)}</li>`).join('')}
+    const regions = (d.intent.by_region?.[intent]||[]).slice(0,3);
+    const titles  = (d.intent.by_title?.[intent]||[]).slice(0,2);
+    return `<div class="card compact"><strong>${intent}</strong>
+      <ul style="margin:4px 0 0;font-size:12px;line-height:1.6">
+        ${regions.map(r=>`<li>${r.Region||r.region||'—'} ${n(r.count)}</li>`).join('')}
+        <li style="color:var(--muted);margin-top:2px">${titles.map(t=>`${(t.Title||t.title||'').replace('Director, Strategy & Planning','Dir, S&P').replace('Director,','Dir,').replace('Specialist','Spec').replace('Manager','Mgr')}: ${n(t.count)}`).join(' · ')}</li>
       </ul></div>`;
   }).join('');
   return `
   <h1>Intent By Role And Region</h1>
   <h2>Who asks what first — ${scopeLabel()}</h2>
   <p class="sub">Each intent has distinct role and regional concentration, enabling targeted adoption plans.</p>
-  <div class="g2">${cards}</div>`;
+  <div class="g3">${cards}<div class="card compact" style="font-size:12px;color:var(--muted)"><strong style="color:var(--ink)">Reading guide</strong><p style="margin:6px 0 0">Regions ranked by prompt volume. Role shows top 2 titles. All figures are initial prompt counts.</p></div></div>`;
 }
 
 // ── slide 4: Activity timing ──────────────────────────────────────
@@ -276,13 +280,12 @@ function renderSlide7(d) {
   const cadenceSummary = Object.entries(s.cadence_summary||{}).map(([k,v])=>`${v} ${k}`).join(' · ');
   const cards = patterns.length === 0
     ? `<div class="card" style="grid-column:1/-1"><p>No statistically regular scheduled patterns detected in this period. Usage is predominantly organic and manual — a positive indicator of active engagement.</p></div>`
-    : patterns.slice(0,4).map(p=>`<div class="card">
+    : patterns.slice(0,3).map(p=>`<div class="card compact">
         <strong>${p.cadence} · ${p.mode_day} (${p.day_cons_pct}% consistency)</strong>
-        <ul style="margin:6px 0 0">
-          <li><strong>User:</strong> ${p.user} (${p.title.replace('Director,','Dir,').replace('Specialist','Spec')}, ${p.region})</li>
-          <li><strong>Runs:</strong> ${p.run_count} · every ~${p.mean_interval_h}h · CV ${p.interval_cv}</li>
-          <li><strong>Intent:</strong> ${p.intent}</li>
-          <li><em>${p.prompt_preview}</em></li>
+        <ul style="margin:4px 0 0;font-size:12px;line-height:1.6">
+          <li>${p.user} · ${p.title.replace('Director,','Dir,').replace('Specialist','Spec')} · ${p.region}</li>
+          <li>${p.run_count} runs · ~${p.mean_interval_h}h interval · CV ${p.interval_cv} · ${p.intent}</li>
+          <li><em>${p.prompt_preview.slice(0,100)}</em></li>
         </ul></div>`).join('');
   return `
   <h1>Scheduled Usage</h1>
@@ -301,11 +304,11 @@ function renderSlide7(d) {
 // ── slide 8: Prompt library behaviour ─────────────────────────────
 function renderSlide8(d) {
   const div = d.diversity;
-  const libRows = (div.library_top10||[]).map(u=>`
+  const libRows = (div.library_top10||[]).slice(0,7).map(u=>`
     <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td>
     <td class="tc"><span class="${clr(u.rep_pct,80,30)}">${pct(u.rep_pct)}</span></td>
-    <td style="font-size:11px"><em>${(u.prompt_preview||'').slice(0,60)}…</em></td></tr>`).join('');
-  const divRows = (div.diverse_top10||[]).slice(0,8).map(u=>`
+    <td style="font-size:10px"><em>${(u.prompt_preview||'').slice(0,50)}…</em></td></tr>`).join('');
+  const divRows = (div.diverse_top10||[]).slice(0,6).map(u=>`
     <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td><td class="tc">${n(u.unique)}</td>
     <td class="tc"><span class="good">${pct(u.rep_pct)}</span></td></tr>`).join('');
   const titRows = (div.title_div||[]).map(r=>`
@@ -320,19 +323,19 @@ function renderSlide8(d) {
   <h2>Repeated similar prompts regardless of time — ${scopeLabel()}</h2>
   <p class="sub">${n(div.analysed_users)} users analysed (≥ 5 initial prompts). <span class="warn">${n(div.library_count)}</span> library-likely (repeat &gt;50%). <span class="good">${n(div.diverse_count)}</span> diverse explorers (&lt;15%).</p>
   <div class="g2">
-    <div class="card"><strong>Library-likely users (top 10, repeat &gt; 50%)</strong>
-      <table class="tbl">${tableHead(['User'],['Initial','tc'],['Repeat %','tc'],['Top prompt',''])}
+    <div class="card"><strong>Library-likely users (top 7, repeat &gt; 50%)</strong>
+      <table class="tbl tbl-sm">${tableHead(['User'],['Initial','tc'],['Repeat %','tc'],['Top prompt',''])}
       <tbody>${libRows}</tbody></table></div>
-    <div class="card"><strong>Most diverse users (top 8, repeat &lt; 15%)</strong>
-      <table class="tbl">${tableHead(['User'],['Initial','tc'],['Unique','tc'],['Repeat %','tc'])}
+    <div class="card"><strong>Most diverse users (top 6, repeat &lt; 15%)</strong>
+      <table class="tbl tbl-sm">${tableHead(['User'],['Initial','tc'],['Unique','tc'],['Repeat %','tc'])}
       <tbody>${divRows}</tbody></table></div>
     <div class="card"><strong>Avg repeat % by title</strong>
-      <table class="tbl">${tableHead(['Title'],['Users','tc'],['Initial prompts','tc'],['Avg repeat %','tc'])}
+      <table class="tbl tbl-sm">${tableHead(['Title'],['Users','tc'],['Initials','tc'],['Avg rep %','tc'])}
       <tbody>${titRows}</tbody></table></div>
     <div class="card"><strong>Avg repeat % by region</strong>
-      <table class="tbl">${tableHead(['Region'],['Users','tc'],['Initial prompts','tc'],['Avg repeat %','tc'])}
+      <table class="tbl tbl-sm">${tableHead(['Region'],['Users','tc'],['Initials','tc'],['Avg rep %','tc'])}
       <tbody>${regRows}</tbody></table>
-      <p style="margin-top:8px;font-size:12px">Highest repeat % = likely template/library-driven usage.</p></div>
+      <p style="margin-top:6px;font-size:11px">Highest repeat % = likely template/library-driven usage.</p></div>
   </div>`;
 }
 
