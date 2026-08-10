@@ -567,7 +567,9 @@ function renderSlide6b(d) {
   <h1>Regular Users — By Region &amp; Title</h1>
   <h2>Top 5 users per region and title — ${scopeLabel()}</h2>
   <p class="sub">Ranked by total prompts. <span class="good">Weekly</span> ≥75% of weeks · <span class="warn">Bi-Weekly</span> 30–74% · Monthly ≥2 months.</p>
-  <div class="g2" style="margin-bottom:10px">${regionCards}</div>
+  <div style="margin:14px 0 8px;font-size:16px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px">Top 5 by Region</div>
+  <div class="g2" style="margin-bottom:14px">${regionCards}</div>
+  <div style="margin:0 0 8px;font-size:16px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px">Top 5 by Role</div>
   <div class="g2">${titleCards}</div>`;
 }
 
@@ -709,7 +711,35 @@ function mergeSlices(slices) {
       freq_counts:Object.fromEntries(frM),
       top10_weekly:mergeTop('top10_weekly'),top10_biweekly:mergeTop('top10_biweekly'),top10_monthly:mergeTop('top10_monthly'),
       region_freq:rfM,
-    },
+      top5_by_region: (() => {
+        // merge by picking the slice with the most prompts per group key, then re-sort users
+        const gM = {};
+        slices.forEach(sl => Object.entries(sl.regular.top5_by_region||{}).forEach(([g,users]) => {
+          if (!gM[g]) gM[g] = {};
+          users.forEach(u => {
+            if (!gM[g][u.name] || u.total_prompts > gM[g][u.name].total_prompts) gM[g][u.name] = u;
+          });
+        }));
+        const out = {};
+        Object.entries(gM).forEach(([g,uMap]) => {
+          out[g] = Object.values(uMap).sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,5);
+        });
+        return out;
+      })(),
+      top5_by_title: (() => {
+        const gM = {};
+        slices.forEach(sl => Object.entries(sl.regular.top5_by_title||{}).forEach(([g,users]) => {
+          if (!gM[g]) gM[g] = {};
+          users.forEach(u => {
+            if (!gM[g][u.name] || u.total_prompts > gM[g][u.name].total_prompts) gM[g][u.name] = u;
+          });
+        }));
+        const out = {};
+        Object.entries(gM).forEach(([g,uMap]) => {
+          out[g] = Object.values(uMap).sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,5);
+        });
+        return out;
+      })(),
     scheduled:{total:sPatterns.length,cadence_summary:sCad,patterns:sPatterns},
     diversity:{
       analysed_users:big.diversity.analysed_users,
