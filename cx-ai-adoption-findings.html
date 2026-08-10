@@ -570,7 +570,6 @@ function renderSlide6b(d) {
   return `
   <h1>Regular Users — By Region &amp; Title</h1>
   <h2>Top 5 users per region and title — ${scopeLabel()}</h2>
-  <p class="sub">Ranked by total prompts. <span class="good">Weekly</span> ≥75% of weeks · <span class="warn">Bi-Weekly</span> 30–74% · Monthly ≥2 months.</p>
   <div class="g2">
     <div class="card"><strong>Top 5 by Region</strong>${groupTable(r.top5_by_region,'Title',5)}</div>
     <div class="card"><strong>Top 5 by Role</strong>${groupTable(r.top5_by_title,'Region',5)}</div>
