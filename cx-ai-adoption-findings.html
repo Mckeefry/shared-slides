@@ -25,6 +25,7 @@ p,li{line-height:1.5}
 .sub{color:var(--muted);max-width:960px;margin-bottom:22px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
 .card{border:1px solid rgba(125,211,252,.22);border-radius:14px;padding:14px 16px;background:rgba(10,25,40,.55)}
 .card.compact{padding:10px 12px}
 .kpi{font-size:clamp(22px,3vw,40px);font-weight:700;color:var(--accent);margin:4px 0}
@@ -52,7 +53,7 @@ td{padding:3px 4px;border-top:1px solid rgba(125,211,252,.08)}
 .tbl-sm th,.tbl-sm td{padding:2px 4px}
 .tc{text-align:center}
 ol.tight{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.8}
-@media(max-width:900px){.deck{padding-right:0}.renewals-side{position:static;flex-direction:row;flex-wrap:wrap;width:auto;margin:0 0 12px}.renewals-side span{text-align:left;padding-right:0;width:100%}.slide{padding:22px;min-height:72vh}.g2{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
+@media(max-width:900px){.deck{padding-right:0}.renewals-side{position:static;flex-direction:row;flex-wrap:wrap;width:auto;margin:0 0 12px}.renewals-side span{text-align:left;padding-right:0;width:100%}.slide{padding:22px;min-height:72vh}.g2,.g3,.g4{grid-template-columns:1fr}.br{grid-template-columns:130px 1fr 70px}}
 </style>
 </head>
 <body>
@@ -567,9 +568,9 @@ function renderSlide6b(d) {
   <h1>Regular Users — By Region &amp; Title</h1>
   <h2>Top 5 users per region and title — ${scopeLabel()}</h2>
   <p class="sub">Ranked by total prompts. <span class="good">Weekly</span> ≥75% of weeks · <span class="warn">Bi-Weekly</span> 30–74% · Monthly ≥2 months.</p>
-  <div style="margin:14px 0 8px;font-size:16px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px">Top 5 by Region</div>
-  <div class="g2" style="margin-bottom:14px">${regionCards}</div>
-  <div style="margin:0 0 8px;font-size:16px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px">Top 5 by Role</div>
+  <div style="margin:10px 0 6px;font-size:15px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:4px">Top 5 by Region</div>
+  <div class="g4" style="margin-bottom:10px">${regionCards}</div>
+  <div style="margin:0 0 6px;font-size:15px;font-weight:700;color:var(--accent2);border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:4px">Top 5 by Role</div>
   <div class="g2">${titleCards}</div>`;
 }
 
