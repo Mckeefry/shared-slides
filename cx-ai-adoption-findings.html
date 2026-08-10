@@ -16,7 +16,7 @@ body{margin:0;font-family:"Bahnschrift","Avenir Next","Trebuchet MS",sans-serif;
 .renewals-side .fbtn{width:100%}
 .fbtn{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--muted);border-radius:999px;padding:5px 14px;cursor:pointer;font-size:13px;transition:all .2s}
 .fbtn.active,.fbtn:hover{background:var(--accent);color:#07131f;border-color:var(--accent);font-weight:700}
-.slide{display:none;background:linear-gradient(145deg,rgba(13,32,50,.95),rgba(8,20,33,.92));border:1px solid rgba(125,211,252,.25);border-radius:20px;padding:44px;min-height:80vh;animation:rise 360ms ease}
+.slide{display:none;background:linear-gradient(145deg,rgba(13,32,50,.95),rgba(8,20,33,.92));border:1px solid rgba(125,211,252,.25);border-radius:20px;padding:44px;min-height:80vh;animation:rise 360ms ease;position:relative}
 .slide.active{display:block}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 h1{margin:0 0 8px;font-size:clamp(28px,4vw,48px)}
@@ -131,7 +131,7 @@ function renderSlide1(d) {
     <span class="chip">Largest region: ${topRegion}</span>
     <span class="chip">Peak initial day: ${peakDay(d.activity.init_by_day)}</span>
   </div>
-  <div style="text-align:right;margin-top:18px;color:var(--muted);font-size:12px">
+  <div style="position:absolute;bottom:20px;right:44px;color:var(--muted);font-size:12px">
     Data refreshed to: <strong style="color:var(--ink)">${LAST_DATE}</strong>
   </div>`;
 }
