@@ -712,7 +712,26 @@ function mergeSlices(slices) {
     regular:{
       dataset_weeks:slices.reduce((s,sl)=>s+(sl.regular.dataset_weeks||0),0),
       freq_counts:Object.fromEntries(frM),
-      top10_weekly:mergeTop('top10_weekly'),top10_biweekly:mergeTop('top10_biweekly'),top10_monthly:mergeTop('top10_monthly'),top10_occasional:mergeTop('top10_occasional'),
+      top10_weekly:mergeTop('top10_weekly'),top10_biweekly:mergeTop('top10_biweekly'),
+      // users in ≥2 selected months who aren't already weekly/bi-weekly qualify as monthly
+      top10_monthly: (() => {
+        const wkNames = new Set([...mergeTop('top10_weekly'),...mergeTop('top10_biweekly')].map(u=>u.name));
+        const ALL_TIERS = ['top10_weekly','top10_biweekly','top10_monthly','top10_occasional'];
+        const cM = new Map();
+        slices.forEach(sl => {
+          const seen = new Set();
+          ALL_TIERS.forEach(t => (sl.regular[t]||[]).forEach(u => {
+            if (seen.has(u.name)) return;
+            seen.add(u.name);
+            if (!cM.has(u.name)) cM.set(u.name, {...u, sliceCount:0, total_prompts:0});
+            const e = cM.get(u.name); e.sliceCount++; e.total_prompts += u.total_prompts;
+          }));
+        });
+        const crossMonthly = [...cM.values()].filter(u=>u.sliceCount>=2&&!wkNames.has(u.name))
+          .sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,10);
+        return crossMonthly.length ? crossMonthly : mergeTop('top10_monthly');
+      })(),
+      top10_occasional:mergeTop('top10_occasional'),
       region_freq:rfM,
       top5_by_region: (() => {
         const gM = {};
