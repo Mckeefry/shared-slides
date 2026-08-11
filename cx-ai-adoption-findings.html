@@ -45,6 +45,14 @@ p,li{line-height:1.5}
 .btn{border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
 .dl-btn{position:absolute;bottom:20px;right:44px;border:1px solid rgba(34,211,238,.5);background:rgba(7,19,31,.85);color:var(--accent);border-radius:999px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;z-index:10}
 .dl-btn:hover{background:var(--accent);color:#07131f}
+.title-dd{position:relative;width:100%;margin-top:4px}
+.title-dd>summary{list-style:none;display:block;border:1px solid rgba(125,211,252,.35);background:rgba(7,19,31,.7);color:var(--muted);border-radius:999px;padding:5px 10px;cursor:pointer;font-size:12px;text-align:center;width:100%;box-sizing:border-box}
+.title-dd[open]>summary{background:rgba(34,211,238,.15);color:var(--ink)}
+.title-opts{position:absolute;right:0;background:#0a1928;border:1px solid rgba(125,211,252,.35);border-radius:8px;padding:4px;z-index:200;width:250px;max-height:210px;overflow-y:auto;margin-top:4px;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+.title-opt{display:flex;align-items:center;gap:6px;padding:3px 6px;font-size:11px;cursor:pointer;border-radius:4px;color:var(--muted);user-select:none}
+.title-opt:hover,.title-opt.sel{color:var(--ink)}
+.title-opt.sel{background:rgba(34,211,238,.1)}
+.title-opt input[type=checkbox]{accent-color:var(--accent);cursor:pointer}
 tbl{width:100%;font-size:12px;border-collapse:collapse;margin-top:6px}
 th{color:var(--muted);font-weight:600;padding:3px 4px;text-align:left}
 td{padding:3px 4px;border-top:1px solid rgba(125,211,252,.08)}
@@ -58,7 +66,7 @@ ol.tight{margin:4px 0 0;padding-left:18px;font-size:12px;line-height:1.8}
 <body>
   <main class="deck">
     <div class="filter-bar"><span>Period:</span><button class="fbtn active" data-m="All" onclick="toggleMonth('All')">All</button><button class="fbtn" data-m="January" onclick="toggleMonth('January')">January</button><button class="fbtn" data-m="February" onclick="toggleMonth('February')">February</button><button class="fbtn" data-m="March" onclick="toggleMonth('March')">March</button><button class="fbtn" data-m="April" onclick="toggleMonth('April')">April</button><button class="fbtn" data-m="May" onclick="toggleMonth('May')">May</button><button class="fbtn" data-m="June" onclick="toggleMonth('June')">June</button><button class="fbtn" data-m="July" onclick="toggleMonth('July')">July</button><button class="fbtn" data-m="August" onclick="toggleMonth('August')">August</button></div>
-    <aside class="renewals-side"><span>Renewals:</span><button class="fbtn" data-s="Y" onclick="toggleSales('Y')">Y</button><button class="fbtn" data-s="N" onclick="toggleSales('N')">N</button><button class="fbtn active" data-s="Both" onclick="toggleSales('Both')">Both</button></aside>
+    <aside class="renewals-side"><span>Renewals:</span><button class="fbtn" data-s="Y" onclick="toggleSales('Y')">Y</button><button class="fbtn" data-s="N" onclick="toggleSales('N')">N</button><button class="fbtn active" data-s="Both" onclick="toggleSales('Both')">Both</button><span style="margin-top:6px">Role:</span><details class="title-dd" id="title-dd"><summary>All roles &#9662;</summary><div class="title-opts" id="title-opts"></div></details></aside>
     <section class="slide  active"></section>
     <section class="slide"></section>
     <section class="slide"></section>
@@ -91,6 +99,7 @@ const LAST_DATE = RAW.last_date || '';
 let selectedMonths = new Set();   // empty = show All
 let currentMonth = "All";         // display label only
 let salesMode = 'Both';
+let selectedTitles = new Set();
 
 // ── utils ──────────────────────────────────────────────────────────
 const n   = v => (v ?? 0).toLocaleString();
@@ -100,6 +109,7 @@ const clr = (v, hi=50, lo=20) => v >= hi ? 'warn' : v <= lo ? 'good' : '';
 const bar = (p, max=100) => `<div class="bar"><div class="fill" style="width:${Math.min(p/max*100,100)}%"></div></div>`;
 const salesLabel = () => salesMode === 'Both' ? 'Y + N' : salesMode;
 const scopeLabel = () => `${currentMonth} | Renewals ${salesLabel()}`;
+const titleMatch = t => !selectedTitles.size || selectedTitles.has(t);
 
 // ── render helpers ────────────────────────────────────────────────
 function kpiCard(label, value, sub='') {
@@ -134,6 +144,7 @@ function renderSlide1(d) {
     <span class="chip">Top intent: ${topIntent.intent||'—'} (${pct(topIntent.pct||0)})</span>
     <span class="chip">Largest region: ${topRegion}</span>
     <span class="chip">Peak initial day: ${peakDay(d.activity.init_by_day)}</span>
+    ${selectedTitles.size ? `<span class="chip" style="color:var(--accent2)">Role filter: ${[...selectedTitles].map(t=>t.replace('Director, Strategy & Planning','Dir, S&P').replace('Specialist','Spec').replace('Manager','Mgr')).join(', ')}</span>` : ''}
   </div>
   <div style="position:absolute;bottom:20px;right:44px;color:var(--muted);font-size:12px">
     Data refreshed to: <strong style="color:var(--ink)">${LAST_DATE}</strong>
@@ -174,7 +185,7 @@ function renderSlide3(d) {
   const intents = ['Risk','Opportunity Pipeline','Deals','Customers','Sales'];
   const cards = intents.map(intent => {
     const regions = (d.intent.by_region?.[intent]||[]).slice(0,3);
-    const titles  = (d.intent.by_title?.[intent]||[]).slice(0,2);
+    const titles  = (d.intent.by_title?.[intent]||[]).filter(t=>titleMatch(t.Title||t.title)).slice(0,2);
     return `<div class="card compact"><strong>${intent}</strong>
       <ul style="margin:4px 0 0;font-size:12px;line-height:1.6">
         ${regions.map(r=>`<li>${r.Region||r.region||'—'} ${n(r.count)}</li>`).join('')}
@@ -223,7 +234,7 @@ function renderSlide5(d) {
   const wk = d.weekend;
   const regRows = (wk.by_region||[]).slice(0,5).map(r=>
     `<tr><td>${r.region}</td><td class="tc">${n(r.count)}</td><td class="tc">${pct(r.pct)}</td></tr>`).join('');
-  const titRows = (wk.by_title||[]).slice(0,5).map(r=>
+  const titRows = (wk.by_title||[]).filter(r=>titleMatch(r.title)).slice(0,5).map(r=>
     `<tr><td>${r.title}</td><td class="tc">${n(r.count)}</td><td class="tc">${pct(r.pct)}</td></tr>`).join('');
   const intRows = (wk.intent_dist||[]).map(r=>
     `<div class="br"><span>${r.intent}</span>${bar(r.pct,Math.max(...(wk.intent_dist||[]).map(x=>x.pct)))}<strong>${pct(r.pct)}</strong></div>`).join('');
@@ -256,7 +267,7 @@ function renderSlide6(d) {
     .filter(([rg])=>['Americas','EMEA','APJC','Global Service Provider'].includes(rg));
 
   function userList(arr) {
-    return (arr||[]).slice(0,5).map((u,i)=>
+    return (arr||[]).filter(u=>titleMatch(u.title)).slice(0,5).map((u,i)=>
       `<li>${u.name} — ${u.title.replace('Director,','Dir,').replace('Specialist','Spec')}, ${u.region} (${n(u.total_prompts)} prompts, ${u.weeks_active}/${r.dataset_weeks} wks)</li>`
     ).join('');
   }
@@ -284,7 +295,7 @@ function renderSlide6(d) {
 // ── slide 7: Scheduled usage ──────────────────────────────────────
 function renderSlide7(d) {
   const s = d.scheduled;
-  const patterns = s.patterns || [];
+  const patterns = (s.patterns || []).filter(p=>titleMatch(p.title));
   const cadenceSummary = Object.entries(s.cadence_summary||{}).map(([k,v])=>`${v} ${k}`).join(' · ');
   const cards = patterns.length === 0
     ? `<div class="card" style="grid-column:1/-1"><p>No statistically regular scheduled patterns detected in this period. Usage is predominantly organic and manual — a positive indicator of active engagement.</p></div>`
@@ -312,14 +323,14 @@ function renderSlide7(d) {
 // ── slide 8: Prompt library behaviour ─────────────────────────────
 function renderSlide8(d) {
   const div = d.diversity;
-  const libRows = (div.library_top10||[]).slice(0,7).map(u=>`
+  const libRows = (div.library_top10||[]).filter(u=>titleMatch(u.title)).slice(0,7).map(u=>`
     <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td>
     <td class="tc"><span class="${clr(u.rep_pct,80,30)}">${pct(u.rep_pct)}</span></td>
     <td style="font-size:10px"><em>${(u.prompt_preview||'').slice(0,50)}…</em></td></tr>`).join('');
-  const divRows = (div.diverse_top10||[]).slice(0,6).map(u=>`
+  const divRows = (div.diverse_top10||[]).filter(u=>titleMatch(u.title)).slice(0,6).map(u=>`
     <tr><td>${u.user}</td><td class="tc">${n(u.initial)}</td><td class="tc">${n(u.unique)}</td>
     <td class="tc"><span class="good">${pct(u.rep_pct)}</span></td></tr>`).join('');
-  const titRows = (div.title_div||[]).map(r=>`
+  const titRows = (div.title_div||[]).filter(r=>titleMatch(r.title)).map(r=>`
     <tr><td>${r.title.replace('Director,','Dir,').replace('Specialist','Spec')}</td>
     <td class="tc">${n(r.users)}</td><td class="tc">${n(r.total_initial)}</td>
     <td class="tc"><span class="${clr(r.avg_rep_pct,60,20)}">${pct(r.avg_rep_pct)}</span></td></tr>`).join('');
@@ -570,10 +581,7 @@ function renderSlide6b(d) {
   return `
   <h1>Regular Users — By Region &amp; Title</h1>
   <h2>Top 5 users per region and title — ${scopeLabel()}</h2>
-  <div class="g2">
-    <div class="card"><strong>Top 5 by Region</strong>${groupTable(r.top5_by_region,'Title',5)}</div>
-    <div class="card"><strong>Top 5 by Role</strong>${groupTable(r.top5_by_title,'Region',5)}</div>
-  </div>`;
+  <div class="g2">${regionCards}${titleCards}</div>`;
 }
 
 function downloadSlide6b() {
@@ -830,6 +838,9 @@ function show(i) {
   document.querySelectorAll('.slide').forEach((s, n) => s.classList.toggle('active', n === index));
   dots.forEach((d, n) => d.classList.toggle('active', n === index));
   document.getElementById('page').textContent = `${index+1} / ${N}`;
+  const isStatic = index === N - 1;
+  document.querySelector('.filter-bar').style.visibility = isStatic ? 'hidden' : '';
+  document.querySelector('.renewals-side').style.visibility = isStatic ? 'hidden' : '';
 }
 
 function toggleMonth(m) {
@@ -857,6 +868,18 @@ function toggleSales(mode) {
   show(index);
 }
 
+function toggleTitle(title) {
+  if (selectedTitles.has(title)) selectedTitles.delete(title); else selectedTitles.add(title);
+  const sum = document.querySelector('#title-dd summary');
+  if (sum) sum.textContent = selectedTitles.size ? selectedTitles.size + ' role(s) \u25be' : 'All roles \u25be';
+  document.querySelectorAll('.title-opt').forEach(el => {
+    const sel = selectedTitles.has(el.dataset.t);
+    el.classList.toggle('sel', sel);
+    const cb = el.querySelector('input'); if (cb) cb.checked = sel;
+  });
+  renderAll(); show(index);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const dotsEl = document.getElementById('dots');
   for (let i = 0; i < N; i++) {
@@ -875,6 +898,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderAll();
   show(0);
+  // populate title/role dropdown from intent by_title keys
+  const _tData = RAW.data?.Both?.All || RAW.data?.Y?.All || {};
+  const _titleSet = new Set();
+  Object.values(_tData.intent?.by_title||{}).forEach(arr=>(arr||[]).forEach(t=>{if(t.Title)_titleSet.add(t.Title);}));
+  const _opts = document.getElementById('title-opts');
+  if (_opts) {
+    const _a = s=>(s||'').replace('Director, Strategy & Planning','Dir, S&P').replace('Director,','Dir,').replace('Specialist','Spec').replace('Manager','Mgr');
+    [..._titleSet].sort().forEach(title => {
+      const el = document.createElement('div');
+      el.className='title-opt'; el.dataset.t=title;
+      el.innerHTML=`<input type="checkbox"><span>${_a(title)}</span>`;
+      const cb = el.querySelector('input');
+      el.addEventListener('click', e=>{ if(e.target!==cb){cb.checked=!cb.checked;} toggleTitle(title); e.stopPropagation(); });
+      _opts.appendChild(el);
+    });
+  }
+  document.addEventListener('click', e=>{ const dd=document.getElementById('title-dd'); if(dd&&!dd.contains(e.target))dd.removeAttribute('open'); });
 });
 
   </script>
