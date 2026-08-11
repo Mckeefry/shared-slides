@@ -855,6 +855,7 @@ function toggleMonth(m) {
     if (b.dataset.m === 'All') b.classList.toggle('active', selectedMonths.size === 0);
     else b.classList.toggle('active', selectedMonths.has(b.dataset.m));
   });
+  populateTitleFilter();
   renderAll();
   show(index);
 }
@@ -864,8 +865,36 @@ function toggleSales(mode) {
   document.querySelectorAll('.fbtn[data-s]').forEach(b => {
     b.classList.toggle('active', b.dataset.s === salesMode);
   });
+  populateTitleFilter();
   renderAll();
   show(index);
+}
+
+function populateTitleFilter() {
+  const d = getActiveData();
+  const ts = new Set();
+  // pull from intent by_title, regular top5_by_title, and all user frequency lists
+  Object.values(d.intent?.by_title||{}).forEach(arr=>(arr||[]).forEach(t=>{if(t.Title)ts.add(t.Title);}));
+  Object.keys(d.regular?.top5_by_title||{}).forEach(t=>ts.add(t));
+  ['top10_weekly','top10_biweekly','top10_monthly','top10_occasional'].forEach(k=>
+    (d.regular?.[k]||[]).forEach(u=>{if(u.title)ts.add(u.title);}));
+  const titles = [...ts].filter(Boolean).sort();
+  // preserve still-valid selections
+  selectedTitles = new Set([...selectedTitles].filter(t=>ts.has(t)));
+  const opts = document.getElementById('title-opts');
+  if (!opts) return;
+  opts.innerHTML = '';
+  const abbr = s=>(s||'').replace('Director, Strategy & Planning','Dir, S&P').replace('Director,','Dir,').replace('Specialist','Spec').replace('Manager','Mgr');
+  titles.forEach(title => {
+    const el = document.createElement('div');
+    el.className = 'title-opt' + (selectedTitles.has(title)?' sel':''); el.dataset.t = title;
+    el.innerHTML = `<input type="checkbox"${selectedTitles.has(title)?' checked':''}><span>${abbr(title)}</span>`;
+    const cb = el.querySelector('input');
+    el.addEventListener('click', e=>{ if(e.target!==cb){cb.checked=!cb.checked;} toggleTitle(title); e.stopPropagation(); });
+    opts.appendChild(el);
+  });
+  const sum = document.querySelector('#title-dd summary');
+  if (sum) sum.textContent = selectedTitles.size ? selectedTitles.size+' role(s) \u25be' : 'All roles \u25be';
 }
 
 function toggleTitle(title) {
@@ -898,22 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderAll();
   show(0);
-  // populate title/role dropdown from intent by_title keys
-  const _tData = RAW.data?.Both?.All || RAW.data?.Y?.All || {};
-  const _titleSet = new Set();
-  Object.values(_tData.intent?.by_title||{}).forEach(arr=>(arr||[]).forEach(t=>{if(t.Title)_titleSet.add(t.Title);}));
-  const _opts = document.getElementById('title-opts');
-  if (_opts) {
-    const _a = s=>(s||'').replace('Director, Strategy & Planning','Dir, S&P').replace('Director,','Dir,').replace('Specialist','Spec').replace('Manager','Mgr');
-    [..._titleSet].sort().forEach(title => {
-      const el = document.createElement('div');
-      el.className='title-opt'; el.dataset.t=title;
-      el.innerHTML=`<input type="checkbox"><span>${_a(title)}</span>`;
-      const cb = el.querySelector('input');
-      el.addEventListener('click', e=>{ if(e.target!==cb){cb.checked=!cb.checked;} toggleTitle(title); e.stopPropagation(); });
-      _opts.appendChild(el);
-    });
-  }
+  populateTitleFilter();
   document.addEventListener('click', e=>{ const dd=document.getElementById('title-dd'); if(dd&&!dd.contains(e.target))dd.removeAttribute('open'); });
 });
 
