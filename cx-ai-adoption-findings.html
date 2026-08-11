@@ -653,6 +653,22 @@ function mergeSlices(slices) {
   const topU=[...uM.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10).map(([name,count])=>({name,count,pct:p2(count,wAll)}));
   const big=slices.reduce((a,b)=>a.overview.total>b.overview.total?a:b);
 
+  // regular users
+  const frM=new Map();
+  slices.forEach(s=>Object.entries(s.regular.freq_counts||{}).forEach(([f,c])=>frM.set(f,(frM.get(f)||0)+c)));
+  function mergeTop(key){
+    const uM2=new Map();
+    slices.forEach(s=>(s.regular[key]||[]).forEach(u=>{
+      if(!uM2.has(u.name))uM2.set(u.name,{...u,total_prompts:0});
+      uM2.get(u.name).total_prompts+=u.total_prompts;
+    }));
+    return[...uM2.values()].sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,10);
+  }
+  const rfM={};
+  slices.forEach(s=>Object.entries(s.regular.region_freq||{}).forEach(([rg,freqs])=>{
+    if(!rfM[rg])rfM[rg]={};
+    Object.entries(freqs).forEach(([f,c])=>{rfM[rg][f]=(rfM[rg][f]||0)+c;});
+  }));
 
   // scheduled — deduplicate by user+prompt, keep highest run_count
   const spM=new Map();
@@ -693,65 +709,40 @@ function mergeSlices(slices) {
       intent_dist:[...wiM.entries()].sort((a,b)=>b[1]-a[1]).map(([k,v])=>({intent:k,count:v,pct:p2(v,wInit)})),
       top_users:topU,
     },
-    regular: (() => {
-      const totalWeeks = slices.reduce((s,sl)=>s+(sl.regular.dataset_weeks||0),0);
-      const ALL_TIERS = ['top10_weekly','top10_biweekly','top10_monthly','top10_occasional'];
-      // pool users from all tier lists across all slices, accumulating prompts/weeks
-      const uMap = new Map();
-      slices.forEach((sl,slIdx) => {
-        const seenInSlice = new Set();
-        ALL_TIERS.forEach(tier => {
-          (sl.regular[tier]||[]).forEach(u => {
-            if (!uMap.has(u.name)) uMap.set(u.name,{name:u.name,title:u.title,region:u.region,total_prompts:0,weeks_active:0,months_active:0});
-            const e = uMap.get(u.name);
-            if (!seenInSlice.has(u.name)) {
-              e.total_prompts += u.total_prompts;
-              e.weeks_active  += u.weeks_active;
-              e.months_active++;
-              seenInSlice.add(u.name);
-            }
+    regular:{
+      dataset_weeks:slices.reduce((s,sl)=>s+(sl.regular.dataset_weeks||0),0),
+      freq_counts:Object.fromEntries(frM),
+      top10_weekly:mergeTop('top10_weekly'),top10_biweekly:mergeTop('top10_biweekly'),top10_monthly:mergeTop('top10_monthly'),top10_occasional:mergeTop('top10_occasional'),
+      region_freq:rfM,
+      top5_by_region: (() => {
+        const gM = {};
+        slices.forEach(sl => Object.entries(sl.regular.top5_by_region||{}).forEach(([g,users]) => {
+          if (!gM[g]) gM[g] = {};
+          users.forEach(u => {
+            if (!gM[g][u.name] || u.total_prompts > gM[g][u.name].total_prompts) gM[g][u.name] = u;
           });
+        }));
+        const out = {};
+        Object.entries(gM).forEach(([g,uMap]) => {
+          out[g] = Object.values(uMap).sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,5);
         });
-      });
-      // re-classify using the same rules as Python compute_regular
-      const users = [...uMap.values()].map(u => {
-        const wc = totalWeeks > 0 ? u.weeks_active / totalWeeks : 0;
-        let freq;
-        if      (wc >= 0.75)              freq = 'Weekly';
-        else if (wc >= 0.30)              freq = 'Bi-Weekly';
-        else if (u.months_active >= 2)    freq = 'Monthly';
-        else                              freq = 'Occasional';
-        return {...u, freq};
-      });
-      const top10 = freq => users.filter(u=>u.freq===freq).sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,10);
-      const freqCounts = {};
-      users.forEach(u=>freqCounts[u.freq]=(freqCounts[u.freq]||0)+1);
-      const rfM2 = {};
-      users.forEach(u=>{if(!rfM2[u.region])rfM2[u.region]={};rfM2[u.region][u.freq]=(rfM2[u.region][u.freq]||0)+1;});
-      function top5byKey(groupKey) {
-        const gM={};
-        users.forEach(u=>{
-          const g=u[groupKey]; if(!g||g==='Unknown') return;
-          if(!gM[g]) gM[g]=[];
-          gM[g].push({name:u.name,other:groupKey==='region'?u.title:u.region,total_prompts:u.total_prompts,freq:u.freq,weeks_active:u.weeks_active});
-        });
-        const out={};
-        Object.entries(gM).sort((a,b)=>b[1].reduce((s,u)=>s+u.total_prompts,0)-a[1].reduce((s,u)=>s+u.total_prompts,0))
-          .slice(0,5).forEach(([g,us])=>out[g]=us.sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,5));
         return out;
-      }
-      return {
-        dataset_weeks:   totalWeeks,
-        freq_counts:     freqCounts,
-        top10_weekly:    top10('Weekly'),
-        top10_biweekly:  top10('Bi-Weekly'),
-        top10_monthly:   top10('Monthly'),
-        top10_occasional:top10('Occasional'),
-        region_freq:     rfM2,
-        top5_by_region:  top5byKey('region'),
-        top5_by_title:   top5byKey('title'),
-      };
-    })(),
+      })(),
+      top5_by_title: (() => {
+        const gM = {};
+        slices.forEach(sl => Object.entries(sl.regular.top5_by_title||{}).forEach(([g,users]) => {
+          if (!gM[g]) gM[g] = {};
+          users.forEach(u => {
+            if (!gM[g][u.name] || u.total_prompts > gM[g][u.name].total_prompts) gM[g][u.name] = u;
+          });
+        }));
+        const out = {};
+        Object.entries(gM).forEach(([g,uMap]) => {
+          out[g] = Object.values(uMap).sort((a,b)=>b.total_prompts-a.total_prompts).slice(0,5);
+        });
+        return out;
+      })(),
+    },
     scheduled:{total:sPatterns.length,cadence_summary:sCad,patterns:sPatterns},
     diversity:{
       analysed_users:big.diversity.analysed_users,
